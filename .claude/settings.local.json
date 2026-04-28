@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Atlassian__getAccessibleAtlassianResources",
+      "mcp__claude_ai_Atlassian__lookupJiraAccountId",
+      "mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql",
+      "Bash(rm \"c:/projects/salta_brain/cards/_EFC-6196/EFC-6196.md\")",
+      "Bash(rmdir \"c:/projects/salta_brain/cards/_EFC-5855\" --ignore-fail-on-non-empty)",
+      "Bash(rm -f \"c:/projects/salta_brain/cards/_EFC-5855/EFC-5855.md\")",
+      "Bash(rmdir \"c:/projects/salta_brain/cards/_EFC-5855\")"
+    ]
+  }
+}
