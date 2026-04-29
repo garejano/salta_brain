@@ -32,7 +32,7 @@ Mantém os arquivos locais em `cards/` atualizados a partir do Jira. O fluxo é 
 ### 1. Descobrir instância e usuário
 
 - Usar `getAccessibleAtlassianResources` para obter o `cloudId`.
-- Usar `lookupJiraAccountId` com o e-mail do usuário para obter o `accountId`.
+- Usar `lookupJiraAccountId` com o e-mail do usuário para obter o `accountId` — **necessário apenas nos modos completo, `--list` e `backlog`; pular esta chamada no modo card único (`<KEY>`).**
 
 ### 2. Buscar cards
 
@@ -46,6 +46,7 @@ Campos: `summary`, `status`, `issuetype`, `priority`, `project`, `description`, 
 ```jql
 key = "<KEY>"
 ```
+Sem filtro de assignee — sincroniza o card independentemente de estar atribuído ao usuário ou de qual for seu status.
 
 **Modo lista (`--list`):**  
 Executar a mesma query do modo completo, mas imprimir tabela no terminal e encerrar sem gravar.
@@ -169,7 +170,7 @@ _Total: <n> cards em backlog_
 ### Regras de arquivo local
 
 - **Não sobrescrever** `cards/<KEY>/<KEY>.md` sem confirmação explícita do usuário — o arquivo pode conter anotações manuais.
-- **Não criar** arquivos para cards com status `Done` a menos que `--list` seja usado.
+- **Não criar** arquivos para cards com status `Done` no modo completo, a menos que `--list` seja usado. No modo card único (`<KEY>`), criar/atualizar independentemente do status.
 - Converter descrições em formato ADF (Atlassian Document Format) para Markdown legível antes de gravar.
 - Preservar arquivos adicionais já existentes no diretório do card (ex: `*_QA.md`, `*_dev.md`).
 - Usar o `cloudId` da instância `gruposalta.atlassian.net` sempre que disponível no contexto da sessão (evitar chamada redundante a `getAccessibleAtlassianResources`).
