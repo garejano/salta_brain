@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Novo documento — Document Builder</title>
+<link rel="stylesheet" href="eleva/colors_and_type.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--color-neutral-light3);
+    font-family: var(--font-body-family);
+    color: var(--fg-primary);
+    overflow: hidden;
+  }
+  button { font-family: inherit; }
+
+  /* ── Top bar ──────────────────────────────────────────── */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 5;
+    background: #fff; border-bottom: 1px solid var(--color-neutral-light2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; gap: 16px;
+  }
+  .topbar .left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+  .backbtn {
+    width: 40px; height: 40px; border-radius: 8px; border: 0; cursor: pointer;
+    background: transparent; color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-fast-2);
+  }
+  .backbtn:hover { background: var(--color-neutral-light2); }
+  .doc-name-block {
+    display: flex; flex-direction: column; gap: 2px; min-width: 0;
+  }
+  .crumb {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--font-body-family); font-size: 11px; color: var(--color-neutral-dark1);
+  }
+  .crumb a { color: inherit; text-decoration: none; }
+  .crumb a:hover { color: var(--color-primary); }
+  .doc-name {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-display-family); font-weight: 600; font-size: 16px;
+    color: var(--color-neutral-dark3);
+  }
+  .doc-name input {
+    border: 0; outline: 0; background: transparent;
+    font: inherit; color: inherit;
+    padding: 2px 4px; border-radius: 4px;
+    min-width: 280px;
+  }
+  .doc-name input:hover { background: var(--color-neutral-light2); }
+  .doc-name input:focus { background: #fff; box-shadow: var(--shadow-focus); }
+  .saved-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--font-body-family); font-size: 11px; color: var(--color-neutral-dark1);
+  }
+  .saved-tag .dot {
+    width: 6px; height: 6px; border-radius: 999px; background: #28975A;
+  }
+
+  .topbar .right { display: flex; align-items: center; gap: 8px; }
+  .btn {
+    height: 36px; padding: 0 14px; border-radius: 8px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+    cursor: pointer; border: 1px solid transparent;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2), border-color var(--motion-fast-2);
+  }
+  .btn .material-symbols-outlined { font-size: 16px; }
+  .btn.ghost  { background: transparent; color: var(--color-neutral-dark2); }
+  .btn.ghost:hover { background: var(--color-neutral-light2); }
+  .btn.outline { background: #fff; color: var(--color-primary); border-color: var(--color-primary); }
+  .btn.outline:hover { background: var(--color-primary-light3); }
+  .btn.fill   { background: var(--color-primary); color: #fff; }
+  .btn.fill:hover { background: var(--color-primary-dark1); }
+
+  /* ── Layout ───────────────────────────────────────────── */
+  .workspace {
+    position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+    display: grid;
+    grid-template-columns: 288px 1fr 320px;
+  }
+
+  /* ── Left rail: Block library ─────────────────────────── */
+  .leftrail {
+    background: #fff;
+    border-right: 1px solid var(--color-neutral-light2);
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  .rail-head { padding: 16px 20px 12px; border-bottom: 1px solid var(--color-neutral-light2); }
+  .rail-head h3 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-neutral-dark2);
+  }
+  .rail-head p {
+    margin: 4px 0 0;
+    font-size: 12px; color: var(--color-neutral-dark1); line-height: 16px;
+  }
+  .rail-search {
+    margin: 12px 16px 0;
+    display: flex; align-items: center; gap: 8px;
+    height: 36px; padding: 0 10px;
+    border: 1px solid var(--color-neutral-light1); border-radius: 8px; background: #fff;
+    transition: border-color var(--motion-fast-2), box-shadow var(--motion-fast-2);
+  }
+  .rail-search:focus-within {
+    border-color: var(--color-primary); box-shadow: var(--shadow-focus);
+  }
+  .rail-search input {
+    border: 0; outline: 0; background: transparent; flex: 1; min-width: 0;
+    font-family: var(--font-body-family); font-size: 13px;
+  }
+  .rail-search .material-symbols-outlined { font-size: 18px; color: var(--color-neutral-dark1); }
+
+  .rail-body { flex: 1; overflow-y: auto; padding: 12px 16px 20px; scrollbar-width: thin; }
+  .rail-body::-webkit-scrollbar { width: 8px; }
+  .rail-body::-webkit-scrollbar-thumb { background: var(--color-neutral-light1); border-radius: 999px; }
+
+  .cat-head {
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-neutral-dark1);
+    padding: 12px 4px 6px;
+  }
+  .blocklist { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .blocklist.single { grid-template-columns: 1fr; }
+  .blockchip {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 12px 10px; border-radius: 10px;
+    border: 1px solid var(--color-neutral-light2);
+    background: #fff; cursor: grab; text-align: center;
+    transition: border-color var(--motion-fast-2), background var(--motion-fast-2), transform var(--motion-fast-2);
+  }
+  .blockchip:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light3);
+    transform: translateY(-1px);
+  }
+  .blockchip:active { cursor: grabbing; }
+  .blockchip .icn {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--color-primary-light3); color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .blockchip .lbl {
+    font-family: var(--font-body-family); font-size: 12px; font-weight: 600;
+    color: var(--color-neutral-dark3); line-height: 1.2;
+  }
+  .blockchip .desc {
+    font-family: var(--font-body-family); font-size: 10px;
+    color: var(--color-neutral-dark1); line-height: 1.2;
+  }
+
+  /* ── Center: canvas ───────────────────────────────────── */
+  .canvas {
+    background: var(--color-neutral-light3);
+    overflow: auto; padding: 32px 24px 80px;
+    position: relative;
+    scrollbar-width: thin;
+  }
+  .canvas::-webkit-scrollbar { width: 10px; }
+  .canvas::-webkit-scrollbar-thumb { background: var(--color-neutral-light1); border-radius: 999px; }
+
+  .canvas-bar {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--color-neutral-light3);
+    padding: 0 0 16px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .seg-mini {
+    display: inline-flex; padding: 3px; gap: 2px;
+    background: #fff; border: 1px solid var(--color-neutral-light2);
+    border-radius: 10px;
+  }
+  .seg-mini button {
+    height: 30px; padding: 0 12px; border-radius: 7px; border: 0;
+    background: transparent; cursor: pointer;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 12px;
+    color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2);
+  }
+  .seg-mini button .material-symbols-outlined { font-size: 16px; }
+  .seg-mini button.on { background: var(--color-primary-light3); color: var(--color-primary); }
+
+  .zoom-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #fff; border: 1px solid var(--color-neutral-light2); border-radius: 8px;
+    height: 34px; padding: 0 4px;
+  }
+  .zoom-pill button {
+    width: 26px; height: 26px; border-radius: 6px; border: 0;
+    background: transparent; cursor: pointer; color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .zoom-pill button:hover { background: var(--color-neutral-light2); }
+  .zoom-pill button .material-symbols-outlined { font-size: 16px; }
+  .zoom-pill .val {
+    min-width: 44px; text-align: center;
+    font-family: var(--font-body-family); font-weight: 700; font-size: 12px;
+    color: var(--color-neutral-dark2);
+  }
+
+  /* Page sheet (A4 retrato) */
+  .sheet {
+    width: 794px; max-width: 100%; margin: 0 auto;
+    background: #fff; border-radius: 4px;
+    box-shadow: var(--shadow-down-large);
+    padding: 56px 64px; min-height: 1123px;
+    color: var(--color-neutral-dark3);
+  }
+  .sheet + .sheet { margin-top: 24px; }
+
+  /* Block wrapper */
+  .block {
+    position: relative;
+    padding: 6px 0;
+    margin: 0 -12px;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    transition: border-color var(--motion-fast-2), background var(--motion-fast-2);
+  }
+  .block .inner { padding: 8px 12px; }
+  .block:hover { border-color: var(--color-neutral-light2); }
+  .block.selected { border-color: var(--color-primary); background: rgba(36, 44, 194, 0.02); }
+  .block .handle {
+    position: absolute; left: -36px; top: 50%; transform: translateY(-50%);
+    width: 28px; height: 28px; border-radius: 6px;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-neutral); cursor: grab;
+    opacity: 0; transition: opacity var(--motion-fast-2);
+  }
+  .block:hover .handle, .block.selected .handle { opacity: 1; }
+  .block .handle:hover { background: var(--color-neutral-light2); color: var(--color-neutral-dark2); }
+
+  .block-toolbar {
+    position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+    display: none; align-items: center; gap: 2px;
+    background: var(--color-neutral-dark3); border-radius: 8px;
+    padding: 4px; box-shadow: var(--shadow-down-medium);
+    z-index: 3;
+  }
+  .block.selected .block-toolbar { display: inline-flex; }
+  .block-toolbar button {
+    width: 28px; height: 28px; border: 0; border-radius: 6px;
+    background: transparent; color: #fff; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-fast-2);
+  }
+  .block-toolbar button:hover { background: rgba(255,255,255,0.16); }
+  .block-toolbar button.danger:hover { background: rgba(230, 86, 55, 0.4); }
+  .block-toolbar .sep { width: 1px; height: 18px; background: rgba(255,255,255,0.16); margin: 0 2px; }
+  .block-toolbar .material-symbols-outlined { font-size: 16px; }
+
+  .block-tag {
+    position: absolute; top: -10px; left: 12px;
+    background: var(--color-primary); color: #fff;
+    border-radius: 999px; padding: 2px 8px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 10px;
+    letter-spacing: 0.04em;
+    display: none;
+  }
+  .block.selected .block-tag { display: inline-block; }
+
+  /* Insert slot between blocks */
+  .insert {
+    height: 16px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 -12px;
+  }
+  .insert:hover .insert-line { background: var(--color-primary); }
+  .insert:hover .insert-btn { opacity: 1; transform: translateY(-50%) scale(1); }
+  .insert-line {
+    position: absolute; left: 12px; right: 12px; height: 2px;
+    background: transparent; border-radius: 2px;
+    transition: background var(--motion-fast-2);
+  }
+  .insert-btn {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.85);
+    width: 22px; height: 22px; border-radius: 999px;
+    background: var(--color-primary); color: #fff;
+    border: 0; cursor: pointer; opacity: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: opacity var(--motion-fast-2), transform var(--motion-fast-2);
+    box-shadow: var(--shadow-down-small);
+  }
+  .insert-btn .material-symbols-outlined { font-size: 16px; }
+
+  /* Block content styles */
+  .doc-header {
+    display: flex; gap: 16px; align-items: center; padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-neutral-light2);
+  }
+  .school-logo {
+    width: 56px; height: 56px; border-radius: 6px;
+    border: 1.5px dashed var(--color-neutral-light1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-neutral); font-size: 11px; font-weight: 600;
+    background: var(--color-neutral-light3); flex-shrink: 0;
+  }
+  .school-meta strong {
+    display: block; font-family: var(--font-display-family); font-weight: 600;
+    font-size: 15px; color: var(--color-neutral-dark3);
+  }
+  .school-meta span {
+    font-size: 12px; color: var(--color-neutral-dark1); line-height: 18px;
+  }
+
+  .doc-title {
+    font-family: var(--font-display-family); font-weight: 600;
+    font-size: 18px; line-height: 24px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--color-neutral-dark3);
+    text-align: center;
+  }
+
+  .doc-field {
+    border: 1px solid var(--color-neutral-light2); border-radius: 4px;
+    padding: 10px 12px;
+  }
+  .doc-field .lbl {
+    font-size: 10px; color: var(--color-primary); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .doc-field .val {
+    margin-top: 2px; font-size: 13px; color: var(--color-neutral-dark3);
+  }
+
+  .doc-richtext {
+    font-family: var(--font-body-family); font-size: 13px; line-height: 1.6;
+    color: var(--color-neutral-dark2);
+  }
+  .doc-richtext strong { color: var(--color-neutral-dark3); }
+
+  .doc-table {
+    width: 100%; border-collapse: collapse;
+    font-family: var(--font-body-family); font-size: 12px;
+  }
+  .doc-table th, .doc-table td {
+    border: 1px solid var(--color-neutral-light1);
+    padding: 6px 10px; text-align: left;
+  }
+  .doc-table th {
+    background: var(--color-neutral-light3); font-weight: 700;
+    color: var(--color-neutral-dark2);
+  }
+
+  .doc-sign-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    margin-top: 12px;
+  }
+  .doc-sign { text-align: center; }
+  .doc-sign .line {
+    height: 1px; background: var(--color-neutral-dark2);
+    margin-bottom: 6px;
+  }
+  .doc-sign .who {
+    font-family: var(--font-body-family); font-size: 12px;
+    color: var(--color-neutral-dark2);
+  }
+  .doc-sign .role {
+    font-size: 11px; color: var(--color-neutral-dark1);
+  }
+
+  .stack-gap > * + * { margin-top: 20px; }
+
+  /* Empty add-block row at the very bottom of the page */
+  .addrow {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    height: 56px; margin: 20px -12px 0;
+    border: 1.5px dashed var(--color-neutral-light1);
+    border-radius: 10px;
+    color: var(--color-neutral-dark1);
+    font-family: var(--font-body-family); font-size: 13px; font-weight: 600;
+    cursor: pointer; background: transparent;
+    transition: border-color var(--motion-fast-2), color var(--motion-fast-2), background var(--motion-fast-2);
+  }
+  .addrow:hover {
+    border-color: var(--color-primary); color: var(--color-primary);
+    background: rgba(36, 44, 194, 0.04);
+  }
+  .addrow .material-symbols-outlined { font-size: 18px; }
+
+  /* ── Right rail: Inspector ────────────────────────────── */
+  .rightrail {
+    background: #fff;
+    border-left: 1px solid var(--color-neutral-light2);
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  .rr-tabs {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--color-neutral-light2);
+  }
+  .rr-tab {
+    height: 48px; border: 0; background: transparent; cursor: pointer;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 13px;
+    color: var(--color-neutral-dark1);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    border-bottom: 2px solid transparent;
+    transition: color var(--motion-fast-2), border-color var(--motion-fast-2);
+  }
+  .rr-tab .material-symbols-outlined { font-size: 16px; }
+  .rr-tab.on {
+    color: var(--color-primary); border-bottom-color: var(--color-primary);
+  }
+  .rr-tab .pill {
+    background: var(--color-primary-light3); color: var(--color-primary);
+    border-radius: 999px; padding: 1px 7px;
+    font-family: var(--font-body-family); font-size: 10px;
+  }
+
+  .rr-body { flex: 1; overflow-y: auto; scrollbar-width: thin; }
+  .rr-body::-webkit-scrollbar { width: 8px; }
+  .rr-body::-webkit-scrollbar-thumb { background: var(--color-neutral-light1); border-radius: 999px; }
+
+  .rr-section { padding: 20px 20px; border-bottom: 1px solid var(--color-neutral-light2); }
+  .rr-section:last-child { border-bottom: 0; }
+  .rr-section h4 {
+    margin: 0 0 14px;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-neutral-dark2);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rr-section h4 .iconwrap {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: var(--color-primary-light3); color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .rr-section h4 .iconwrap .material-symbols-outlined { font-size: 14px; }
+
+  .rr-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .rr-field:last-child { margin-bottom: 0; }
+  .rr-field label {
+    font-family: var(--font-ui-family); font-weight: 500; font-size: 12px;
+    color: var(--color-neutral-dark3);
+  }
+  .rr-field .row {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  .rr-input {
+    width: 100%; height: 36px; padding: 0 12px;
+    border: 1px solid var(--color-neutral-light1); border-radius: 8px;
+    background: #fff; font-family: var(--font-body-family); font-size: 13px;
+    color: var(--color-neutral-dark3);
+    transition: border-color var(--motion-fast-2), box-shadow var(--motion-fast-2);
+  }
+  .rr-input:focus { outline: 0; border-color: var(--color-primary); box-shadow: var(--shadow-focus); }
+  textarea.rr-input { height: auto; padding: 8px 12px; resize: vertical; min-height: 72px; line-height: 1.5; }
+
+  .select-wrap { position: relative; }
+  .select-wrap .chev {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; color: var(--color-neutral-dark1); font-size: 18px;
+  }
+  select.rr-input {
+    appearance: none; -webkit-appearance: none; padding-right: 32px; cursor: pointer;
+  }
+
+  .seg-r {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    padding: 4px; background: var(--color-neutral-light2); border-radius: 10px;
+  }
+  .seg-r button {
+    border: 0; background: transparent; cursor: pointer;
+    padding: 7px 8px; border-radius: 8px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 12px;
+    color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2), box-shadow var(--motion-fast-2);
+  }
+  .seg-r button.on { background: #fff; color: var(--color-primary); box-shadow: var(--shadow-down-small); }
+  .seg-r button .material-symbols-outlined { font-size: 16px; }
+
+  .num-step {
+    display: inline-flex; align-items: stretch;
+    border: 1px solid var(--color-neutral-light1); border-radius: 8px;
+    overflow: hidden; background: #fff;
+  }
+  .num-step button {
+    width: 32px; border: 0; background: transparent; cursor: pointer;
+    color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .num-step button:hover { background: var(--color-neutral-light2); color: var(--color-primary); }
+  .num-step button .material-symbols-outlined { font-size: 16px; }
+  .num-step input {
+    width: 44px; height: 34px; border: 0; outline: 0;
+    text-align: center; background: transparent;
+    font-family: var(--font-body-family); font-size: 13px; font-weight: 700;
+    color: var(--color-neutral-dark3);
+  }
+
+  /* Toggle */
+  .tg-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; }
+  .tg-label {
+    font-family: var(--font-body-family); font-size: 13px; color: var(--color-neutral-dark3);
+  }
+  .tg-sub { font-size: 11px; color: var(--color-neutral-dark1); }
+  .toggle {
+    width: 36px; height: 20px; border-radius: 999px;
+    background: var(--color-neutral-light1); border: 0; cursor: pointer;
+    position: relative; flex-shrink: 0;
+    transition: background var(--motion-moderate-1);
+  }
+  .toggle::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; background: #fff; border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,23,31,.25);
+    transition: left var(--motion-moderate-1);
+  }
+  .toggle.on { background: #28975A; }
+  .toggle.on::after { left: 18px; }
+
+  /* Column editor for table block */
+  .cols-list { display: flex; flex-direction: column; gap: 6px; }
+  .col-row {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 8px; border-radius: 8px;
+    border: 1px solid var(--color-neutral-light2); background: #fff;
+  }
+  .col-row .grip { color: var(--color-neutral); cursor: grab; }
+  .col-row .grip .material-symbols-outlined { font-size: 16px; }
+  .col-row input {
+    flex: 1; border: 0; outline: 0; background: transparent; min-width: 0;
+    font-family: var(--font-body-family); font-size: 12px; color: var(--color-neutral-dark3);
+  }
+  .col-row .w {
+    font-family: var(--font-mono-family); font-size: 11px;
+    color: var(--color-neutral-dark1);
+    background: var(--color-neutral-light2); border-radius: 4px;
+    padding: 2px 6px;
+  }
+  .col-row .del {
+    width: 22px; height: 22px; border: 0; border-radius: 4px;
+    background: transparent; color: var(--color-neutral-dark1); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .col-row .del:hover { color: var(--color-error); background: rgba(230,86,55,0.08); }
+  .col-row .del .material-symbols-outlined { font-size: 14px; }
+  .addcol {
+    margin-top: 8px;
+    height: 32px; width: 100%;
+    background: transparent; border: 1px dashed var(--color-neutral-light1);
+    color: var(--color-primary); border-radius: 8px; cursor: pointer;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 12px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    transition: border-color var(--motion-fast-2), background var(--motion-fast-2);
+  }
+  .addcol:hover { border-color: var(--color-primary); background: var(--color-primary-light3); }
+  .addcol .material-symbols-outlined { font-size: 16px; }
+
+  /* Bottom canvas status bar */
+  .canvas-foot {
+    position: fixed; bottom: 16px; left: calc(288px + 16px);
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; border: 1px solid var(--color-neutral-light2);
+    border-radius: 999px; padding: 6px 12px;
+    box-shadow: var(--shadow-down-medium);
+    font-family: var(--font-body-family); font-size: 12px; color: var(--color-neutral-dark1);
+    z-index: 3;
+  }
+  .canvas-foot .pill {
+    background: var(--color-primary-light3); color: var(--color-primary);
+    border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 11px;
+  }
+
+  /* Tiny rich-text toolbar shown above selected Text block */
+  .rt-toolbar {
+    position: absolute; top: -42px; left: 0;
+    display: none; align-items: center; gap: 1px;
+    background: #fff; border: 1px solid var(--color-neutral-light2);
+    border-radius: 8px; padding: 4px;
+    box-shadow: var(--shadow-down-medium);
+    z-index: 2;
+  }
+  .block.selected.text .rt-toolbar { display: inline-flex; }
+  .rt-toolbar button {
+    width: 28px; height: 28px; border: 0; border-radius: 6px;
+    background: transparent; cursor: pointer;
+    color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2);
+  }
+  .rt-toolbar button:hover { background: var(--color-neutral-light2); color: var(--color-primary); }
+  .rt-toolbar button.on { background: var(--color-primary-light3); color: var(--color-primary); }
+  .rt-toolbar .material-symbols-outlined { font-size: 16px; }
+  .rt-toolbar .sep { width: 1px; height: 18px; background: var(--color-neutral-light2); margin: 0 4px; }
+
+  /* Helpers */
+  .hr { height: 1px; background: var(--color-neutral-light2); margin: 14px 0; }
+  .badge-pos { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-body-family); font-size: 11px; color: var(--color-neutral-dark1); }
+  .badge-pos .num {
+    background: var(--color-primary-light3); color: var(--color-primary);
+    border-radius: 999px; padding: 1px 7px; font-weight: 700; font-size: 10px;
+  }
+
+  /* Hidden by default for non-selected block tabs */
+  [data-tabpane] { display: none; }
+  [data-tabpane].on { display: block; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="left">
+    <button class="backbtn" aria-label="Voltar"><span class="material-symbols-outlined">arrow_back</span></button>
+    <div class="doc-name-block">
+      <span class="crumb">
+        <a href="#">Document Builder</a>
+        <span class="material-symbols-outlined" style="font-size:12px;color:var(--color-neutral);">chevron_right</span>
+        <span>Novo documento</span>
+      </span>
+      <span class="doc-name">
+        <span class="material-symbols-outlined" style="font-size:18px;color:var(--color-primary);">draft</span>
+        <input value="Declaração de Escolaridade" />
+        <span class="saved-tag"><span class="dot"></span>Rascunho salvo às 13:42</span>
+      </span>
+    </div>
+  </div>
+  <div class="right">
+    <button class="btn ghost"><span class="material-symbols-outlined">history</span>Histórico</button>
+    <button class="btn ghost"><span class="material-symbols-outlined">groups</span>Compartilhar</button>
+    <button class="btn outline"><span class="material-symbols-outlined">visibility</span>Visualizar</button>
+    <button class="btn fill"><span class="material-symbols-outlined">picture_as_pdf</span>Gerar PDF</button>
+  </div>
+</header>
+
+<div class="workspace">
+
+  <!-- ── Left rail: block library ─────────────────────── -->
+  <aside class="leftrail">
+    <div class="rail-head">
+      <h3>Biblioteca de blocos</h3>
+      <p>Arraste para a folha ou clique para inserir no final.</p>
+      <div class="rail-search">
+        <span class="material-symbols-outlined">search</span>
+        <input placeholder="Buscar bloco..." />
+      </div>
+    </div>
+
+    <div class="rail-body">
+
+      <div class="cat-head">Identificação</div>
+      <div class="blocklist">
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">domain</span></span>
+          <span class="lbl">Cabeçalho da escola</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">title</span></span>
+          <span class="lbl">Título</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">person</span></span>
+          <span class="lbl">Dados do aluno</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">school</span></span>
+          <span class="lbl">Dados da turma</span>
+        </div>
+      </div>
+
+      <div class="cat-head">Conteúdo</div>
+      <div class="blocklist">
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">format_paragraph</span></span>
+          <span class="lbl">Texto rico</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">list_alt</span></span>
+          <span class="lbl">Lista</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">format_quote</span></span>
+          <span class="lbl">Citação</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">code_blocks</span></span>
+          <span class="lbl">Campo dinâmico</span>
+          <span class="desc">{{aluno.nome}}</span>
+        </div>
+      </div>
+
+      <div class="cat-head">Dados</div>
+      <div class="blocklist">
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">table_chart</span></span>
+          <span class="lbl">Tabela</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">grading</span></span>
+          <span class="lbl">Notas</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">event_available</span></span>
+          <span class="lbl">Frequência</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">stacked_bar_chart</span></span>
+          <span class="lbl">Gráfico</span>
+        </div>
+      </div>
+
+      <div class="cat-head">Estrutura</div>
+      <div class="blocklist">
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">horizontal_rule</span></span>
+          <span class="lbl">Divisor</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">space_bar</span></span>
+          <span class="lbl">Espaçador</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">view_column</span></span>
+          <span class="lbl">2 colunas</span>
+        </div>
+        <div class="blockchip">
+          <span class="icn"><span class="material-symbols-outlined">insert_page_break</span></span>
+          <span class="lbl">Quebra</span>
+        </div>
+      </div>
+
+      <div class="cat-head">Encerramento</div>
+      <div class="blocklist single">
+        <div class="blockchip" style="flex-direction: row; gap: 12px; padding: 10px 12px; text-align: left;">
+          <span class="icn" style="flex-shrink: 0;"><span class="material-symbols-outlined">draw</span></span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span class="lbl">Assinaturas</span>
+            <span class="desc">Diretor + Secretário</span>
+          </span>
+        </div>
+        <div class="blockchip" style="flex-direction: row; gap: 12px; padding: 10px 12px; text-align: left;">
+          <span class="icn" style="flex-shrink: 0;"><span class="material-symbols-outlined">qr_code_2</span></span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span class="lbl">QR de validação</span>
+            <span class="desc">Link de verificação</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Center canvas ────────────────────────────────── -->
+  <main class="canvas" id="canvas">
+    <div class="canvas-bar">
+      <div class="seg-mini">
+        <button class="on"><span class="material-symbols-outlined">edit_note</span>Editar</button>
+        <button><span class="material-symbols-outlined">visibility</span>Pré-visualizar</button>
+        <button><span class="material-symbols-outlined">code</span>JSON</button>
+      </div>
+      <div style="display:flex; gap: 8px; align-items: center;">
+        <span style="font-family: var(--font-body-family); font-size: 12px; color: var(--color-neutral-dark1);">Página <strong style="color:var(--color-neutral-dark3);">1</strong> / 1</span>
+        <div class="zoom-pill">
+          <button aria-label="Zoom out"><span class="material-symbols-outlined">remove</span></button>
+          <span class="val">100%</span>
+          <button aria-label="Zoom in"><span class="material-symbols-outlined">add</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sheet -->
+    <article class="sheet" id="sheet">
+
+      <!-- Block: Header -->
+      <div class="block" data-type="header">
+        <span class="handle"><span class="material-symbols-outlined">drag_indicator</span></span>
+        <span class="block-tag">Cabeçalho</span>
+        <div class="block-toolbar">
+          <button aria-label="Mover acima"><span class="material-symbols-outlined">arrow_upward</span></button>
+          <button aria-label="Mover abaixo"><span class="material-symbols-outlined">arrow_downward</span></button>
+          <span class="sep"></span>
+          <button aria-label="Duplicar"><span class="material-symbols-outlined">content_copy</span></button>
+          <button aria-label="Configurações"><span class="material-symbols-outlined">tune</span></button>
+          <span class="sep"></span>
+          <button class="danger" aria-label="Remover"><span class="material-symbols-outlined">delete</span></button>
+        </div>
+        <div class="inner">
+          <div class="doc-header">
+            <div class="school-logo">LOGO</div>
+            <div class="school-meta">
+              <strong>Escola Estadual Exemplo</strong>
+              <span>Rua das Flores, 123 — Centro — São Paulo/SP</span><br/>
+              <span>(11) 1234-5678 · CNPJ 00.000.000/0001-00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insert">
+        <div class="insert-line"></div>
+        <button class="insert-btn" aria-label="Inserir bloco"><span class="material-symbols-outlined">add</span></button>
+      </div>
+
+      <!-- Block: Title -->
+      <div class="block" data-type="title">
+        <span class="handle"><span class="material-symbols-outlined">drag_indicator</span></span>
+        <span class="block-tag">Título</span>
+        <div class="block-toolbar">
+          <button><span class="material-symbols-outlined">arrow_upward</span></button>
+          <button><span class="material-symbols-outlined">arrow_downward</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">content_copy</span></button>
+          <button><span class="material-symbols-outlined">tune</span></button>
+          <span class="sep"></span>
+          <button class="danger"><span class="material-symbols-outlined">delete</span></button>
+        </div>
+        <div class="inner">
+          <div class="doc-title">Declaração de Escolaridade</div>
+        </div>
+      </div>
+
+      <div class="insert">
+        <div class="insert-line"></div>
+        <button class="insert-btn"><span class="material-symbols-outlined">add</span></button>
+      </div>
+
+      <!-- Block: Field -->
+      <div class="block" data-type="field">
+        <span class="handle"><span class="material-symbols-outlined">drag_indicator</span></span>
+        <span class="block-tag">Campo</span>
+        <div class="block-toolbar">
+          <button><span class="material-symbols-outlined">arrow_upward</span></button>
+          <button><span class="material-symbols-outlined">arrow_downward</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">content_copy</span></button>
+          <button><span class="material-symbols-outlined">tune</span></button>
+          <span class="sep"></span>
+          <button class="danger"><span class="material-symbols-outlined">delete</span></button>
+        </div>
+        <div class="inner">
+          <div class="doc-field">
+            <div class="lbl">Período letivo</div>
+            <div class="val">2024</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insert">
+        <div class="insert-line"></div>
+        <button class="insert-btn"><span class="material-symbols-outlined">add</span></button>
+      </div>
+
+      <!-- Block: Text (TinyMCE-like) — selected by default -->
+      <div class="block selected text" data-type="text" id="textBlock">
+        <span class="handle"><span class="material-symbols-outlined">drag_indicator</span></span>
+        <span class="block-tag">Texto rico</span>
+        <div class="rt-toolbar">
+          <button class="on"><span class="material-symbols-outlined">format_bold</span></button>
+          <button><span class="material-symbols-outlined">format_italic</span></button>
+          <button><span class="material-symbols-outlined">format_underlined</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">format_align_left</span></button>
+          <button><span class="material-symbols-outlined">format_align_center</span></button>
+          <button><span class="material-symbols-outlined">format_align_right</span></button>
+          <button><span class="material-symbols-outlined">format_align_justify</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">format_list_bulleted</span></button>
+          <button><span class="material-symbols-outlined">format_list_numbered</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">link</span></button>
+          <button><span class="material-symbols-outlined">code_blocks</span></button>
+        </div>
+        <div class="block-toolbar">
+          <button><span class="material-symbols-outlined">arrow_upward</span></button>
+          <button><span class="material-symbols-outlined">arrow_downward</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">content_copy</span></button>
+          <button><span class="material-symbols-outlined">tune</span></button>
+          <span class="sep"></span>
+          <button class="danger"><span class="material-symbols-outlined">delete</span></button>
+        </div>
+        <div class="inner">
+          <div class="doc-richtext" contenteditable="true">
+            <strong>Declaramos, para os devidos fins,</strong> que o(a) aluno(a) <strong>{{aluno.nome}}</strong>, portador(a) do RA <strong>{{aluno.ra}}</strong>, encontra-se regularmente matriculado(a) nesta instituição no ano letivo de <strong>{{periodo}}</strong>, cursando o <strong>{{turma.serie}}</strong>.<br/><br/>
+            Por ser expressão da verdade, firmamos a presente declaração.
+          </div>
+        </div>
+      </div>
+
+      <div class="insert">
+        <div class="insert-line"></div>
+        <button class="insert-btn"><span class="material-symbols-outlined">add</span></button>
+      </div>
+
+      <!-- Block: Table -->
+      <div class="block" data-type="table">
+        <span class="handle"><span class="material-symbols-outlined">drag_indicator</span></span>
+        <span class="block-tag">Tabela</span>
+        <div class="block-toolbar">
+          <button><span class="material-symbols-outlined">arrow_upward</span></button>
+          <button><span class="material-symbols-outlined">arrow_downward</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">content_copy</span></button>
+          <button><span class="material-symbols-outlined">tune</span></button>
+          <span class="sep"></span>
+          <button class="danger"><span class="material-symbols-outlined">delete</span></button>
+        </div>
+        <div class="inner">
+          <table class="doc-table">
+            <thead><tr><th style="width: 12%;">Etapa</th><th>Disciplina</th><th style="width: 16%;">Carga horária</th><th style="width: 14%;">Frequência</th></tr></thead>
+            <tbody>
+              <tr><td>1ª</td><td>Língua Portuguesa</td><td>120 h</td><td>96%</td></tr>
+              <tr><td>1ª</td><td>Matemática</td><td>120 h</td><td>92%</td></tr>
+              <tr><td>1ª</td><td>História</td><td>80 h</td><td>100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="insert">
+        <div class="insert-line"></div>
+        <button class="insert-btn"><span class="material-symbols-outlined">add</span></button>
+      </div>
+
+      <!-- Block: Signatures -->
+      <div class="block" data-type="sign">
+        <span class="handle"><span class="material-symbols-outlined">drag_indicator</span></span>
+        <span class="block-tag">Assinaturas</span>
+        <div class="block-toolbar">
+          <button><span class="material-symbols-outlined">arrow_upward</span></button>
+          <button><span class="material-symbols-outlined">arrow_downward</span></button>
+          <span class="sep"></span>
+          <button><span class="material-symbols-outlined">content_copy</span></button>
+          <button><span class="material-symbols-outlined">tune</span></button>
+          <span class="sep"></span>
+          <button class="danger"><span class="material-symbols-outlined">delete</span></button>
+        </div>
+        <div class="inner">
+          <div style="text-align: right; font-size: 13px; color: var(--color-neutral-dark2); margin-bottom: 28px;">São Paulo/SP, 11 de maio de 2026.</div>
+          <div class="doc-sign-row">
+            <div class="doc-sign">
+              <div class="line"></div>
+              <div class="who">{{diretor.nome}}</div>
+              <div class="role">Diretor(a) escolar</div>
+            </div>
+            <div class="doc-sign">
+              <div class="line"></div>
+              <div class="who">{{secretario.nome}}</div>
+              <div class="role">Secretário(a)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="addrow" id="addrow">
+        <span class="material-symbols-outlined">add</span>
+        Adicionar bloco
+      </button>
+
+    </article>
+  </main>
+
+  <!-- ── Right rail: Inspector ────────────────────────── -->
+  <aside class="rightrail">
+    <div class="rr-tabs">
+      <button class="rr-tab" data-tab="doc">
+        <span class="material-symbols-outlined">description</span>
+        Documento
+      </button>
+      <button class="rr-tab on" data-tab="block">
+        <span class="material-symbols-outlined">widgets</span>
+        Bloco
+        <span class="pill">Texto</span>
+      </button>
+    </div>
+
+    <div class="rr-body">
+
+      <!-- ── DOCUMENTO TAB ── -->
+      <div data-tabpane="doc">
+        <section class="rr-section">
+          <h4><span class="iconwrap"><span class="material-symbols-outlined">info</span></span>Informações</h4>
+          <div class="rr-field">
+            <label>Nome do documento</label>
+            <input class="rr-input" value="Declaração de Escolaridade" />
+          </div>
+          <div class="rr-field">
+            <label>Descrição</label>
+            <textarea class="rr-input">Documento gerado para comprovar matrícula ativa do aluno na unidade.</textarea>
+          </div>
+          <div class="rr-field">
+            <label>Categoria</label>
+            <div class="select-wrap">
+              <select class="rr-input">
+                <option>Declaração</option><option>Relatório</option><option>Histórico</option><option>Comunicado</option>
+              </select>
+              <span class="material-symbols-outlined chev">expand_more</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="rr-section">
+          <h4><span class="iconwrap"><span class="material-symbols-outlined">crop_free</span></span>Página</h4>
+          <div class="rr-field">
+            <label>Orientação</label>
+            <div class="seg-r">
+              <button class="on"><span class="material-symbols-outlined">crop_portrait</span>Retrato</button>
+              <button><span class="material-symbols-outlined">crop_landscape</span>Paisagem</button>
+            </div>
+          </div>
+          <div class="rr-field">
+            <div class="row"><label>Margem (px)</label>
+              <div class="num-step">
+                <button><span class="material-symbols-outlined">remove</span></button>
+                <input value="64" />
+                <button><span class="material-symbols-outlined">add</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="rr-field">
+            <div class="row"><label>Gap entre blocos</label>
+              <div class="num-step">
+                <button><span class="material-symbols-outlined">remove</span></button>
+                <input value="20" />
+                <button><span class="material-symbols-outlined">add</span></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="rr-section">
+          <h4><span class="iconwrap"><span class="material-symbols-outlined">tune</span></span>Comportamento</h4>
+          <div class="tg-row">
+            <div>
+              <div class="tg-label">Cabeçalho em todas as páginas</div>
+              <div class="tg-sub">Repete o bloco de cabeçalho da escola</div>
+            </div>
+            <button class="toggle on" aria-pressed="true"></button>
+          </div>
+          <div class="hr"></div>
+          <div class="tg-row">
+            <div>
+              <div class="tg-label">Rodapé com numeração</div>
+              <div class="tg-sub">Página X de Y no canto inferior</div>
+            </div>
+            <button class="toggle on" aria-pressed="true"></button>
+          </div>
+          <div class="hr"></div>
+          <div class="tg-row">
+            <div>
+              <div class="tg-label">QR de validação</div>
+              <div class="tg-sub">Adiciona link de verificação</div>
+            </div>
+            <button class="toggle" aria-pressed="false"></button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ── BLOCK TAB (Text selected) ── -->
+      <div data-tabpane="block" class="on">
+        <section class="rr-section">
+          <h4>
+            <span class="iconwrap"><span class="material-symbols-outlined">format_paragraph</span></span>
+            Texto rico
+            <span class="badge-pos" style="margin-left:auto;"><span class="num">4</span>de 6</span>
+          </h4>
+          <div class="rr-field">
+            <label>Identificador</label>
+            <input class="rr-input" value="declaracao-corpo" />
+          </div>
+          <div class="rr-field">
+            <label>Conteúdo</label>
+            <textarea class="rr-input" rows="5">Declaramos, para os devidos fins, que o(a) aluno(a) {{aluno.nome}}...</textarea>
+          </div>
+        </section>
+
+        <section class="rr-section">
+          <h4><span class="iconwrap"><span class="material-symbols-outlined">style</span></span>Aparência</h4>
+          <div class="rr-field">
+            <label>Alinhamento</label>
+            <div class="seg-r" style="grid-template-columns: repeat(4,1fr);">
+              <button><span class="material-symbols-outlined">format_align_left</span></button>
+              <button><span class="material-symbols-outlined">format_align_center</span></button>
+              <button><span class="material-symbols-outlined">format_align_right</span></button>
+              <button class="on"><span class="material-symbols-outlined">format_align_justify</span></button>
+            </div>
+          </div>
+          <div class="rr-field">
+            <div class="row">
+              <label>Tamanho da fonte</label>
+              <div class="num-step">
+                <button><span class="material-symbols-outlined">remove</span></button>
+                <input value="13" />
+                <button><span class="material-symbols-outlined">add</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="rr-field">
+            <div class="row">
+              <label>Altura de linha</label>
+              <div class="num-step">
+                <button><span class="material-symbols-outlined">remove</span></button>
+                <input value="1.6" />
+                <button><span class="material-symbols-outlined">add</span></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="rr-section">
+          <h4><span class="iconwrap"><span class="material-symbols-outlined">code_blocks</span></span>Campos dinâmicos</h4>
+          <div class="cols-list">
+            <div class="col-row">
+              <span class="grip"><span class="material-symbols-outlined">drag_indicator</span></span>
+              <input value="{{aluno.nome}}" />
+              <span class="w">String</span>
+            </div>
+            <div class="col-row">
+              <span class="grip"><span class="material-symbols-outlined">drag_indicator</span></span>
+              <input value="{{aluno.ra}}" />
+              <span class="w">String</span>
+            </div>
+            <div class="col-row">
+              <span class="grip"><span class="material-symbols-outlined">drag_indicator</span></span>
+              <input value="{{periodo}}" />
+              <span class="w">Ano</span>
+            </div>
+            <div class="col-row">
+              <span class="grip"><span class="material-symbols-outlined">drag_indicator</span></span>
+              <input value="{{turma.serie}}" />
+              <span class="w">String</span>
+            </div>
+          </div>
+          <button class="addcol"><span class="material-symbols-outlined">add</span>Inserir campo</button>
+        </section>
+
+        <section class="rr-section">
+          <h4><span class="iconwrap"><span class="material-symbols-outlined">visibility</span></span>Visibilidade</h4>
+          <div class="tg-row">
+            <div>
+              <div class="tg-label">Exibir este bloco</div>
+              <div class="tg-sub">Pode ser desativado por categoria</div>
+            </div>
+            <button class="toggle on" aria-pressed="true"></button>
+          </div>
+          <div class="hr"></div>
+          <div class="rr-field">
+            <label>Condição de exibição</label>
+            <div class="select-wrap">
+              <select class="rr-input">
+                <option>Sempre</option>
+                <option>Apenas se aluno ativo</option>
+                <option>Apenas se houver notas</option>
+                <option>Apenas no PDF final</option>
+              </select>
+              <span class="material-symbols-outlined chev">expand_more</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </aside>
+</div>
+
+<div class="canvas-foot">
+  <span class="material-symbols-outlined" style="font-size:14px;color:var(--color-primary);">layers</span>
+  <span><strong style="color:var(--color-neutral-dark3);">6</strong> blocos</span>
+  <span style="color: var(--color-neutral-light1);">·</span>
+  <span>A4 retrato</span>
+  <span style="color: var(--color-neutral-light1);">·</span>
+  <span class="pill">v 0.3 — rascunho</span>
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.rr-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.rr-tab').forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+      const which = t.dataset.tab;
+      document.querySelectorAll('[data-tabpane]').forEach(p => p.classList.toggle('on', p.dataset.tabpane === which));
+    });
+  });
+
+  // Block selection
+  document.querySelectorAll('.block').forEach(b => {
+    b.addEventListener('click', (e) => {
+      // Don't grab clicks on contenteditable inner text
+      if (e.target.closest('[contenteditable="true"]') && document.activeElement === e.target.closest('[contenteditable="true"]')) return;
+      document.querySelectorAll('.block').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      // Switch inspector to Block tab
+      document.querySelectorAll('.rr-tab').forEach(x => x.classList.remove('on'));
+      document.querySelector('.rr-tab[data-tab="block"]').classList.add('on');
+      document.querySelectorAll('[data-tabpane]').forEach(p => p.classList.toggle('on', p.dataset.tabpane === 'block'));
+    });
+  });
+
+  // Toggle switches
+  document.querySelectorAll('.toggle').forEach(t => {
+    t.addEventListener('click', () => {
+      const on = t.classList.toggle('on');
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+
+  // Segmented controls (Retrato/Paisagem, alignment, etc.)
+  document.querySelectorAll('.seg-r').forEach(g => {
+    g.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', () => {
+        g.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+      });
+    });
+  });
+
+  // Seg-mini (Editar / Pré-visualizar / JSON)
+  document.querySelectorAll('.seg-mini').forEach(g => {
+    g.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', () => {
+        g.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+      });
+    });
+  });
+
+  // Num-step
+  document.querySelectorAll('.num-step').forEach(s => {
+    const input = s.querySelector('input');
+    const [minus, plus] = s.querySelectorAll('button');
+    const step = () => parseFloat(input.value.replace(',', '.')).toString().includes('.') ? 0.1 : 1;
+    const fmt = (n) => Number.isInteger(n) ? String(n) : n.toFixed(1);
+    minus.addEventListener('click', () => { input.value = fmt(Math.max(0, parseFloat(input.value) - step())); });
+    plus.addEventListener('click',  () => { input.value = fmt(parseFloat(input.value) + step()); });
+  });
+</script>
+</body>
+</html>

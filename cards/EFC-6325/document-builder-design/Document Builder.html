@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Document Builder — Eleva</title>
+<link rel="stylesheet" href="eleva/colors_and_type.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--color-neutral-light3);
+    font-family: var(--font-body-family);
+    color: var(--fg-primary);
+    min-height: 100vh;
+  }
+
+  /* ── Header ───────────────────────────────────────────── */
+  .topbar {
+    position: sticky; top: 0; z-index: 5;
+    background: #fff;
+    border-bottom: 1px solid var(--color-neutral-light2);
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .mark {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--brand-gradient);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-family: var(--font-display-family); font-weight: 800;
+    font-size: 18px;
+  }
+  .brand .name {
+    font-family: var(--font-display-family); font-weight: 700; font-size: 18px;
+    color: var(--color-neutral-dark3);
+  }
+  .brand .tag {
+    font-family: var(--font-body-family); font-size: 12px;
+    color: var(--color-neutral-dark1);
+    padding: 2px 8px; background: var(--color-neutral-light2);
+    border-radius: 999px; margin-left: 6px;
+  }
+  .topbar nav { display: flex; align-items: center; gap: 4px; }
+  .topbar nav a {
+    padding: 8px 14px; border-radius: 8px;
+    font-family: var(--font-body-family); font-size: 14px; font-weight: 600;
+    color: var(--color-neutral-dark2); text-decoration: none;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2);
+  }
+  .topbar nav a:hover { background: var(--color-neutral-light2); color: var(--color-neutral-dark3); }
+  .topbar nav a.on {
+    color: var(--color-primary); background: var(--color-primary-light3);
+  }
+  .topbar .right { display: flex; align-items: center; gap: 12px; }
+  .topbar .iconbtn {
+    width: 40px; height: 40px; border-radius: 999px; border: 0;
+    background: transparent; color: var(--color-neutral-dark2); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-fast-2);
+  }
+  .topbar .iconbtn:hover { background: var(--color-neutral-light2); }
+  .topbar .avatar {
+    width: 36px; height: 36px; border-radius: 999px;
+    background: var(--brand-gradient);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-family: var(--font-display-family); font-weight: 700; font-size: 14px;
+  }
+
+  /* ── Layout ───────────────────────────────────────────── */
+  .container {
+    max-width: 1280px; margin: 0 auto;
+    padding: 32px 32px 64px;
+  }
+  .pagehead { margin-bottom: 24px; }
+  .crumbs {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-body-family); font-size: 12px; color: var(--color-neutral-dark1);
+    margin-bottom: 8px;
+  }
+  .crumbs a { color: var(--color-neutral-dark1); text-decoration: none; }
+  .crumbs a:hover { color: var(--color-primary); }
+  .crumbs .sep { color: var(--color-neutral); }
+  .pagehead h1 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 600;
+    font-size: 32px; line-height: 40px; color: var(--color-neutral-dark3);
+    letter-spacing: -0.01em;
+  }
+  .pagehead p {
+    margin: 6px 0 0; max-width: 680px;
+    font-family: var(--font-body-family); font-size: 14px; line-height: 22px;
+    color: var(--color-neutral-dark1);
+  }
+
+  /* Toolbar */
+  .toolbar {
+    margin: 24px 0 16px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .searchbox {
+    flex: 1; max-width: 380px;
+    display: flex; align-items: center; gap: 8px;
+    height: 40px; padding: 0 12px;
+    border: 1px solid var(--color-neutral-light1);
+    border-radius: 8px; background: #fff;
+    transition: border-color var(--motion-fast-2), box-shadow var(--motion-fast-2);
+  }
+  .searchbox:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-focus);
+  }
+  .searchbox input {
+    border: 0; outline: 0; background: transparent; flex: 1;
+    font-family: var(--font-body-family); font-size: 14px;
+    color: var(--color-neutral-dark3);
+  }
+  .searchbox .material-symbols-outlined { color: var(--color-neutral-dark1); font-size: 20px; }
+
+  .tabs {
+    display: inline-flex; padding: 4px;
+    background: var(--color-neutral-light2);
+    border-radius: 10px;
+  }
+  .tab {
+    padding: 8px 14px; border: 0; background: transparent; cursor: pointer;
+    border-radius: 8px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 13px;
+    color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2), box-shadow var(--motion-fast-2);
+  }
+  .tab.on {
+    background: #fff; color: var(--color-primary);
+    box-shadow: var(--shadow-down-small);
+  }
+  .tab .count {
+    background: var(--color-neutral-light1);
+    color: var(--color-neutral-dark2);
+    border-radius: 999px; padding: 1px 7px;
+    font-size: 11px; font-family: var(--font-body-family); font-weight: 700;
+  }
+  .tab.on .count { background: var(--color-primary-light3); color: var(--color-primary); }
+
+  .toolbar .spacer { flex: 1; }
+  .iconbtn-outline {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: #fff; border: 1px solid var(--color-neutral-light1);
+    color: var(--color-neutral-dark2); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: border-color var(--motion-fast-2), color var(--motion-fast-2);
+  }
+  .iconbtn-outline:hover { border-color: var(--color-primary); color: var(--color-primary); }
+  .iconbtn-outline.on { color: var(--color-primary); border-color: var(--color-primary); background: var(--color-primary-light3); }
+
+  /* ── Section headers ──────────────────────────────────── */
+  .section { margin-top: 32px; }
+  .section-head {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .section-head .badge {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--color-primary-light3); color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-head .badge.alt { background: #E6F7E9; color: #28975A; }
+  .section-head h2 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 600;
+    font-size: 20px; line-height: 24px; color: var(--color-neutral-dark3);
+  }
+  .section-head p {
+    margin: 2px 0 0; font-size: 13px; color: var(--color-neutral-dark1);
+  }
+
+  /* ── Card grid ────────────────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 1080px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 720px)  { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color var(--motion-moderate-1), box-shadow var(--motion-moderate-1), transform var(--motion-moderate-1);
+    display: flex; flex-direction: column; gap: 14px;
+    min-height: 148px;
+  }
+  .card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-down-medium);
+  }
+  .card:hover .openbtn {
+    background: var(--color-primary); color: #fff; border-color: var(--color-primary);
+  }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .doc-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .doc-icon.indigo { background: var(--color-primary-light3); color: var(--color-primary); }
+  .doc-icon.teal   { background: #E0F6F7; color: var(--color-tertiary-dark1); }
+  .doc-icon.amber  { background: #FFF3DD; color: var(--color-warning-dark); }
+  .doc-icon.purple { background: var(--color-inform-light2); color: var(--color-inform); }
+  .doc-icon.magenta{ background: #FBEAF3; color: var(--color-secondary); }
+  .doc-icon.green  { background: #E6F7E9; color: #28975A; }
+  .doc-icon.orange { background: #FBE4DC; color: var(--color-error-dark); }
+  .doc-icon .material-symbols-outlined { font-size: 24px; }
+
+  .chip-row { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    height: 22px; padding: 0 8px; border-radius: 999px;
+    font-family: var(--font-body-family); font-size: 11px; font-weight: 700;
+    background: var(--color-neutral-light2); color: var(--color-neutral-dark2);
+    letter-spacing: 0.02em;
+  }
+  .chip .material-symbols-outlined { font-size: 13px; }
+  .chip.retrato { background: #E0F6F7; color: var(--color-tertiary-dark1); }
+  .chip.paisagem { background: var(--color-primary-light3); color: var(--color-primary); }
+  .chip.stress { background: #FBE4DC; color: var(--color-error-dark); }
+  .chip.debug { background: #FFF3DD; color: var(--color-warning-dark); }
+  .chip.escolar { background: #E6F7E9; color: #28975A; }
+
+  .card h3 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 600;
+    font-size: 16px; line-height: 22px; color: var(--color-neutral-dark3);
+  }
+  .card p {
+    margin: 4px 0 0;
+    font-family: var(--font-body-family); font-size: 13px; line-height: 20px;
+    color: var(--color-neutral-dark1);
+  }
+  .card-body { flex: 1; }
+
+  .card-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-neutral-light2);
+  }
+  .meta {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-body-family); font-size: 12px;
+    color: var(--color-neutral-dark1);
+  }
+  .meta .material-symbols-outlined { font-size: 16px; }
+  .actions { display: inline-flex; gap: 4px; }
+  .actbtn {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 0; background: transparent; color: var(--color-neutral-dark1);
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2);
+  }
+  .actbtn:hover { background: var(--color-neutral-light2); color: var(--color-primary); }
+  .actbtn .material-symbols-outlined { font-size: 18px; }
+  .openbtn {
+    height: 32px; padding: 0 12px; border-radius: 8px;
+    background: #fff; border: 1px solid var(--color-neutral-light1);
+    color: var(--color-neutral-dark2);
+    font-family: var(--font-display-family); font-weight: 700; font-size: 13px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    transition: background var(--motion-fast-2), color var(--motion-fast-2), border-color var(--motion-fast-2);
+  }
+  .openbtn .material-symbols-outlined { font-size: 16px; }
+
+  /* "Featured" card variant — a slightly heavier first card per section */
+  .card.featured {
+    background: linear-gradient(135deg, var(--color-primary-light3) 0%, #fff 60%);
+    border-color: var(--color-primary-light2);
+  }
+  .card.featured .doc-icon.indigo { background: var(--color-primary); color: #fff; }
+
+  /* Section banner */
+  .banner {
+    display: flex; align-items: center; gap: 16px;
+    background: linear-gradient(90deg, var(--color-primary) 0%, #3949D8 100%);
+    color: #fff; border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 24px;
+  }
+  .banner .badge {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(255,255,255,0.16);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .banner h3 {
+    margin: 0; font-family: var(--font-display-family); font-weight: 600; font-size: 16px;
+  }
+  .banner p { margin: 2px 0 0; font-size: 13px; opacity: 0.86; line-height: 18px; }
+  .banner .cta {
+    margin-left: auto; flex-shrink: 0;
+    background: #fff; color: var(--color-primary);
+    border: 0; border-radius: 8px; height: 36px; padding: 0 14px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 13px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    transition: background var(--motion-fast-2);
+  }
+  .banner .cta:hover { background: var(--color-neutral-light2); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--color-neutral-light2);
+    padding: 20px 32px; text-align: center;
+    font-family: var(--font-body-family); font-size: 12px;
+    color: var(--color-neutral-dark1);
+    background: #fff;
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">E</span>
+    <span class="name">Eleva</span>
+    <span class="tag">Document Builder</span>
+  </div>
+  <nav>
+    <a href="#" class="on">Documentos</a>
+    <a href="#">Modelos</a>
+    <a href="#">Histórico</a>
+    <a href="#">Configurações</a>
+  </nav>
+  <div class="right">
+    <button class="iconbtn" aria-label="Notificações"><span class="material-symbols-outlined">notifications</span></button>
+    <button class="iconbtn" aria-label="Ajuda"><span class="material-symbols-outlined">help</span></button>
+    <span class="avatar">MS</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="pagehead">
+    <div class="crumbs">
+      <a href="#">Início</a><span class="sep">/</span>
+      <a href="#">Ferramentas</a><span class="sep">/</span>
+      <span>Document Builder</span>
+    </div>
+    <h1>Controlador de testes</h1>
+    <p>Selecione um documento para visualizar, imprimir ou salvar em PDF. Use os cards para testar componentes, layouts e quebras de página antes da geração final.</p>
+  </div>
+
+  <div class="banner">
+    <span class="badge"><span class="material-symbols-outlined">science</span></span>
+    <div>
+      <h3>Ambiente de testes</h3>
+      <p>Modificações nesta tela não afetam documentos publicados. Use o painel de configuração para ajustar margem, fonte e elementos antes de exportar.</p>
+    </div>
+    <button class="cta">
+      <span class="material-symbols-outlined" style="font-size:16px;">menu_book</span>
+      Guia rápido
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <div class="searchbox">
+      <span class="material-symbols-outlined">search</span>
+      <input placeholder="Buscar documentos..." />
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab on" role="tab">Todos <span class="count">21</span></button>
+      <button class="tab" role="tab">Testes <span class="count">13</span></button>
+      <button class="tab" role="tab">Modelos <span class="count">8</span></button>
+    </div>
+    <div class="spacer"></div>
+    <button class="iconbtn-outline on" aria-label="Visualização em grade"><span class="material-symbols-outlined">grid_view</span></button>
+    <button class="iconbtn-outline" aria-label="Visualização em lista"><span class="material-symbols-outlined">view_list</span></button>
+    <button class="iconbtn-outline" aria-label="Filtrar"><span class="material-symbols-outlined">tune</span></button>
+  </div>
+
+  <!-- ── Testes ───────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="badge"><span class="material-symbols-outlined">build</span></span>
+      <div>
+        <h2>Document Builder — Controlador de Testes</h2>
+        <p>Cenários para validar componentes, quebras e variações de layout.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <article class="card featured">
+        <div class="card-top">
+          <span class="doc-icon indigo"><span class="material-symbols-outlined">draft</span></span>
+          <span class="chip-row"><span class="chip retrato"><span class="material-symbols-outlined">crop_portrait</span>Retrato</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Documento simples</h3>
+          <p>Campos de texto e assinatura — sem tabela.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~1 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon teal"><span class="material-symbols-outlined">table_rows</span></span>
+          <span class="chip-row">
+            <span class="chip retrato"><span class="material-symbols-outlined">crop_portrait</span>Retrato</span>
+            <span class="chip">55 linhas</span>
+          </span>
+        </div>
+        <div class="card-body">
+          <h3>Tabela retrato (55)</h3>
+          <p>Testa quebra de página com DocTableComponent em retrato.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~2 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon indigo"><span class="material-symbols-outlined">table_chart</span></span>
+          <span class="chip-row">
+            <span class="chip paisagem"><span class="material-symbols-outlined">crop_landscape</span>Paisagem</span>
+            <span class="chip">55 linhas</span>
+          </span>
+        </div>
+        <div class="card-body">
+          <h3>Tabela paisagem (55)</h3>
+          <p>Mesma tabela em orientação paisagem para comparar.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~2 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon orange"><span class="material-symbols-outlined">stacks</span></span>
+          <span class="chip-row"><span class="chip stress">Stress</span><span class="chip">100 linhas</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Tabela 100 linhas</h3>
+          <p>Stress test com 100 linhas — várias quebras de página.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~4 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon orange"><span class="material-symbols-outlined">stacks</span></span>
+          <span class="chip-row"><span class="chip stress">Stress</span><span class="chip">500 linhas</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Tabela 500 linhas</h3>
+          <p>Stress test com 500 linhas.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~18 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon orange"><span class="material-symbols-outlined">stacks</span></span>
+          <span class="chip-row"><span class="chip stress">Stress extremo</span><span class="chip">1000 linhas</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Tabela 1000 linhas</h3>
+          <p>Stress test extremo com 1000 linhas.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~36 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon purple"><span class="material-symbols-outlined">view_quilt</span></span>
+          <span class="chip-row"><span class="chip">3 turmas</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Múltiplas tabelas (3 turmas)</h3>
+          <p>3 tabelas intercaladas com seções — testa quebra entre elementos.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~6 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon magenta"><span class="material-symbols-outlined">how_to_reg</span></span>
+          <span class="chip-row"><span class="chip retrato"><span class="material-symbols-outlined">crop_portrait</span>Retrato</span><span class="chip">Diária</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Presença — Diária</h3>
+          <p>Lista diária: Nº, RA, Nome, coluna de assinatura.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~1 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon magenta"><span class="material-symbols-outlined">date_range</span></span>
+          <span class="chip-row"><span class="chip paisagem"><span class="material-symbols-outlined">crop_landscape</span>Paisagem</span><span class="chip">Seg–Sáb</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Presença — Semanal</h3>
+          <p>Lista semanal: colunas Seg–Sáb.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~1 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon magenta"><span class="material-symbols-outlined">calendar_month</span></span>
+          <span class="chip-row"><span class="chip paisagem"><span class="material-symbols-outlined">crop_landscape</span>Paisagem</span><span class="chip">31 colunas</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Presença — Mensal</h3>
+          <p>Lista mensal: 31 colunas de dia (paisagem).</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~1 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon amber"><span class="material-symbols-outlined">looks_one</span></span>
+          <span class="chip-row"><span class="chip">onAllPages: false</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Cabeçalho só na pág. 1</h3>
+          <p>header.onAllPages: false — páginas 2+ têm mais espaço disponível.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~3 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon amber"><span class="material-symbols-outlined">bug_report</span></span>
+          <span class="chip-row"><span class="chip debug">Debug</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Debug ativo</h3>
+          <p>Documento com painel de debug visível.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">schedule</span>~2 pág.</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="actbtn" aria-label="Salvar PDF"><span class="material-symbols-outlined">picture_as_pdf</span></button>
+            <button class="openbtn">Abrir<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── Modelos ───────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="badge alt"><span class="material-symbols-outlined">school</span></span>
+      <div>
+        <h2>Modelos de documentos escolares</h2>
+        <p>Modelos reais compostos com blocos genéricos <span style="font-family: var(--font-mono-family); background: var(--color-neutral-light2); padding: 1px 6px; border-radius: 4px;">EFC-666</span>.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon indigo"><span class="material-symbols-outlined">history_edu</span></span>
+          <span class="chip-row"><span class="chip escolar">Acadêmico</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Histórico escolar</h3>
+          <p>Trajetória acadêmica completa do aluno com notas, frequência e resultado final por disciplina.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">groups</span>1 aluno</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon teal"><span class="material-symbols-outlined">assessment</span></span>
+          <span class="chip-row"><span class="chip escolar">Avaliação</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Boletim escolar</h3>
+          <p>Resumo periódico do desempenho acadêmico do aluno com notas por bimestre e frequência.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">groups</span>Turma</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon purple"><span class="material-symbols-outlined">verified</span></span>
+          <span class="chip-row"><span class="chip">Declaração</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Declaração de matrícula</h3>
+          <p>Comprova que o aluno está regularmente matriculado na instituição.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">groups</span>1 aluno</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon green"><span class="material-symbols-outlined">workspace_premium</span></span>
+          <span class="chip-row"><span class="chip escolar">Conclusão</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Certificado de conclusão</h3>
+          <p>Comprova a conclusão de etapa escolar com base legal, carga horária e dados do egresso.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">groups</span>1 aluno</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon amber"><span class="material-symbols-outlined">meeting_room</span></span>
+          <span class="chip-row"><span class="chip">Institucional</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Ata de reunião</h3>
+          <p>Registro formal de reunião institucional com participantes, pauta e deliberações.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">event</span>Variável</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon indigo"><span class="material-symbols-outlined">menu_book</span></span>
+          <span class="chip-row"><span class="chip">Pedagógico</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Plano de aula</h3>
+          <p>Planejamento detalhado de aula com objetivos, metodologia, competências BNCC e avaliação.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">person</span>Professor</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon magenta"><span class="material-symbols-outlined">psychology</span></span>
+          <span class="chip-row"><span class="chip">Pedagógico</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Relatório pedagógico</h3>
+          <p>Análise qualitativa do desenvolvimento cognitivo, social e comportamental do aluno.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">groups</span>1 aluno</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="doc-icon orange"><span class="material-symbols-outlined">campaign</span></span>
+          <span class="chip-row"><span class="chip">Comunicação</span></span>
+        </div>
+        <div class="card-body">
+          <h3>Comunicado aos pais</h3>
+          <p>Informativo oficial enviado às famílias com orientações, datas e ações necessárias.</p>
+        </div>
+        <div class="card-foot">
+          <span class="meta"><span class="material-symbols-outlined">groups</span>Turma</span>
+          <div class="actions">
+            <button class="actbtn" aria-label="Imprimir"><span class="material-symbols-outlined">print</span></button>
+            <button class="openbtn">Gerar<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Eleva · Grupo Salta — Document Builder</footer>
+
+<script>
+  // Tab switching (cosmetic)
+  document.querySelectorAll('.tabs .tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tabs .tab').forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+    });
+  });
+  // View toggles
+  document.querySelectorAll('.iconbtn-outline').forEach(b => {
+    if (b.querySelector('.material-symbols-outlined').textContent === 'tune') return;
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.iconbtn-outline').forEach(x => {
+        if (x.querySelector('.material-symbols-outlined').textContent === 'tune') return;
+        x.classList.remove('on');
+      });
+      b.classList.add('on');
+    });
+  });
+</script>
+</body>
+</html>

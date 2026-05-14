@@ -1,0 +1,1842 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Tour — Document Builder</title>
+<link rel="stylesheet" href="eleva/colors_and_type.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #0F0F10; }
+  body { font-family: var(--font-body-family); color: var(--color-neutral-dark3); }
+
+  deck-stage { --bg: #0F0F10; }
+
+  /* ────────────────────────────────────────────────────────────────
+     Slide chrome (shared)
+     ──────────────────────────────────────────────────────────────── */
+  .slide {
+    width: 1920px; height: 1080px;
+    background: var(--color-neutral-light3);
+    display: grid;
+    grid-template-rows: 96px 1fr 80px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .slide-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 80px;
+    border-bottom: 1px solid var(--color-neutral-light2);
+    background: var(--color-white);
+  }
+  .slide-head .left {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .slide-head .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 16px; color: var(--color-neutral-dark3);
+    letter-spacing: 0.01em;
+  }
+  .slide-head .brand .mark {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: var(--brand-gradient);
+  }
+  .slide-head .crumb {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 13px; color: var(--color-neutral-dark1);
+    letter-spacing: 0.04em;
+  }
+  .slide-head .crumb .sep { color: var(--color-neutral); margin: 0 8px; }
+  .slide-head .crumb .feature { color: var(--color-primary); }
+
+  .slide-head .num {
+    font-family: var(--font-mono-family); font-weight: 700;
+    font-size: 14px; color: var(--color-neutral-dark1);
+    letter-spacing: 0.06em;
+  }
+  .slide-head .num .total { color: var(--color-neutral); margin-left: 4px; }
+
+  .slide-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 80px;
+    border-top: 1px solid var(--color-neutral-light2);
+    background: var(--color-white);
+    font-family: var(--font-mono-family); font-size: 12px;
+    color: var(--color-neutral-dark1);
+    letter-spacing: 0.04em;
+  }
+  .slide-foot .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-ui-family); font-weight: 500; font-size: 12px;
+    color: var(--color-neutral-dark2);
+    background: var(--color-neutral-light2);
+    border-radius: 999px;
+    padding: 6px 12px;
+    letter-spacing: 0;
+  }
+  .slide-foot .tag .material-symbols-outlined { font-size: 14px; color: var(--color-neutral-dark1); }
+  .slide-foot .hint {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--color-neutral-dark1);
+  }
+  .slide-foot .hint kbd {
+    font-family: var(--font-mono-family); font-weight: 700; font-size: 11px;
+    background: var(--color-neutral-light2);
+    color: var(--color-neutral-dark2);
+    padding: 3px 6px; border-radius: 4px;
+    border: 1px solid var(--color-neutral-light1);
+    border-bottom-width: 2px;
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     Split layout (default for most slides)
+     ──────────────────────────────────────────────────────────────── */
+  .slide-body {
+    display: grid;
+    grid-template-columns: 720px 1fr;
+    align-items: stretch;
+  }
+
+  .info {
+    padding: 80px 80px 56px 80px;
+    display: flex; flex-direction: column; gap: 24px;
+    background: var(--color-white);
+    border-right: 1px solid var(--color-neutral-light2);
+  }
+  .info .section-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    align-self: flex-start;
+    font-family: var(--font-mono-family); font-weight: 700;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-primary);
+    background: var(--color-primary-light3);
+    border-radius: 4px;
+    padding: 6px 10px;
+  }
+  .info h1 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 64px; line-height: 1.05;
+    color: var(--color-neutral-dark3);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .info .lede {
+    margin: 0;
+    font-family: var(--font-body-family); font-weight: 400;
+    font-size: 24px; line-height: 34px;
+    color: var(--color-neutral-dark2);
+    max-width: 580px;
+  }
+  .info .meta-list {
+    margin-top: 8px;
+    display: grid; gap: 14px;
+  }
+  .info .meta {
+    display: grid; grid-template-columns: 24px 1fr; gap: 16px;
+    align-items: start;
+  }
+  .info .meta .ico {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: var(--color-primary-light3);
+    color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .info .meta .ico .material-symbols-outlined { font-size: 16px; }
+  .info .meta .txt {
+    font-family: var(--font-body-family); font-size: 17px; line-height: 26px;
+    color: var(--color-neutral-dark2);
+  }
+  .info .meta .txt strong {
+    display: block;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 15px; color: var(--color-neutral-dark3);
+    margin-bottom: 2px;
+  }
+  .info .meta .txt code {
+    font-family: var(--font-mono-family); font-size: 13px;
+    background: var(--color-neutral-light2);
+    color: var(--color-neutral-dark3);
+    padding: 1px 6px; border-radius: 3px;
+  }
+
+  .demo {
+    padding: 64px 80px;
+    display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(36,44,194,0.04), transparent 50%),
+      var(--color-neutral-light3);
+    position: relative;
+  }
+  .demo-frame {
+    width: 100%; max-width: 920px;
+    background: var(--color-white);
+    border-radius: 16px;
+    border: 1px solid var(--color-neutral-light2);
+    box-shadow: var(--shadow-down-xlarge);
+    overflow: hidden;
+    position: relative;
+  }
+  .demo-cap {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 12px; color: var(--color-neutral-dark1);
+    letter-spacing: 0.04em;
+  }
+  .demo-cap .dot {
+    width: 6px; height: 6px; border-radius: 999px;
+    background: var(--color-tertiary);
+    display: inline-block;
+    margin-right: 8px;
+    transform: translateY(-1px);
+    animation: dotPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     Slide 01 — Cover (different layout)
+     ──────────────────────────────────────────────────────────────── */
+  .cover-body {
+    display: grid;
+    grid-template-columns: 720px 1fr;
+    background:
+      radial-gradient(circle at 80% 110%, rgba(36,44,194,0.10), transparent 60%),
+      var(--color-white);
+  }
+  .cover-body .info { background: transparent; border-right: 0; padding-top: 120px; }
+  .cover-body .info h1 { font-size: 88px; line-height: 0.98; letter-spacing: -0.03em; }
+  .cover-body .info .lede { font-size: 26px; line-height: 36px; max-width: 540px; }
+  .cover-body .info .product {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-neutral-dark1);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cover-body .info .product::before {
+    content: ""; width: 32px; height: 1px; background: var(--color-neutral-dark1);
+  }
+
+  .cover-mock-wrap {
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 80px 80px 0;
+  }
+  .cover-mock {
+    width: 100%; max-width: 1040px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-down-xlarge);
+    border: 1px solid var(--color-neutral-light2);
+    background: #2A2D33;
+    transform: perspective(2200px) rotateY(-8deg) rotateX(2deg);
+    transform-origin: center center;
+  }
+
+  /* shared mini-mock styles used in cover + overview demos */
+  .mini-app {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #2A2D33;
+    display: grid;
+    grid-template-rows: 44px 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .mini-topbar {
+    background: var(--color-primary);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px;
+  }
+  .mini-topbar .left, .mini-topbar .right { display: flex; align-items: center; gap: 8px; }
+  .mini-topbar .iconbtn {
+    width: 24px; height: 24px; border-radius: 999px;
+    background: rgba(255,255,255,0.16);
+  }
+  .mini-topbar .iconbtn.active { background: #fff; }
+  .mini-topbar .name {
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 12px; color: #fff; margin-left: 4px;
+  }
+  .mini-topbar .pill {
+    height: 24px; border-radius: 6px;
+    background: #fff;
+    padding: 0 10px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 10px;
+    color: var(--color-primary);
+  }
+  .mini-topbar .pill.ghost { background: rgba(255,255,255,0.16); color: #fff; }
+  .mini-body {
+    display: grid; grid-template-columns: 1fr 240px;
+    background:
+      linear-gradient(rgba(15,15,16,0.5), rgba(15,15,16,0.5)),
+      #2A2D33;
+  }
+  .mini-doc-wrap {
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 18px;
+  }
+  .mini-doc {
+    width: 100%; max-width: 460px;
+    background: #fff; border-radius: 4px;
+    box-shadow: var(--shadow-down-large);
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .mini-doc .ln {
+    height: 5px; border-radius: 2px;
+    background: var(--color-neutral-light2);
+  }
+  .mini-doc .ln.short { width: 40%; }
+  .mini-doc .ln.title { height: 8px; background: var(--color-neutral-dark2); width: 60%; margin: 4px 0; }
+  .mini-doc .grid-mini {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px; margin-top: 6px;
+  }
+  .mini-doc .grid-mini .cell {
+    height: 10px; background: var(--color-neutral-light3);
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 2px;
+  }
+  .mini-doc .grid-mini .cell.h { background: var(--color-neutral-light2); }
+
+  .mini-panel {
+    background: #fff;
+    border-left: 1px solid var(--color-neutral-light2);
+    padding: 14px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .mini-panel .lbl {
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--color-neutral-dark2);
+  }
+  .mini-panel .row {
+    height: 8px; background: var(--color-neutral-light2);
+    border-radius: 999px;
+    position: relative;
+  }
+  .mini-panel .row::before {
+    content: ""; position: absolute; left: 0; top: 0;
+    height: 100%; width: 30%; background: var(--color-primary);
+    border-radius: 999px;
+  }
+  .mini-panel .seg-mini {
+    height: 18px; border-radius: 6px; background: var(--color-neutral-light2);
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .mini-panel .seg-mini .on {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: var(--shadow-down-small);
+    margin: 2px;
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     Demo: Configuração de página (orient + gap + margin)
+     ──────────────────────────────────────────────────────────────── */
+  .demo-config { padding: 32px; display: grid; gap: 24px; }
+  .demo-config .doc-preview {
+    aspect-ratio: 1.6;
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 8px;
+    padding: var(--doc-margin, 24px);
+    display: flex; flex-direction: column;
+    gap: var(--doc-gap, 18px);
+    transition: padding var(--motion-moderate-2), gap var(--motion-moderate-2),
+                aspect-ratio var(--motion-slow-1);
+    box-shadow: var(--shadow-down-small);
+  }
+  .demo-config .doc-preview[data-orient="retrato"] { aspect-ratio: 0.7; }
+  .demo-config .doc-preview .block {
+    background: var(--color-neutral-light2);
+    border-radius: 4px;
+  }
+  .demo-config .doc-preview .block.h { height: 14px; width: 50%; }
+  .demo-config .doc-preview .block.row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+    background: transparent;
+  }
+  .demo-config .doc-preview .block.row .cell {
+    background: var(--color-neutral-light2);
+    border-radius: 4px;
+    height: 32px;
+  }
+  .demo-config .doc-preview .block.text {
+    height: 8px;
+  }
+  .demo-config .doc-preview .block.text.long { width: 90%; }
+  .demo-config .doc-preview .block.text.mid  { width: 70%; }
+  .demo-config .doc-preview .block.text.short { width: 40%; }
+  .demo-config .controls {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+  }
+
+  /* Reusable demo control card */
+  .ctrl {
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .ctrl .lbl {
+    font-family: var(--font-ui-family); font-weight: 500;
+    font-size: 12px; color: var(--color-neutral-dark3);
+  }
+  .ctrl .val {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 12px; color: var(--color-neutral-dark3);
+    background: var(--color-neutral-light2);
+    padding: 4px 8px; border-radius: 4px;
+    min-width: 44px; text-align: center;
+  }
+  .ctrl .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+  .seg {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    padding: 4px; background: var(--color-neutral-light2);
+    border-radius: 10px;
+  }
+  .seg button {
+    border: 0; background: transparent; cursor: pointer;
+    padding: 8px 10px; border-radius: 8px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 12px;
+    color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    transition: background var(--motion-moderate-1), color var(--motion-moderate-1), box-shadow var(--motion-moderate-1);
+  }
+  .seg button.on {
+    background: #fff; color: var(--color-primary);
+    box-shadow: var(--shadow-down-small);
+  }
+  .seg button .material-symbols-outlined { font-size: 16px; }
+  .seg.three { grid-template-columns: 1fr 1fr 1fr; }
+  .seg.icons button { padding: 8px; }
+
+  /* Slider */
+  .slider {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 4px; background: transparent;
+    margin: 0; padding: 0;
+  }
+  .slider::-webkit-slider-runnable-track {
+    height: 4px; border-radius: 999px;
+    background: linear-gradient(to right, var(--color-primary) var(--pct, 50%), var(--color-neutral-light2) var(--pct, 50%));
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; border: 2px solid var(--color-primary);
+    box-shadow: var(--shadow-down-small);
+    margin-top: -7px; cursor: pointer;
+  }
+  .slider:focus { outline: none; }
+  .slider:focus::-webkit-slider-thumb { box-shadow: var(--shadow-focus); }
+
+  /* ────────────────────────────────────────────────────────────────
+     Typography demo
+     ──────────────────────────────────────────────────────────────── */
+  .demo-typo .doc-preview {
+    aspect-ratio: 1.4;
+    background: #fff;
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 8px;
+    padding: 36px 44px;
+    color: var(--color-neutral-dark3);
+    font-family: var(--font-body-family);
+    font-size: var(--typo-size, 14px);
+    line-height: 1.55;
+    box-shadow: var(--shadow-down-small);
+  }
+  .demo-typo h3 {
+    margin: 0 0 12px;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: calc(var(--typo-size, 14px) * 1.5); line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .demo-typo .p { margin: 0 0 10px; }
+  .demo-typo .p:last-child { margin-bottom: 0; }
+  .demo-typo .tagline { color: var(--color-primary); font-weight: 700; font-size: calc(var(--typo-size, 14px) * 0.85); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+
+  /* ────────────────────────────────────────────────────────────────
+     Table padding demo
+     ──────────────────────────────────────────────────────────────── */
+  .demo-table .doc-preview {
+    background: #fff;
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--shadow-down-small);
+  }
+  .demo-table table {
+    width: 100%; border-collapse: collapse;
+    font-family: var(--font-body-family); font-size: 13px;
+    color: var(--color-neutral-dark3);
+  }
+  .demo-table th, .demo-table td {
+    border: 1px solid var(--color-neutral-light2);
+    padding: var(--tpad-y, 8px) var(--tpad-x, 12px);
+    text-align: left;
+    transition: padding var(--motion-moderate-2);
+  }
+  .demo-table th { background: var(--color-neutral-light3); font-weight: 700; }
+
+  /* ────────────────────────────────────────────────────────────────
+     Header / Footer demo
+     ──────────────────────────────────────────────────────────────── */
+  .demo-headfoot { padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+  .demo-headfoot .pages {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .demo-headfoot .page {
+    aspect-ratio: 0.7;
+    background: #fff;
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 6px;
+    box-shadow: var(--shadow-down-small);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 10px;
+    gap: 10px;
+    position: relative;
+  }
+  .demo-headfoot .page::before {
+    content: attr(data-num);
+    position: absolute; top: 6px; right: 8px;
+    font-family: var(--font-mono-family); font-weight: 700; font-size: 9px;
+    color: var(--color-neutral-dark1);
+  }
+  .demo-headfoot .page .header,
+  .demo-headfoot .page .footer {
+    height: 18px;
+    border: 1px dashed var(--color-primary-light2);
+    background: var(--color-primary-light3);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono-family); font-weight: 600; font-size: 8px;
+    color: var(--color-primary);
+    transition: opacity var(--motion-moderate-2), background var(--motion-moderate-2);
+  }
+  .demo-headfoot .page .footer { font-size: 7px; }
+  .demo-headfoot .page.no-header .header { opacity: 0; visibility: hidden; }
+  .demo-headfoot .page.no-footer .footer { opacity: 0; visibility: hidden; }
+  .demo-headfoot .page .content {
+    display: flex; flex-direction: column; gap: 5px;
+    padding: 8px 4px;
+  }
+  .demo-headfoot .page .content .ln {
+    height: 4px; background: var(--color-neutral-light2); border-radius: 2px;
+  }
+  .demo-headfoot .page .content .ln.short { width: 50%; }
+  .demo-headfoot .page .content .ln.title { background: var(--color-neutral-dark2); width: 70%; height: 6px; margin-bottom: 4px; }
+
+  .demo-headfoot .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .check-line {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    padding: 4px 0;
+  }
+  .check-line.sub { margin-left: 28px; }
+  .check-line .lbl { font-family: var(--font-body-family); font-size: 13px; font-weight: 500; color: var(--color-neutral-dark3); }
+  .check-line.sub .lbl { font-size: 12px; color: var(--color-neutral-dark1); font-weight: 400; }
+  .cbx {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 1.5px solid var(--color-neutral-light1);
+    background: #fff; cursor: pointer; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-fast-2), border-color var(--motion-fast-2);
+  }
+  .cbx.sm { width: 14px; height: 14px; border-radius: 3px; }
+  .cbx.on { background: var(--color-primary); border-color: var(--color-primary); }
+  .cbx .material-symbols-outlined { color: #fff; font-size: 13px; font-weight: 700; display: none; }
+  .cbx.sm .material-symbols-outlined { font-size: 11px; }
+  .cbx.on .material-symbols-outlined { display: inline; }
+
+  /* ────────────────────────────────────────────────────────────────
+     Signatures demo
+     ──────────────────────────────────────────────────────────────── */
+  .demo-sig .doc-preview {
+    background: #fff;
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 8px;
+    padding: 36px 60px;
+    box-shadow: var(--shadow-down-small);
+    aspect-ratio: 1.7;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .demo-sig .doc-preview .ghost-content {
+    flex: 1;
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 32px;
+    opacity: 0.4;
+  }
+  .demo-sig .doc-preview .ghost-content .ln {
+    height: 5px; background: var(--color-neutral-light2); border-radius: 2px;
+  }
+  .demo-sig .doc-preview .ghost-content .ln:nth-child(1) { width: 35%; height: 8px; background: var(--color-neutral-dark2); margin-bottom: 4px; }
+  .demo-sig .doc-preview .ghost-content .ln:nth-child(3) { width: 90%; }
+  .demo-sig .doc-preview .ghost-content .ln:nth-child(4) { width: 80%; }
+  .demo-sig .doc-preview .ghost-content .ln:nth-child(5) { width: 92%; }
+  .demo-sig .doc-preview .ghost-content .ln:nth-child(6) { width: 60%; }
+  .sig-date {
+    font-family: var(--font-body-family); font-size: 12px; font-weight: 700;
+    color: var(--color-neutral-dark3);
+    margin-bottom: 28px;
+    text-align: var(--sig-date-align, center);
+    transition: text-align var(--motion-moderate-1);
+  }
+  .sig-row { display: flex; gap: var(--sig-gap, 56px); transition: gap var(--motion-moderate-1); justify-content: center; }
+  .sig-row.left { justify-content: flex-start; }
+  .sig-row.right { justify-content: flex-end; }
+  .sig-cell {
+    flex: 0 1 240px; text-align: center;
+    border-top: 1px solid var(--color-neutral-dark3);
+    padding-top: 6px;
+  }
+  .sig-cell .role { font-family: var(--font-body-family); font-size: 11px; font-weight: 700; color: var(--color-neutral-dark3); margin-bottom: 2px; }
+  .sig-cell.no-role .role { display: none; }
+  .sig-cell .name { font-family: var(--font-body-family); font-size: 10px; color: var(--color-neutral-dark2); }
+
+  /* ────────────────────────────────────────────────────────────────
+     Export demo
+     ──────────────────────────────────────────────────────────────── */
+  .demo-export {
+    padding: 40px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    align-items: center;
+  }
+  .demo-export .ctrl { gap: 14px; }
+  .demo-export .select-wrap { position: relative; }
+  .demo-export .select-wrap select {
+    width: 100%; height: 44px;
+    padding: 0 36px 0 14px;
+    border-radius: 8px; border: 1px solid var(--color-neutral-light1);
+    background: #fff; appearance: none;
+    font-family: var(--font-body-family); font-size: 14px;
+    color: var(--color-neutral-dark3); cursor: pointer;
+  }
+  .demo-export .select-wrap select:focus { outline: 0; border-color: var(--color-primary); box-shadow: var(--shadow-focus); }
+  .demo-export .select-wrap .material-symbols-outlined {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; color: var(--color-neutral-dark1); font-size: 20px;
+  }
+  .demo-export .out {
+    background: #fff;
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 14px;
+    align-items: center;
+    box-shadow: var(--shadow-down-small);
+  }
+  .demo-export .pdfico {
+    width: 88px; height: 112px; border-radius: 8px;
+    background: linear-gradient(135deg, #fff 60%, var(--color-error-light) 100%);
+    border: 1px solid var(--color-neutral-light1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-error);
+    font-family: var(--font-display-family); font-weight: 800;
+    font-size: 22px; letter-spacing: 0.04em;
+    box-shadow: var(--shadow-down-small);
+    position: relative;
+  }
+  .demo-export .pdfico::before {
+    content: ""; position: absolute; top: 0; right: 0;
+    width: 22px; height: 22px;
+    background:
+      linear-gradient(135deg, transparent 50%, var(--color-neutral-light2) 50%);
+    border-top-right-radius: 8px;
+  }
+  .demo-export .out .meta {
+    width: 100%;
+    display: grid; grid-template-columns: 1fr auto; row-gap: 6px;
+    font-family: var(--font-mono-family); font-size: 12px;
+  }
+  .demo-export .out .meta .k { color: var(--color-neutral-dark1); }
+  .demo-export .out .meta .v { color: var(--color-neutral-dark3); font-weight: 700; }
+  .demo-export .out .filename {
+    font-family: var(--font-mono-family); font-weight: 700; font-size: 13px;
+    color: var(--color-neutral-dark3);
+    word-break: break-all; text-align: center;
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     Minimize pages demo
+     ──────────────────────────────────────────────────────────────── */
+  .demo-minimize {
+    padding: 32px;
+    display: grid; grid-template-columns: 280px 1fr; gap: 28px;
+    align-items: stretch;
+  }
+  .demo-minimize .pagestrip {
+    background: var(--color-neutral-dark3);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 14px;
+    color: #fff;
+  }
+  .demo-minimize .pagestrip .num {
+    font-family: var(--font-display-family); font-weight: 800; font-size: 56px; line-height: 1;
+    letter-spacing: -0.02em;
+    transition: color var(--motion-moderate-1);
+  }
+  .demo-minimize .pagestrip .num.flash { color: var(--color-tertiary-light1); }
+  .demo-minimize .pagestrip .num-lbl {
+    font-family: var(--font-ui-family); font-weight: 500; font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: -4px;
+  }
+  .demo-minimize .pagestrip .dots {
+    flex: 1;
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 6px;
+    align-content: start;
+  }
+  .demo-minimize .pagestrip .pdot {
+    width: 100%; aspect-ratio: 0.7;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 2px;
+    transform-origin: top center;
+    transition: opacity var(--motion-slow-1), transform var(--motion-slow-1);
+  }
+  .demo-minimize .pagestrip .pdot.gone {
+    opacity: 0; transform: translateY(-4px) scale(0.7);
+  }
+
+  .demo-minimize .modal {
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 12px;
+    box-shadow: var(--shadow-down-large);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .demo-minimize .modal-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--color-neutral-light2);
+  }
+  .demo-minimize .modal-head .leadicon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--color-primary-light3); color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .demo-minimize .modal-head .leadicon .material-symbols-outlined { font-size: 18px; }
+  .demo-minimize .modal-head h4 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 14px; color: var(--color-neutral-dark3);
+  }
+  .demo-minimize .modal-head h4 .sub {
+    display: block;
+    font-family: var(--font-body-family); font-weight: 400;
+    font-size: 11px; color: var(--color-neutral-dark1);
+    margin-top: 2px;
+  }
+  .demo-minimize .modal-progress {
+    padding: 14px 18px 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .demo-minimize .bar {
+    flex: 1; height: 6px; border-radius: 999px; background: var(--color-neutral-light2); overflow: hidden;
+  }
+  .demo-minimize .bar-fill {
+    height: 100%; width: 0; background: var(--color-primary);
+    border-radius: 999px;
+    transition: width var(--motion-slow-1);
+  }
+  .demo-minimize .ptext {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 11px; color: var(--color-neutral-dark2);
+  }
+  .demo-minimize .phases {
+    padding: 0 18px 16px;
+    overflow-y: auto;
+    flex: 1; min-height: 0;
+  }
+  .demo-minimize .phase + .phase { margin-top: 12px; }
+  .demo-minimize .phase-head {
+    display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+  }
+  .demo-minimize .phase-num {
+    font-family: var(--font-mono-family); font-weight: 700; font-size: 9px;
+    color: var(--color-neutral-dark1);
+    background: var(--color-neutral-light2);
+    border-radius: 3px; padding: 3px 5px;
+  }
+  .demo-minimize .phase-name {
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-neutral-dark2);
+  }
+  .demo-minimize .phase-warning {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--font-body-family); font-weight: 600; font-size: 9px;
+    color: var(--color-warning-dark);
+    background: var(--color-warning-light);
+    border-radius: 999px;
+    padding: 2px 6px;
+  }
+  .demo-minimize .phase-warning .material-symbols-outlined { font-size: 11px; }
+  .demo-minimize .step {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 10px; border-radius: 8px;
+  }
+  .demo-minimize .step .ico {
+    width: 18px; height: 18px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-neutral-light2);
+    color: var(--color-neutral);
+    flex-shrink: 0;
+  }
+  .demo-minimize .step .ico .material-symbols-outlined { font-size: 13px; }
+  .demo-minimize .step .lbl {
+    flex: 1; font-family: var(--font-body-family); font-weight: 500; font-size: 12px;
+    color: var(--color-neutral-dark2);
+  }
+  .demo-minimize .step .res {
+    font-family: var(--font-mono-family); font-weight: 500; font-size: 10px;
+    color: var(--color-neutral-dark1);
+  }
+  .demo-minimize .step.active {
+    background: var(--color-primary-light3);
+  }
+  .demo-minimize .step.active .ico { background: var(--color-primary); color: #fff; }
+  .demo-minimize .step.active .lbl { color: var(--color-primary-dark1); font-weight: 700; }
+  .demo-minimize .step.active .ico .material-symbols-outlined { animation: minSpin 1.2s linear infinite; }
+  @keyframes minSpin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+  .demo-minimize .step.reduced .ico { background: #28975A; color: #fff; }
+  .demo-minimize .step.reduced .res { color: #28975A; font-weight: 700; }
+  .demo-minimize .step.kept .ico { background: var(--color-neutral-light2); color: var(--color-neutral-dark1); }
+
+  /* ────────────────────────────────────────────────────────────────
+     Index / agenda slide
+     ──────────────────────────────────────────────────────────────── */
+  .index-body {
+    grid-template-columns: 1fr;
+    padding: 80px 80px 56px;
+    background: var(--color-white);
+  }
+  .index-body .top {
+    display: grid; grid-template-columns: 1fr auto; gap: 24px;
+    align-items: end;
+    margin-bottom: 48px;
+  }
+  .index-body .top h1 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 56px; line-height: 1.05; letter-spacing: -0.02em;
+    color: var(--color-neutral-dark3);
+  }
+  .index-body .top .stats {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 13px; color: var(--color-neutral-dark1);
+    text-align: right; letter-spacing: 0.06em;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .index-body .top .stats b { color: var(--color-neutral-dark3); font-weight: 700; }
+  .index-body .grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .index-body .card {
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-light2);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    min-height: 180px;
+    transition: border-color var(--motion-moderate-1), box-shadow var(--motion-moderate-1), transform var(--motion-moderate-1);
+  }
+  .index-body .card:hover {
+    border-color: var(--color-primary-light2);
+    box-shadow: var(--shadow-down-medium);
+    transform: translateY(-2px);
+  }
+  .index-body .card .ico {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--color-primary-light3); color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .index-body .card .ico .material-symbols-outlined { font-size: 20px; }
+  .index-body .card .step-num {
+    font-family: var(--font-mono-family); font-weight: 700; font-size: 11px;
+    color: var(--color-neutral-dark1);
+    letter-spacing: 0.08em;
+    margin-bottom: -4px;
+  }
+  .index-body .card h3 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 16px; line-height: 20px;
+    color: var(--color-neutral-dark3);
+  }
+  .index-body .card p {
+    margin: 0;
+    font-family: var(--font-body-family); font-size: 13px; line-height: 18px;
+    color: var(--color-neutral-dark1);
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     Overview slide (anatomia da tela)
+     ──────────────────────────────────────────────────────────────── */
+  .demo-overview {
+    padding: 0; align-items: stretch;
+    background: var(--color-neutral-light3);
+  }
+  .demo-overview-inner {
+    width: 100%; max-width: none;
+    display: flex; align-items: center; justify-content: center;
+    padding: 56px;
+    position: relative;
+  }
+  .demo-overview .mini-app-large {
+    width: 100%;
+    border-radius: 12px; overflow: hidden;
+    box-shadow: var(--shadow-down-xlarge);
+    border: 1px solid var(--color-neutral-light2);
+  }
+  .demo-overview .annot {
+    position: absolute;
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono-family); font-weight: 700; font-size: 11px;
+    color: var(--color-primary);
+    background: #fff;
+    border: 1px solid var(--color-primary-light2);
+    border-radius: 4px;
+    padding: 4px 8px;
+    box-shadow: var(--shadow-down-small);
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  .demo-overview .annot::after {
+    content: ""; position: absolute;
+    background: var(--color-primary-light2);
+  }
+  .demo-overview .annot.topbar  { top: 80px;  left: 90px; }
+  .demo-overview .annot.canvas  { top: 320px; left: 90px; }
+  .demo-overview .annot.panel   { top: 360px; right: 90px; }
+  .demo-overview .annot.actions { bottom: 240px; right: 90px; }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+<!-- ───────────────────────── 01 — Cover ───────────────────────── -->
+<section class="slide" data-screen-label="01 Cover">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+    </div>
+    <div class="num">01<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body cover-body">
+    <div class="info">
+      <div class="product">Eleva · Tour de features</div>
+      <h1>Document Builder.</h1>
+      <p class="lede">
+        Editor visual de documentos imprimíveis. Configuração granular de página,
+        tipografia, tabelas e exportação a partir de um único painel.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">target</span></span>
+          <span class="txt"><strong>Audiência</strong>desenvolvedores integrando ou estendendo o produto</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">layers</span></span>
+          <span class="txt"><strong>Stack</strong>design tokens em <code>colors_and_type.css</code>, componentes vanilla</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">apps</span></span>
+          <span class="txt"><strong>Escopo do tour</strong>8 features em 9 telas com demos funcionais</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-mock-wrap">
+      <div class="cover-mock">
+        <div class="mini-app">
+          <div class="mini-topbar">
+            <div class="left">
+              <span class="iconbtn"></span>
+              <span class="name">Document Builder</span>
+            </div>
+            <div class="right">
+              <span class="iconbtn active"></span>
+              <span class="pill ghost">Minimizar</span>
+              <span class="pill ghost">Imprimir</span>
+              <span class="pill">PDF</span>
+            </div>
+          </div>
+          <div class="mini-body">
+            <div class="mini-doc-wrap">
+              <div class="mini-doc">
+                <div class="ln short"></div>
+                <div class="ln title"></div>
+                <div class="ln"></div>
+                <div class="ln"></div>
+                <div class="ln short"></div>
+                <div class="grid-mini">
+                  <div class="cell h"></div><div class="cell h"></div><div class="cell h"></div>
+                  <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                  <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                  <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mini-panel">
+              <div class="lbl">Página</div>
+              <div class="seg-mini"><div></div><div class="on"></div></div>
+              <div class="lbl">Gap</div>
+              <div class="row"></div>
+              <div class="lbl">Margem</div>
+              <div class="row"></div>
+              <div class="lbl">Tipografia</div>
+              <div class="row"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">menu_book</span>9 telas · tempo estimado: 5 min</span>
+    <span class="hint"><kbd>→</kbd> próximo</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 02 — Index ───────────────────────── -->
+<section class="slide" data-screen-label="02 Index">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> agenda</span>
+    </div>
+    <div class="num">02<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body index-body">
+    <div class="top">
+      <h1>O que está incluído neste tour.</h1>
+      <div class="stats">
+        <div><b>8</b> features cobertas</div>
+        <div><b>7</b> demos interativas</div>
+        <div><b>1</b> design system (Eleva)</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="step-num">03</div>
+        <span class="ico"><span class="material-symbols-outlined">dashboard</span></span>
+        <h3>Editor visual</h3>
+        <p>Anatomia da tela: topbar, canvas de documento e painel de configuração.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">04</div>
+        <span class="ico"><span class="material-symbols-outlined">description</span></span>
+        <h3>Configuração de página</h3>
+        <p>Orientação retrato/paisagem, gap entre componentes e margem da folha.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">05</div>
+        <span class="ico"><span class="material-symbols-outlined">text_fields</span></span>
+        <h3>Tipografia</h3>
+        <p>Tamanho de fonte aplicado a todo o documento via variável CSS.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">06</div>
+        <span class="ico"><span class="material-symbols-outlined">table_chart</span></span>
+        <h3>Padding de células</h3>
+        <p>Dois eixos independentes mais presets compacto / padrão / confortável.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">07</div>
+        <span class="ico"><span class="material-symbols-outlined">view_agenda</span></span>
+        <h3>Cabeçalho e rodapé</h3>
+        <p>Toggles com sub-opção "em todas as páginas" e preview por página.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">08</div>
+        <span class="ico"><span class="material-symbols-outlined">draw</span></span>
+        <h3>Bloco de assinaturas</h3>
+        <p>Posição de data, alinhamento, espaçamento e exibição do cargo.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">09</div>
+        <span class="ico"><span class="material-symbols-outlined">file_save</span></span>
+        <h3>Exportação</h3>
+        <p>Qualidade do PDF e estratégia de renderização (CSS / Canvas / híbrido).</p>
+      </div>
+      <div class="card">
+        <div class="step-num">10</div>
+        <span class="ico"><span class="material-symbols-outlined">compress</span></span>
+        <h3>Minimizar páginas</h3>
+        <p>Otimização automática em fases com estados executando / concluído / sem redução.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">grid_view</span>cards são apenas guia visual</span>
+    <span class="hint"><kbd>←</kbd> <kbd>→</kbd> navegar · <kbd>F</kbd> tela cheia</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 03 — Editor visual (overview) ───────────────────────── -->
+<section class="slide" data-screen-label="03 Editor visual">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> editor <span class="sep">/</span> <span class="feature">anatomia</span></span>
+    </div>
+    <div class="num">03<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">dashboard</span> Editor visual</div>
+      <h1>Três áreas, uma fonte de verdade.</h1>
+      <p class="lede">
+        O documento ao centro reflete em tempo real qualquer alteração feita
+        nos controles à direita. Sem botão de "aplicar" intermediário.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">view_headline</span></span>
+          <span class="txt"><strong>Topbar</strong><code>.topbar</code> · 64px · ações globais (configurar, minimizar, imprimir, exportar)</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">description</span></span>
+          <span class="txt"><strong>Canvas</strong><code>.docstage</code> · documento renderizado em <code>900px</code> max, escalável</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">tune</span></span>
+          <span class="txt"><strong>Painel direito</strong><code>.panel</code> · 360px · seccionado por categoria</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo demo-overview">
+      <div class="demo-overview-inner">
+        <div class="mini-app-large">
+          <div class="mini-app" style="aspect-ratio: auto; height: 460px;">
+            <div class="mini-topbar">
+              <div class="left">
+                <span class="iconbtn"></span>
+                <span class="name">Document Builder</span>
+              </div>
+              <div class="right">
+                <span class="iconbtn active"></span>
+                <span class="pill ghost">Minimizar</span>
+                <span class="pill ghost">Imprimir</span>
+                <span class="pill">PDF</span>
+              </div>
+            </div>
+            <div class="mini-body">
+              <div class="mini-doc-wrap" style="padding: 24px;">
+                <div class="mini-doc" style="max-width: 380px; padding: 20px;">
+                  <div class="ln short"></div>
+                  <div class="ln title"></div>
+                  <div class="ln"></div>
+                  <div class="ln"></div>
+                  <div class="ln short"></div>
+                  <div class="grid-mini">
+                    <div class="cell h"></div><div class="cell h"></div><div class="cell h"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mini-panel">
+                <div class="lbl">Página</div>
+                <div class="seg-mini"><div></div><div class="on"></div></div>
+                <div class="lbl">Gap</div>
+                <div class="row"></div>
+                <div class="lbl">Margem</div>
+                <div class="row"></div>
+                <div class="lbl">Tipografia</div>
+                <div class="row"></div>
+                <div class="lbl">Tabela</div>
+                <div class="row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">info</span>diagrama estático · interagir nas próximas telas</span>
+    <span class="hint"><kbd>→</kbd> Configuração de página</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 04 — Configuração de página ───────────────────────── -->
+<section class="slide" data-screen-label="04 Configuração de página">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> painel <span class="sep">/</span> <span class="feature">página</span></span>
+    </div>
+    <div class="num">04<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">description</span> Página</div>
+      <h1>Orientação, gap e margem.</h1>
+      <p class="lede">
+        Três variáveis CSS controlam o esqueleto da folha. Mudanças são
+        propagadas para todos os componentes do documento sem reflow custoso.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">crop_landscape</span></span>
+          <span class="txt"><strong>Orientação</strong>segmented control · <code>retrato</code> | <code>paisagem</code> · altera <code>aspect-ratio</code></span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">space_bar</span></span>
+          <span class="txt"><strong>Gap</strong><code>--doc-gap</code> · 0 – 48px · espaçamento vertical entre blocos</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">crop_free</span></span>
+          <span class="txt"><strong>Margem</strong><code>--doc-margin</code> · 8 – 48px · padding interno da folha</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-frame demo-config">
+        <div class="doc-preview" id="cfgDoc" data-orient="paisagem">
+          <div class="block h"></div>
+          <div class="block text long"></div>
+          <div class="block text mid"></div>
+          <div class="block text short"></div>
+          <div class="block row">
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          </div>
+          <div class="block text long"></div>
+        </div>
+        <div class="controls">
+          <div class="ctrl">
+            <div class="row"><span class="lbl">Orientação</span></div>
+            <div class="seg" id="cfgOrient">
+              <button data-val="retrato"><span class="material-symbols-outlined">crop_portrait</span> Retrato</button>
+              <button data-val="paisagem" class="on"><span class="material-symbols-outlined">crop_landscape</span> Paisagem</button>
+            </div>
+          </div>
+          <div class="ctrl">
+            <div class="row"><span class="lbl">Gap entre componentes</span><span class="val" id="cfgGapVal">18 px</span></div>
+            <input type="range" class="slider" min="0" max="48" step="2" value="18" id="cfgGap" style="--pct: 37.5%;" />
+          </div>
+          <div class="ctrl">
+            <div class="row"><span class="lbl">Margem da folha</span><span class="val" id="cfgMargVal">24 px</span></div>
+            <input type="range" class="slider" min="8" max="48" step="2" value="24" id="cfgMarg" style="--pct: 40%;" />
+          </div>
+        </div>
+        <div class="demo-cap"><span class="dot"></span>arraste os sliders</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">touch_app</span>demo funcional</span>
+    <span class="hint"><kbd>←</kbd> <kbd>→</kbd> navegar</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 05 — Tipografia ───────────────────────── -->
+<section class="slide" data-screen-label="05 Tipografia">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> painel <span class="sep">/</span> <span class="feature">tipografia</span></span>
+    </div>
+    <div class="num">05<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">text_fields</span> Tipografia</div>
+      <h1>Um slider, escala consistente.</h1>
+      <p class="lede">
+        O tamanho da fonte do corpo define um modular scale. Títulos
+        multiplicam por <code>1.5×</code>, captions por <code>0.85×</code>,
+        preservando a hierarquia em qualquer tamanho.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">format_size</span></span>
+          <span class="txt"><strong>Range</strong>8 – 24 px · default 14 px · step 1</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">stack</span></span>
+          <span class="txt"><strong>Famílias do design system</strong><code>Archivo</code> (display) + <code>Nunito</code> (corpo)</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">tune</span></span>
+          <span class="txt"><strong>Aplicação</strong>propaga via <code>--typo-size</code> a todos os textos do documento</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-frame">
+        <div style="padding: 32px; display: flex; flex-direction: column; gap: 20px;">
+          <div class="doc-preview" id="typoDoc" style="--typo-size: 14px;">
+            <div class="tagline">Relatório de notas</div>
+            <h3>Período letivo 2024 — Turma 9° Ano A</h3>
+            <p class="p">Documento gerado automaticamente pelo Document Builder a partir
+            dos dados do sistema acadêmico. As notas são calculadas com base na
+            média ponderada das avaliações realizadas durante o período.</p>
+            <p class="p">Em caso de divergência, o responsável deve entrar em contato
+            com a secretaria em até 30 dias após a emissão deste documento.</p>
+          </div>
+          <div class="ctrl">
+            <div class="row"><span class="lbl">Tamanho da fonte</span><span class="val" id="typoVal">14 px</span></div>
+            <input type="range" class="slider" min="8" max="24" step="1" value="14" id="typoSize" style="--pct: 37.5%;" />
+          </div>
+        </div>
+        <div class="demo-cap"><span class="dot"></span>preview tipográfico ao vivo</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">text_fields</span>fontes via Google Fonts + Archivo local</span>
+    <span class="hint"><kbd>→</kbd> Padding de células</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 06 — Padding de células ───────────────────────── -->
+<section class="slide" data-screen-label="06 Padding de células">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> painel <span class="sep">/</span> <span class="feature">tabela</span></span>
+    </div>
+    <div class="num">06<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">table_chart</span> Tabela</div>
+      <h1>Dois eixos, três presets.</h1>
+      <p class="lede">
+        Padding horizontal e vertical são controlados separadamente. Atalhos
+        de densidade cobrem 90% dos casos sem precisar ajustar manualmente.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">height</span></span>
+          <span class="txt"><strong>Eixos independentes</strong><code>--cell-pad-y</code> (2–24px) e <code>--cell-pad-x</code> (2–32px)</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">view_compact</span></span>
+          <span class="txt"><strong>Presets</strong>compacto (4/6) · padrão (8/12) · confortável (14/20)</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">sync</span></span>
+          <span class="txt"><strong>Sincronia</strong>presets ficam ativos automaticamente quando os valores batem</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-frame demo-table">
+        <div style="padding: 32px; display: flex; flex-direction: column; gap: 18px;">
+          <div class="doc-preview" id="tblDoc" style="--tpad-y: 8px; --tpad-x: 12px;">
+            <table>
+              <thead><tr><th>#</th><th>Aluno(a)</th><th>Nota 1</th><th>Nota 2</th><th>Média</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Aluno 01</td><td>7,0</td><td>6,2</td><td>7,1</td></tr>
+                <tr><td>2</td><td>Aluno 02</td><td>8,1</td><td>7,3</td><td>8,2</td></tr>
+                <tr><td>3</td><td>Aluno 03</td><td>9,2</td><td>8,4</td><td>7,3</td></tr>
+                <tr><td>4</td><td>Aluno 04</td><td>7,3</td><td>9,5</td><td>8,4</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="ctrl">
+              <div class="row"><span class="lbl">Vertical</span><span class="val" id="tblYVal">8 px</span></div>
+              <input type="range" class="slider" min="2" max="24" step="1" value="8" id="tblY" style="--pct: 27%;" />
+            </div>
+            <div class="ctrl">
+              <div class="row"><span class="lbl">Horizontal</span><span class="val" id="tblXVal">12 px</span></div>
+              <input type="range" class="slider" min="2" max="32" step="1" value="12" id="tblX" style="--pct: 33%;" />
+            </div>
+          </div>
+          <div class="seg three" id="tblPreset">
+            <button data-y="4" data-x="6">Compacto</button>
+            <button data-y="8" data-x="12" class="on">Padrão</button>
+            <button data-y="14" data-x="20">Confortável</button>
+          </div>
+        </div>
+        <div class="demo-cap"><span class="dot"></span>ajuste os sliders ou clique nos presets</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">table_chart</span>aplicado a toda <code style="font-family:var(--font-mono-family);font-size:11px;background:transparent;color:inherit;padding:0;">.docpage table</code></span>
+    <span class="hint"><kbd>→</kbd> Cabeçalho e rodapé</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 07 — Cabeçalho / Rodapé ───────────────────────── -->
+<section class="slide" data-screen-label="07 Cabeçalho e rodapé">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> painel <span class="sep">/</span> <span class="feature">elementos</span></span>
+    </div>
+    <div class="num">07<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">view_agenda</span> Elementos</div>
+      <h1>Cabeçalho, rodapé e sub-opções.</h1>
+      <p class="lede">
+        Toggle simples para mostrar/ocultar elementos repetidos. Quando o
+        cabeçalho está ativo, uma sub-opção decide se ele aparece apenas na
+        primeira página ou em todas.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">flip_to_front</span></span>
+          <span class="txt"><strong>Cabeçalho</strong>logo + dados da instituição · <code>@page :first</code> ou todas</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">flip_to_back</span></span>
+          <span class="txt"><strong>Rodapé</strong>numeração e total · <code>counter(page)</code> · sempre em todas</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">subdirectory_arrow_right</span></span>
+          <span class="txt"><strong>Sub-opções</strong>desabilitadas automaticamente quando o pai está off</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-frame demo-headfoot">
+        <div class="pages" id="hfPages">
+          <div class="page" data-num="01">
+            <div class="header">CABEÇALHO</div>
+            <div class="content">
+              <div class="ln title"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln short"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln short"></div>
+            </div>
+            <div class="footer">RODAPÉ · 1/3</div>
+          </div>
+          <div class="page" data-num="02">
+            <div class="header">CABEÇALHO</div>
+            <div class="content">
+              <div class="ln"></div>
+              <div class="ln short"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln short"></div>
+              <div class="ln"></div>
+            </div>
+            <div class="footer">RODAPÉ · 2/3</div>
+          </div>
+          <div class="page" data-num="03">
+            <div class="header">CABEÇALHO</div>
+            <div class="content">
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln short"></div>
+              <div class="ln"></div>
+              <div class="ln short"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+            </div>
+            <div class="footer">RODAPÉ · 3/3</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="ctrl">
+            <div class="check-line">
+              <span class="lbl">Cabeçalho</span>
+              <button class="cbx on" id="hfHeader"><span class="material-symbols-outlined">check</span></button>
+            </div>
+            <div class="check-line sub">
+              <span class="lbl">Em todas as páginas</span>
+              <button class="cbx sm on" id="hfHeaderAll"><span class="material-symbols-outlined">check</span></button>
+            </div>
+          </div>
+          <div class="ctrl">
+            <div class="check-line">
+              <span class="lbl">Rodapé</span>
+              <button class="cbx on" id="hfFooter"><span class="material-symbols-outlined">check</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-cap"><span class="dot"></span>clique nos checkboxes</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">view_agenda</span>preview multi-página</span>
+    <span class="hint"><kbd>→</kbd> Bloco de assinaturas</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 08 — Bloco de assinaturas ───────────────────────── -->
+<section class="slide" data-screen-label="08 Bloco de assinaturas">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> painel <span class="sep">/</span> <span class="feature">assinaturas</span></span>
+    </div>
+    <div class="num">08<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">draw</span> Assinaturas</div>
+      <h1>Quatro variáveis, oito layouts.</h1>
+      <p class="lede">
+        Posição da data, alinhamento das assinaturas, espaçamento entre elas
+        e exibição do cargo. Cada controle muda apenas uma variável CSS.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">format_align_center</span></span>
+          <span class="txt"><strong>Data e local</strong><code>text-align</code> · esquerda · centro · direita</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">align_horizontal_center</span></span>
+          <span class="txt"><strong>Alinhamento das assinaturas</strong><code>justify-content</code> · 3 posições</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">space_bar</span></span>
+          <span class="txt"><strong>Espaçamento</strong><code>--sig-gap</code> · 8 – 160px · gap entre células</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">badge</span></span>
+          <span class="txt"><strong>Cargo</strong>checkbox · <code>display: none</code> na linha de role</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-frame demo-sig">
+        <div style="padding: 32px; display: flex; flex-direction: column; gap: 18px;">
+          <div class="doc-preview" id="sigDoc">
+            <div class="ghost-content">
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+              <div class="ln"></div>
+            </div>
+            <div class="sig-date" id="sigDate">São Paulo, 12 de Maio de 2026</div>
+            <div class="sig-row" id="sigRow">
+              <div class="sig-cell">
+                <div class="role">Diretor(a)</div>
+                <div class="name">João da Silva</div>
+              </div>
+              <div class="sig-cell">
+                <div class="role">Secretário(a)</div>
+                <div class="name">Maria Oliveira</div>
+              </div>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="ctrl">
+              <span class="lbl">Posição da data</span>
+              <div class="seg three icons" id="sigDatePos">
+                <button data-val="left" aria-label="Esquerda"><span class="material-symbols-outlined">format_align_left</span></button>
+                <button data-val="center" class="on" aria-label="Centro"><span class="material-symbols-outlined">format_align_center</span></button>
+                <button data-val="right" aria-label="Direita"><span class="material-symbols-outlined">format_align_right</span></button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <span class="lbl">Alinhamento das assinaturas</span>
+              <div class="seg three icons" id="sigAlignCtl">
+                <button data-val="left" aria-label="Esquerda"><span class="material-symbols-outlined">align_horizontal_left</span></button>
+                <button data-val="center" class="on" aria-label="Centro"><span class="material-symbols-outlined">align_horizontal_center</span></button>
+                <button data-val="right" aria-label="Direita"><span class="material-symbols-outlined">align_horizontal_right</span></button>
+              </div>
+            </div>
+            <div class="ctrl">
+              <div class="row"><span class="lbl">Espaçamento</span><span class="val" id="sigGapVal">56 px</span></div>
+              <input type="range" class="slider" min="8" max="160" step="4" value="56" id="sigGapInp" style="--pct: 31.6%;" />
+            </div>
+            <div class="ctrl">
+              <div class="check-line">
+                <span class="lbl">Exibir cargo</span>
+                <button class="cbx on" id="sigRole"><span class="material-symbols-outlined">check</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-cap"><span class="dot"></span>combine os 4 controles</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">draw</span>render persistente no documento</span>
+    <span class="hint"><kbd>→</kbd> Exportação</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 09 — Exportação ───────────────────────── -->
+<section class="slide" data-screen-label="09 Exportação">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> painel <span class="sep">/</span> <span class="feature">exportação</span></span>
+    </div>
+    <div class="num">09<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">file_save</span> Exportação</div>
+      <h1>Qualidade × estratégia.</h1>
+      <p class="lede">
+        Dois selects definem o pipeline de geração do PDF. A qualidade afeta
+        a resolução de imagens; a estratégia determina o renderer usado.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">hd</span></span>
+          <span class="txt"><strong>Qualidade</strong><code>padrão</code> (96 DPI) · <code>alta</code> (150 DPI) · <code>máxima</code> (300 DPI)</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">memory</span></span>
+          <span class="txt"><strong>CSS (nativo)</strong>browser <code>window.print()</code> · texto vetorial selecionável</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">image</span></span>
+          <span class="txt"><strong>Canvas</strong><code>html2canvas</code> · pixel-perfect · texto rasterizado</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">merge_type</span></span>
+          <span class="txt"><strong>Híbrido</strong>imagens via canvas, texto via CSS · melhor dos dois</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-frame demo-export">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="ctrl">
+            <span class="lbl">Qualidade do PDF</span>
+            <div class="select-wrap">
+              <select id="expQual">
+                <option value="padrao">Padrão (96 DPI)</option>
+                <option value="alta" selected>Alta (150 DPI)</option>
+                <option value="maxima">Máxima (300 DPI)</option>
+              </select>
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+          </div>
+          <div class="ctrl">
+            <span class="lbl">Estratégia</span>
+            <div class="select-wrap">
+              <select id="expStrat">
+                <option value="css" selected>CSS (nativo)</option>
+                <option value="canvas">Canvas</option>
+                <option value="hibrido">Híbrido</option>
+              </select>
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="out">
+          <div class="pdfico">PDF</div>
+          <div class="filename" id="expFilename">relatorio-notas-150dpi-css.pdf</div>
+          <div class="meta">
+            <span class="k">Qualidade</span><span class="v" id="expVQual">Alta · 150 DPI</span>
+            <span class="k">Estratégia</span><span class="v" id="expVStrat">CSS nativo</span>
+            <span class="k">Texto</span><span class="v" id="expVText">Vetorial · selecionável</span>
+            <span class="k">Tamanho estimado</span><span class="v" id="expVSize">~ 240 KB</span>
+          </div>
+        </div>
+        <div class="demo-cap" style="left: 60px;"><span class="dot"></span>altere os selects</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">picture_as_pdf</span>geração no cliente</span>
+    <span class="hint"><kbd>→</kbd> Minimizar páginas</span>
+  </footer>
+</section>
+
+<!-- ───────────────────────── 10 — Minimizar páginas ───────────────────────── -->
+<section class="slide" data-screen-label="10 Minimizar páginas">
+  <header class="slide-head">
+    <div class="left">
+      <div class="brand"><span class="mark"></span> Document Builder</div>
+      <span class="crumb"><span class="sep">/</span> ação <span class="sep">/</span> <span class="feature">minimizar páginas</span></span>
+    </div>
+    <div class="num">10<span class="total">/09</span></div>
+  </header>
+
+  <div class="slide-body">
+    <div class="info">
+      <div class="section-badge"><span class="material-symbols-outlined" style="font-size:14px;">compress</span> Otimização automática</div>
+      <h1>Reduzir páginas em 4 fases.</h1>
+      <p class="lede">
+        Algoritmo greedy que testa configurações em ordem de menor impacto
+        visual. Cada step ou reduz uma página, ou é descartado.
+      </p>
+      <div class="meta-list">
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">format_list_numbered</span></span>
+          <span class="txt"><strong>Fases</strong>espaçamento → tabela → margens → fonte (último recurso)</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">flag</span></span>
+          <span class="txt"><strong>Fase com warning</strong>fonte exibe pílula <code>impacto visual</code> antes de aplicar</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">undo</span></span>
+          <span class="txt"><strong>Reversível</strong>botão "Desfazer" restaura todos os valores anteriores</span>
+        </div>
+        <div class="meta">
+          <span class="ico"><span class="material-symbols-outlined">check_circle</span></span>
+          <span class="txt"><strong>3 estados</strong><code>running</code> · <code>done</code> (sucesso) · <code>none</code> (sem redução)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-frame demo-minimize">
+        <div class="pagestrip">
+          <div>
+            <div class="num" id="mNum">7</div>
+            <div class="num-lbl">páginas</div>
+          </div>
+          <div class="dots" id="mDots">
+            <div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div>
+            <div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div>
+          </div>
+        </div>
+
+        <div class="modal">
+          <div class="modal-head">
+            <span class="leadicon"><span class="material-symbols-outlined">compress</span></span>
+            <h4>Minimizando páginas…
+              <span class="sub" id="mSub">Testando configurações ótimas</span>
+            </h4>
+          </div>
+          <div class="modal-progress">
+            <div class="bar"><div class="bar-fill" id="mBarFill" style="width: 0%;"></div></div>
+            <div class="ptext"><span id="mStepNow">0</span>/7</div>
+          </div>
+          <div class="phases" id="mPhases">
+            <div class="phase">
+              <div class="phase-head">
+                <span class="phase-num">FASE 1</span>
+                <span class="phase-name">Espaçamento</span>
+              </div>
+              <div class="step" data-idx="0">
+                <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+                <span class="lbl">Reduzir gap entre componentes</span>
+                <span class="res"></span>
+              </div>
+              <div class="step" data-idx="1">
+                <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+                <span class="lbl">Refinar gap entre componentes</span>
+                <span class="res"></span>
+              </div>
+            </div>
+            <div class="phase">
+              <div class="phase-head">
+                <span class="phase-num">FASE 2</span>
+                <span class="phase-name">Células da tabela</span>
+              </div>
+              <div class="step" data-idx="2">
+                <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+                <span class="lbl">Padding vertical</span>
+                <span class="res"></span>
+              </div>
+              <div class="step" data-idx="3">
+                <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+                <span class="lbl">Padding horizontal</span>
+                <span class="res"></span>
+              </div>
+            </div>
+            <div class="phase">
+              <div class="phase-head">
+                <span class="phase-num">FASE 3</span>
+                <span class="phase-name">Margens</span>
+              </div>
+              <div class="step" data-idx="4">
+                <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+                <span class="lbl">Margem vertical</span>
+                <span class="res"></span>
+              </div>
+              <div class="step" data-idx="5">
+                <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+                <span class="lbl">Margem horizontal</span>
+                <span class="res"></span>
+              </div>
+            </div>
+            <div class="phase">
+              <div class="phase-head">
+                <span class="phase-num">FASE 4</span>
+                <span class="phase-name">Fonte</span>
+                <span class="phase-warning"><span class="material-symbols-outlined">warning</span>impacto visual</span>
+              </div>
+              <div class="step" data-idx="6">
+                <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+                <span class="lbl">Reduzir tamanho da fonte</span>
+                <span class="res"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-cap"><span class="dot"></span>simulação em loop</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="slide-foot">
+    <span class="tag"><span class="material-symbols-outlined">replay</span>fim do tour · use <kbd>←</kbd> para revisar</span>
+    <span class="hint"><kbd>Home</kbd> voltar ao início</span>
+  </footer>
+</section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+<script src="tour-demos.js"></script>
+</body>
+</html>

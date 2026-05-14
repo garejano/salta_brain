@@ -1,0 +1,50 @@
+A descricao abaixo foi enviada pelo tech lead, validando alguns pontos implementados nesse card.
+
+analise o que ele passou e vincule ao que ja foi feito e marque o que ainda precisa ser feito ou validado
+refine o texto abaixo.
+
+
+Caso o agrupamento não esteja configurado para exibir Componentes Formativos separadamente:
+Filtro deve exibir apenas os escopos "Boletim Regular", "Boletim diversificado", "Outras avaliações"
+Ao selecionar "Boletim Regular" devem ser exibidas todas as disciplinas que tenham "Possui avaliações regulares" selecionado no Configurador de Disciplinas
+Isso inclui disciplinas que façam parte de Componentes Formativos, mesmo que não sejam anuais.
+Ao selecionar "Boletim Diversificado" devem ser exibidas todas as disciplinas que tenham "Possui avaliações diversificadas" selecionado no Configurador de Disciplinas
+Ao selecionar "Outras avaliações" devem ser exibidas todas as disciplinas que tenham "Possui avaliações regulares" selecionadas no Configurador de Disciplinas
+Apenas as colunas correspondentes ao escopo devem ser exibidas.
+Para "Boletim regular", isso inclui as colunas automáticas de Total/Média/Falta e Situação, conforme configuração do agrupamento
+Caso o agrupamento em algum momento tenha sido configurado para exibir Componentes Formativos separadamente, e depois foi alterado de volta para não separar os Componentes, o escopo "Boletim regular" deve seguir também as seguintes condições:
+Colunas diferentes que tenham sido configuradas nesses escopos não devem ser exibidas na visão de boletim regular, mesmo que as disciplinas agora sejam.
+Se colunas iguais (mesmo tipo + ciclo) tenham sido configuradas nesses escopos e recebido avaliações diferentes, essas mesmas avaliações devem ser exibidas na visão de boletim regular, na coluna correspondente.
+Ao selecionar incluir uma nova coluna, a lista de tipos/etapas/ciclos deve incluir qualquer opção que tenha sido criada durante o uso do escopo de Componente separado.
+Ao selecionar incluir uma nova coluna, caso seja escolhida uma combinação que tenha existido para o escopo de Componente separado, o sistema deve permitir incluí-la também para o escopo de Boletim Regular e não tratar como uma coluna repetida.
+Ao selecionar incluir uma nova coluna, a opção de ordenação deve listar apenas as colunas atualmente configuradas para o escopo boletim regular.
+Não deve ser possível incluir 2 colunas com a mesma configuração de Etapa + Tipo + Ciclo para o mesmo escopo.
+Ao selecionar incluir ou editar uma avaliação, apenas as disciplinas exibidas no grid devem estar disponíveis para seleção.
+Ao selecionar "Edição em massa", "Copiar coluna" ou "Criar avaliação padrão"  para alguma coluna, apenas as disciplinas/avaliações que aparecem no grid devem ser exibidas.
+Ao selecionar "Exportar", as avaliações e disciplinas retornadas devem corresponder ao que aparece no grid.
+---
+Caso o agrupamento atualmente esteja configurado para exibir Componentes Formativos separadamente:
+Filtro deve exibir os escopos "Boletim regular", "Boletim diversificado", "Outras avaliações" e todos os ciclos que tenham algum Componente Formativo configurado para o agrupamento. Ou seja:
+Se existirem componentes formativos anuais, exibir também "Componentes Formativo Anuais"
+Se existirem componentes formativos semestrais, exibir também "Componentes Formativos Semestrais"
+etc.
+Ao selecionar "Boletim regular" devem ser exibidas todas as disciplinas que tenham "Possui avaliações regulares" selecionado no Configurador de Disciplinas que não façam parte de um Componente Formativo.
+Ao selecionar "Boletim Diversificado" devem ser exibidas todas as disciplinas que tenham "Possui avaliações diversificadas" no Configurador de Disciplinas
+Isso inclui disciplinas que façam parte de Componentes Formativos -- se é diversificado, aparece no escopo diversificado.
+Ao selecionar "Outras avaliações" devem ser exibidas todas as disciplinas que tenham "Possui avaliações regulares" selecionadas no Configurador de Disciplinas
+Isso inclui disciplinas que façam parte de Componentes Formativos -- a divisão é apenas para Boletim Regular
+Ao selecionar "Componentes Formativos Anuais" devem ser exibidas todas as disciplinas que tenham "Possui avaliações regulares" selecionado no Configurador de Disciplinas e que façam parte de um Componente Formativo Anual.
+Mesma coisa para Componentes Formativos Semestrais/Trimestrais/Bimestrais.
+Apenas as colunas correspondentes ao escopo devem ser exibidas.
+Para "Boletim regular" e qualquer escopo de Componente Formativo isso inclui as colunas automáticas de Total/Média/Falta e Situação, conforme configuração do agrupamento.
+Caso tenha ocorrido alguma configuração no agrupamento enquanto ele estava configurado para não separar os Componentes Formativos:
+Caso uma coluna correspondente (mesmo tipo + etapa + ciclo) seja criada no escopo de Componente separado, qualquer avaliação que já existisse para as disciplinas do escopo deve ser exibida.
+Ao selecionar incluir uma nova coluna:
+As opções de Tipo, Etapa e Ciclo disponíveis para seleção devem ser as mesmas existentes para o escopo de Boletim Regular e qualquer outro escopo de Componente separado. Qualquer nova opção criada/editada em qualquer um desses escopos deve refletir nos outros -- é a mesma lista.
+Não deve ser possível incluir 2 colunas com a mesma configuração de Etapa + Tipo + Ciclo para o mesmo escopo apenas, mas é possível incluir a mesma configuração que já exista para outro escopo.
+A opção de ordenação deve listar apenas as colunas atualmente configuradas para o escopo selecionado.
+Ao selecionar incluir ou editar uma avaliação, apenas as disciplinas exibidas no grid devem estar disponíveis para seleção.
+Ao selecionar "Edição em massa", "Copiar coluna" ou "Criar avaliação padrão"  para alguma coluna, apenas as disciplinas/avaliações que aparecem no grid devem ser exibidas.
+Ao selecionar "Exportar", as avaliações e disciplinas retornadas devem corresponder ao que aparece no grid.
+---
+A opção de exportar precisa ser adaptada em uma outra atividade futura.

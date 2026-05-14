@@ -1,0 +1,1650 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Painel de Configuração — Eleva</title>
+<link rel="stylesheet" href="eleva/colors_and_type.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: #2A2D33;
+    font-family: var(--font-body-family);
+    color: var(--fg-primary);
+    overflow: hidden;
+  }
+  /* Mock backdrop: a doc preview behind a scrim, to mirror context */
+  .backdrop {
+    position: fixed; inset: 0;
+    background:
+      linear-gradient(rgba(15,15,16,0.55), rgba(15,15,16,0.55)),
+      #2A2D33;
+    display: flex; align-items: stretch; justify-content: stretch;
+  }
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: 64px;
+    background: var(--color-primary);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; z-index: 5;
+    box-shadow: var(--shadow-down-medium);
+  }
+  .topbar .left, .topbar .right { display: flex; align-items: center; gap: 12px; }
+  .topbar .iconbtn {
+    width: 40px; height: 40px; border-radius: 999px; border: 0;
+    background: rgba(255,255,255,0.12); color: #fff; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-moderate-1);
+  }
+  .topbar .iconbtn:hover { background: rgba(255,255,255,0.22); }
+  .topbar .iconbtn.active { background: #fff; color: var(--color-primary); }
+  .topbar .btn {
+    height: 40px; padding: 0 16px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.0);
+    font-family: var(--font-display-family); font-weight: 700; font-size: 14px;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    transition: background var(--motion-moderate-1), color var(--motion-moderate-1);
+  }
+  .topbar .btn.ghost { background: #fff; color: var(--color-neutral-dark3); }
+  .topbar .btn.ghost:hover { background: var(--color-neutral-light2); }
+  .topbar .btn.primary { background: #fff; color: var(--color-primary); }
+  .topbar .btn.primary:hover { background: var(--color-neutral-light2); }
+
+  /* Document preview placeholder */
+  .docstage {
+    position: fixed; top: 64px; left: 0; right: 360px; bottom: 0;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 32px 32px 64px;
+    overflow: hidden;
+  }
+  .docpage {
+    width: min(900px, 100%);
+    background: #fff; border-radius: 8px;
+    box-shadow: var(--shadow-down-xlarge);
+    padding: 40px 48px;
+    color: var(--color-neutral-dark3);
+    opacity: 0.85;
+  }
+  .docpage .doc-h1 {
+    font-family: var(--font-display-family); font-weight: 600;
+    font-size: 22px; line-height: 28px; letter-spacing: 0.04em;
+    color: var(--color-neutral-dark2);
+    margin: 0 0 18px;
+  }
+  .docpage hr { border: 0; border-top: 1px solid var(--color-neutral-light2); margin: 16px 0; }
+  .docpage table { width: 100%; border-collapse: collapse; font-family: var(--font-body-family); font-size: 13px; }
+  .docpage th, .docpage td {
+    border: 1px solid var(--color-neutral-light2);
+    padding: var(--cell-pad-y, 8px) var(--cell-pad-x, 12px); text-align: left;
+    transition: padding var(--motion-moderate-1);
+  }
+  .docpage th { background: var(--color-neutral-light3); font-weight: 700; }
+  .docpage .row-flex { display: flex; gap: 16px; align-items: flex-start; }
+  .docpage .placeholder-box {
+    width: 60px; height: 60px; flex-shrink: 0;
+    border: 1px dashed var(--color-neutral-light1);
+    color: var(--color-neutral); font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px;
+  }
+  .docpage .meta { font-size: 13px; color: var(--color-neutral-dark2); line-height: 1.5; }
+  .docpage .meta strong { font-weight: 700; color: var(--color-neutral-dark3); display: block; margin-bottom: 2px; }
+
+  /* ── Right config panel ───────────────────────────────────── */
+  .panel {
+    position: fixed; top: 64px; right: 0; bottom: 0; width: 360px;
+    background: var(--color-white);
+    border-left: 1px solid var(--color-neutral-light2);
+    box-shadow: var(--shadow-center-large);
+    display: flex; flex-direction: column;
+    z-index: 4;
+  }
+  .panel-head {
+    padding: 20px 24px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--color-neutral-light2);
+  }
+  .panel-head h2 {
+    margin: 0;
+    font-family: var(--font-display-family);
+    font-weight: 600; font-size: 18px; line-height: 22px;
+    color: var(--color-neutral-dark3);
+  }
+  .panel-head .sub {
+    margin: 2px 0 0;
+    font-family: var(--font-body-family); font-size: 12px; line-height: 16px;
+    color: var(--color-neutral-dark1);
+  }
+  .panel-head .closebtn {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 0; background: transparent; color: var(--color-neutral-dark1);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background var(--motion-moderate-1);
+  }
+  .panel-head .closebtn:hover { background: var(--color-neutral-light2); color: var(--color-neutral-dark3); }
+
+  .panel-body {
+    flex: 1; overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-neutral-light1) transparent;
+  }
+  .panel-body::-webkit-scrollbar { width: 8px; }
+  .panel-body::-webkit-scrollbar-thumb { background: var(--color-neutral-light1); border-radius: 999px; }
+
+  .section { padding: 20px 24px; border-bottom: 1px solid var(--color-neutral-light2); }
+  .section:last-child { border-bottom: 0; }
+  .section-head {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  }
+  .section-head .iconwrap {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--color-primary-light3);
+    color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .section-head h3 {
+    margin: 0;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 12px;
+    line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-neutral-dark2);
+  }
+  .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .field label.fieldlabel {
+    font-family: var(--font-ui-family); font-weight: 500;
+    font-size: 12px; line-height: 1; color: var(--color-neutral-dark3);
+  }
+  .value-pill {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 12px; line-height: 1;
+    background: var(--color-neutral-light2);
+    color: var(--color-neutral-dark3);
+    padding: 4px 8px; border-radius: 4px;
+    min-width: 44px; text-align: center;
+  }
+
+  /* Segmented control (Orientação) */
+  .segmented {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    padding: 4px; background: var(--color-neutral-light2);
+    border-radius: 10px;
+  }
+  .seg {
+    border: 0; background: transparent; cursor: pointer;
+    padding: 8px 10px; border-radius: 8px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 13px;
+    color: var(--color-neutral-dark2);
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background var(--motion-moderate-1), color var(--motion-moderate-1), box-shadow var(--motion-moderate-1);
+  }
+  .seg:hover:not(.on) { color: var(--color-neutral-dark3); }
+  .seg.on {
+    background: var(--color-white);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-down-small);
+  }
+  .seg .material-symbols-outlined { font-size: 18px; }
+
+  /* Slider */
+  .slider-wrap { position: relative; padding: 8px 0 6px; }
+  input[type=range].eleva-range {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 4px; background: transparent;
+    margin: 0; padding: 0;
+  }
+  input[type=range].eleva-range::-webkit-slider-runnable-track {
+    height: 4px; border-radius: 999px;
+    background: linear-gradient(to right, var(--color-primary) var(--pct, 50%), var(--color-neutral-light2) var(--pct, 50%));
+  }
+  input[type=range].eleva-range::-moz-range-track {
+    height: 4px; border-radius: 999px; background: var(--color-neutral-light2);
+  }
+  input[type=range].eleva-range::-moz-range-progress {
+    height: 4px; border-radius: 999px; background: var(--color-primary);
+  }
+  input[type=range].eleva-range::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--color-white);
+    border: 2px solid var(--color-primary);
+    box-shadow: var(--shadow-down-small);
+    margin-top: -7px; cursor: pointer;
+    transition: box-shadow var(--motion-moderate-1), transform var(--motion-moderate-1);
+  }
+  input[type=range].eleva-range::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--color-white);
+    border: 2px solid var(--color-primary);
+    box-shadow: var(--shadow-down-small); cursor: pointer;
+  }
+  input[type=range].eleva-range:focus { outline: none; }
+  input[type=range].eleva-range:focus::-webkit-slider-thumb {
+    box-shadow: var(--shadow-focus);
+  }
+  input[type=range].eleva-range:active::-webkit-slider-thumb { transform: scale(1.1); }
+  .range-ticks {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-body-family); font-size: 11px; color: var(--color-neutral-dark1);
+    margin-top: 4px;
+  }
+
+  /* Cell padding visual preview */
+  .cellpad-preview {
+    display: flex; align-items: center; justify-content: center;
+    height: 84px;
+    background: var(--color-neutral-light3);
+    border-radius: 8px;
+    border: 1px solid var(--color-neutral-light2);
+    padding: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .cellpad-preview .mini-cell {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #fff;
+    border: 1px solid var(--color-neutral-light1);
+    border-radius: 4px;
+    font-family: var(--font-body-family); font-size: 12px; font-weight: 600;
+    color: var(--color-neutral-dark3);
+    padding: var(--prev-pad-y, 8px) var(--prev-pad-x, 12px);
+    transition: padding var(--motion-moderate-1);
+    position: relative;
+  }
+  .cellpad-preview .mini-cell::before,
+  .cellpad-preview .mini-cell::after {
+    content: "";
+    position: absolute;
+    background: var(--color-primary-light2);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  /* horizontal padding bands (left + right) */
+  .cellpad-preview .mini-cell::before {
+    left: 0; top: 0; bottom: 0;
+    width: var(--prev-pad-x, 12px);
+    border-right: 1px dashed var(--color-primary);
+  }
+  .cellpad-preview .mini-cell::after {
+    right: 0; top: 0; bottom: 0;
+    width: var(--prev-pad-x, 12px);
+    border-left: 1px dashed var(--color-primary);
+  }
+  .cellpad-preview .mini-cell .label {
+    position: relative; z-index: 1;
+    background: #fff; padding: 0 2px;
+  }
+  /* Signature block in doc preview */
+  .docpage .sig-block {
+    margin-top: 32px;
+    font-family: var(--font-body-family);
+    color: var(--color-neutral-dark3);
+  }
+  .docpage .sig-date {
+    font-size: 12px; font-weight: 700;
+    margin-bottom: 28px;
+    text-align: var(--sig-date-align, center);
+    transition: text-align var(--motion-moderate-1);
+  }
+  .docpage .sig-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--sig-gap, 48px);
+    transition: gap var(--motion-moderate-1);
+  }
+  .docpage .sig-row.left { justify-content: flex-start; }
+  .docpage .sig-row.center { justify-content: center; }
+  .docpage .sig-row.right { justify-content: flex-end; }
+  .docpage .sig-cell {
+    flex: 0 1 220px;
+    text-align: center;
+    border-top: 1px solid var(--color-neutral-dark3);
+    padding-top: 6px;
+  }
+  .docpage .sig-cell .role {
+    font-size: 11px; font-weight: 700;
+    color: var(--color-neutral-dark3);
+    margin-bottom: 2px;
+  }
+  .docpage .sig-cell .name {
+    font-size: 10px; color: var(--color-neutral-dark2);
+  }
+  .docpage .sig-cell.no-role .role { display: none; }
+
+  /* Icon-only segmented (alignment) */
+  .seg.icon-only { padding: 8px; }
+  .seg.icon-only .material-symbols-outlined { font-size: 18px; }
+
+  /* ── Page stack indicator (left side of docstage) ──────────── */
+  .pagestack {
+    position: fixed; top: 96px; left: 24px;
+    z-index: 3;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+    color: var(--color-neutral-light2);
+    pointer-events: none;
+  }
+  .pagestack .pc-num {
+    font-family: var(--font-display-family);
+    font-weight: 800; font-size: 32px; line-height: 1;
+    color: #fff;
+    letter-spacing: -0.02em;
+    transition: color var(--motion-moderate-1);
+  }
+  .pagestack .pc-lbl {
+    font-family: var(--font-ui-family); font-weight: 500;
+    font-size: 11px; line-height: 1;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: -6px;
+  }
+  .pagestack .pc-dots {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .pagestack .pc-dot {
+    width: 22px; height: 28px; border-radius: 2px;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.22);
+    box-shadow: var(--shadow-down-small);
+    transform-origin: top center;
+    transition: opacity var(--motion-slow-1), transform var(--motion-slow-1), background var(--motion-moderate-2);
+  }
+  .pagestack .pc-dot.removed {
+    opacity: 0; transform: translateY(-4px) scale(0.7);
+  }
+  .pagestack.flashing .pc-num { color: var(--color-tertiary-light1); }
+
+  /* ── Minimize modal overlay ────────────────────────────────── */
+  .min-overlay {
+    position: fixed; inset: 0;
+    z-index: 8;
+    pointer-events: none;
+  }
+  .min-overlay.show { pointer-events: auto; }
+  .min-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(15, 15, 16, 0.18);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity var(--motion-moderate-2);
+  }
+  .min-overlay.show .min-backdrop { opacity: 1; }
+
+  .min-modal {
+    position: absolute; top: 80px; right: 16px;
+    width: 360px;
+    max-height: calc(100vh - 100px);
+    background: var(--color-white);
+    border-radius: 12px;
+    border: 1px solid var(--color-neutral-light2);
+    box-shadow: var(--shadow-up-xlarge), var(--shadow-down-large);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    opacity: 0; transform: translateY(-8px) scale(0.98);
+    transition: opacity var(--motion-moderate-2), transform var(--motion-moderate-2);
+  }
+  .min-overlay.show .min-modal { opacity: 1; transform: translateY(0) scale(1); }
+
+  .min-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 16px 14px 20px;
+    border-bottom: 1px solid var(--color-neutral-light2);
+  }
+  .min-head .leadicon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--color-primary-light3);
+    color: var(--color-primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .min-head .leadicon .material-symbols-outlined { font-size: 18px; position: relative; z-index: 1; }
+  .min-overlay[data-state="running"] .min-head .leadicon::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(36,44,194,0.18) 50%, transparent 70%);
+    animation: minShimmer 1.6s linear infinite;
+  }
+  @keyframes minShimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .min-head h2 {
+    margin: 0; flex: 1;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 15px; line-height: 20px;
+    color: var(--color-neutral-dark3);
+  }
+  .min-head h2 .sub {
+    display: block;
+    font-family: var(--font-body-family); font-weight: 400;
+    font-size: 12px; line-height: 16px;
+    color: var(--color-neutral-dark1);
+    margin-top: 2px;
+  }
+  .min-head .closebtn {
+    width: 28px; height: 28px; border-radius: 6px;
+    border: 0; background: transparent; color: var(--color-neutral-dark1);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background var(--motion-moderate-1);
+  }
+  .min-head .closebtn:hover { background: var(--color-neutral-light2); color: var(--color-neutral-dark3); }
+
+  /* State switching */
+  .min-running, .min-done-success, .min-done-none { display: none; }
+  .min-overlay[data-state="running"] .min-running { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .min-overlay[data-state="done"]    .min-done-success { display: flex; flex-direction: column; }
+  .min-overlay[data-state="none"]    .min-done-none    { display: flex; flex-direction: column; }
+
+  /* Running — progress bar */
+  .min-progress {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px 12px;
+  }
+  .min-bar {
+    flex: 1; height: 6px; border-radius: 999px;
+    background: var(--color-neutral-light2);
+    overflow: hidden;
+  }
+  .min-bar-fill {
+    height: 100%; width: 0;
+    background: var(--color-primary);
+    border-radius: 999px;
+    transition: width var(--motion-slow-1);
+  }
+  .min-progress-text {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 12px; color: var(--color-neutral-dark2);
+    white-space: nowrap;
+  }
+
+  /* Phase list */
+  .min-phases {
+    flex: 1; min-height: 0;
+    overflow-y: auto;
+    padding: 0 20px 16px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-neutral-light1) transparent;
+  }
+  .min-phase + .min-phase { margin-top: 14px; }
+  .min-phase-head {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 6px;
+  }
+  .min-phase-num {
+    font-family: var(--font-mono-family); font-weight: 700;
+    font-size: 10px; line-height: 1;
+    color: var(--color-neutral-dark1);
+    background: var(--color-neutral-light2);
+    border-radius: 3px;
+    padding: 3px 5px;
+  }
+  .min-phase-name {
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 11px; line-height: 1;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-neutral-dark2);
+  }
+  .min-phase-warning {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--font-body-family); font-weight: 600;
+    font-size: 10px; line-height: 1;
+    color: var(--color-warning-dark);
+    background: var(--color-warning-light);
+    border-radius: 999px;
+    padding: 3px 7px;
+  }
+  .min-phase-warning .material-symbols-outlined { font-size: 12px; }
+
+  .min-steps { display: flex; flex-direction: column; gap: 4px; }
+  .min-step {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: transparent;
+    transition: background var(--motion-moderate-2);
+  }
+  .min-step .ico {
+    width: 18px; height: 18px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: var(--color-neutral-light2);
+    color: var(--color-neutral);
+    transition: background var(--motion-moderate-1), color var(--motion-moderate-1);
+  }
+  .min-step .ico .material-symbols-outlined { font-size: 14px; }
+  .min-step .lbl {
+    flex: 1;
+    font-family: var(--font-body-family); font-weight: 500;
+    font-size: 13px; line-height: 16px;
+    color: var(--color-neutral-dark2);
+  }
+  .min-step .result {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 11px; line-height: 1;
+    color: var(--color-neutral-dark1);
+    white-space: nowrap;
+  }
+  /* Step states */
+  .min-step.pending .lbl { color: var(--color-neutral); }
+  .min-step.active {
+    background: var(--color-primary-light3);
+  }
+  .min-step.active .ico {
+    background: var(--color-primary);
+    color: #fff;
+    animation: minPulse 1.3s ease-in-out infinite;
+  }
+  .min-step.active .lbl {
+    color: var(--color-primary-dark1);
+    font-weight: 700;
+  }
+  @keyframes minPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(36,44,194,0.45); }
+    50%      { box-shadow: 0 0 0 6px rgba(36,44,194,0.00); }
+  }
+  .min-step.active .ico .material-symbols-outlined {
+    animation: minSpin 1.2s linear infinite;
+  }
+  @keyframes minSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .min-step.reduced .ico { background: #28975A; color: #fff; }
+  .min-step.reduced .result { color: #28975A; font-weight: 700; }
+  .min-step.kept .ico {
+    background: var(--color-neutral-light2);
+    color: var(--color-neutral-dark1);
+  }
+  .min-step.kept .result { color: var(--color-neutral-dark1); }
+
+  /* Step reveal animation */
+  .min-step {
+    opacity: 0;
+    transform: translateY(-4px);
+    animation: minStepIn var(--motion-moderate-2) forwards;
+  }
+  @keyframes minStepIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DONE success state */
+  .min-done-success { padding: 20px 24px 16px; gap: 12px; align-items: stretch; }
+  .min-result-iconbig {
+    width: 56px; height: 56px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(40,151,90,0.12);
+    color: #28975A;
+    margin: 4px auto 0;
+  }
+  .min-result-iconbig .material-symbols-outlined { font-size: 36px; font-variation-settings: 'FILL' 1; }
+  .min-result-iconbig.info {
+    background: var(--color-primary-light3);
+    color: var(--color-primary);
+  }
+  .min-result-title {
+    text-align: center;
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 18px; line-height: 22px;
+    color: var(--color-neutral-dark3);
+  }
+  .min-result-big {
+    display: flex; align-items: baseline; justify-content: center; gap: 10px;
+    padding: 14px 16px;
+    background: var(--color-neutral-light3);
+    border-radius: 10px;
+    border: 1px solid var(--color-neutral-light2);
+    margin: 4px 0 4px;
+  }
+  .min-result-big .from {
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 28px; line-height: 1;
+    color: var(--color-neutral-dark1);
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgba(0,0,0,0.25);
+  }
+  .min-result-big .arrow .material-symbols-outlined {
+    font-size: 22px; color: var(--color-primary); vertical-align: middle;
+    transform: translateY(-2px);
+  }
+  .min-result-big .to {
+    font-family: var(--font-display-family); font-weight: 800;
+    font-size: 40px; line-height: 1;
+    color: var(--color-primary);
+    letter-spacing: -0.02em;
+  }
+  .min-result-big .unit {
+    font-family: var(--font-body-family); font-weight: 600;
+    font-size: 13px; color: var(--color-neutral-dark2);
+    margin-left: 2px;
+  }
+  .min-result-list-title {
+    font-family: var(--font-display-family); font-weight: 700;
+    font-size: 11px; line-height: 1;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-neutral-dark2);
+    margin-top: 4px;
+  }
+  .min-result-list { display: flex; flex-direction: column; gap: 2px; }
+  .min-result-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 4px;
+    border-bottom: 1px dashed var(--color-neutral-light2);
+  }
+  .min-result-item:last-child { border-bottom: 0; }
+  .min-result-item .k {
+    flex: 1;
+    font-family: var(--font-body-family); font-size: 13px; font-weight: 500;
+    color: var(--color-neutral-dark3);
+  }
+  .min-result-item .v {
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 12px; color: var(--color-neutral-dark2);
+  }
+  .min-result-item .v .arr { color: var(--color-neutral-dark1); margin: 0 4px; }
+  .min-result-item .v .to-v { color: var(--color-primary); font-weight: 700; }
+  .min-result-foot {
+    display: flex; gap: 8px; margin-top: 8px;
+  }
+  .min-result-foot .btn { flex: 1; }
+
+  /* DONE none state */
+  .min-done-none { padding: 20px 24px 16px; gap: 10px; }
+  .min-done-none .min-result-sub {
+    text-align: center;
+    font-family: var(--font-body-family); font-size: 13px; line-height: 18px;
+    color: var(--color-neutral-dark1);
+    margin-bottom: 4px;
+  }
+
+  /* Topbar minimize button — slight differentiation */
+  .topbar .btn.minimize {
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.0);
+  }
+  .topbar .btn.minimize:hover { background: rgba(255,255,255,0.22); }
+  .topbar .btn.minimize.active {
+    background: #fff;
+    color: var(--color-primary);
+  }
+  .topbar .btn[disabled] {
+    opacity: 0.45; cursor: not-allowed;
+  }
+  .topbar .btn[disabled]:hover { background: inherit; }
+
+
+  .pad-axis-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .axis-head {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-ui-family); font-weight: 500;
+    font-size: 12px; color: var(--color-neutral-dark3);
+  }
+  .axis-head .material-symbols-outlined { font-size: 16px; color: var(--color-neutral-dark1); }
+  .axis-head .pill {
+    margin-left: auto;
+    font-family: var(--font-mono-family); font-weight: 500;
+    font-size: 11px; line-height: 1;
+    background: var(--color-neutral-light2);
+    color: var(--color-neutral-dark3);
+    padding: 3px 6px; border-radius: 4px;
+  }
+
+  /* Checkbox row */
+  .check-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 4px 0;
+  }
+  .check-row .left { display: flex; align-items: center; gap: 10px; }
+  .check-row .left .lbl {
+    font-family: var(--font-body-family); font-size: 14px; line-height: 20px;
+    color: var(--color-neutral-dark3);
+  }
+  .sub-check {
+    margin-left: 26px; display: flex; align-items: center; gap: 8px;
+    padding: 2px 0;
+  }
+  .sub-check .lbl {
+    font-family: var(--font-body-family); font-size: 12px; line-height: 16px;
+    color: var(--color-neutral-dark1);
+  }
+  .cbx {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 1.5px solid var(--color-neutral-light1);
+    background: #fff; cursor: pointer; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--motion-fast-2), border-color var(--motion-fast-2);
+  }
+  .cbx.sm { width: 14px; height: 14px; border-radius: 3px; }
+  .cbx.on {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  .cbx.on .material-symbols-outlined { color: #fff; font-size: 14px; font-weight: 700; }
+  .cbx.sm.on .material-symbols-outlined { font-size: 11px; }
+  .cbx:not(.on) .material-symbols-outlined { display: none; }
+  .cbx:focus-visible { outline: 0; box-shadow: var(--shadow-focus); }
+
+  /* Select */
+  .select-wrap { position: relative; }
+  .select {
+    width: 100%; height: 40px; padding: 0 36px 0 12px;
+    border-radius: 8px; border: 1px solid var(--color-neutral-light1);
+    background: #fff; appearance: none; -webkit-appearance: none;
+    font-family: var(--font-body-family); font-size: 14px;
+    color: var(--color-neutral-dark3); cursor: pointer;
+    transition: border-color var(--motion-fast-2), box-shadow var(--motion-fast-2);
+  }
+  .select:hover { border-color: var(--color-neutral-dark1); }
+  .select:focus {
+    outline: 0; border-color: var(--color-primary);
+    box-shadow: var(--shadow-focus);
+  }
+  .select-wrap .chev {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; color: var(--color-neutral-dark1); font-size: 20px;
+  }
+
+  /* Footer actions */
+  .panel-foot {
+    border-top: 1px solid var(--color-neutral-light2);
+    padding: 16px 24px;
+    display: flex; gap: 8px; background: var(--color-neutral-light3);
+  }
+  .btn {
+    height: 40px; padding: 0 16px; border-radius: 8px;
+    font-family: var(--font-display-family); font-weight: 700; font-size: 14px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; border: 1px solid transparent;
+    transition: background var(--motion-moderate-1), color var(--motion-moderate-1), border-color var(--motion-moderate-1);
+  }
+  .btn.fill { background: var(--color-primary); color: #fff; }
+  .btn.fill:hover { background: var(--color-primary-dark1); }
+  .btn.outline { background: #fff; color: var(--color-primary); border-color: var(--color-primary); }
+  .btn.outline:hover { background: var(--color-primary-light3); }
+  .btn.full { flex: 1; }
+
+  /* Tooltip-y "saved" toast preview at base of doc */
+  .savedchip {
+    position: fixed; bottom: 24px; left: 24px;
+    background: var(--color-neutral-dark3); color: #fff;
+    padding: 10px 16px; border-radius: 999px;
+    font-family: var(--font-body-family); font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: var(--shadow-down-medium);
+    opacity: 0; transform: translateY(8px);
+    transition: opacity var(--motion-moderate-2), transform var(--motion-moderate-2);
+    pointer-events: none;
+  }
+  .savedchip.show { opacity: 1; transform: translateY(0); }
+  .savedchip .material-symbols-outlined { color: #39D881; font-size: 18px; }
+
+  @media (max-width: 900px) {
+    .docstage { right: 0; opacity: 0.4; }
+    .panel { width: 100%; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar (kept simple, mirrors original look in Eleva indigo) -->
+<header class="topbar">
+  <div class="left">
+    <button class="iconbtn" id="backBtn" aria-label="Voltar">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <span style="font-family: var(--font-display-family); font-weight: 700; color: #fff; font-size: 16px; letter-spacing: 0.01em;">Document Builder</span>
+  </div>
+  <div class="right">
+    <button class="iconbtn active" id="cogBtn" aria-label="Configurações da página">
+      <span class="material-symbols-outlined">settings</span>
+    </button>
+    <button class="btn minimize" id="minimizeBtn" aria-label="Minimizar páginas">
+      <span class="material-symbols-outlined" style="font-size:18px;">compress</span>
+      Minimizar páginas
+    </button>
+    <button class="btn ghost" id="printBtn">
+      <span class="material-symbols-outlined" style="font-size:18px;">print</span>
+      Imprimir
+    </button>
+    <button class="btn primary" id="savePdfBtn">
+      <span class="material-symbols-outlined" style="font-size:18px;">picture_as_pdf</span>
+      Salvar PDF
+    </button>
+  </div>
+</header>
+
+<!-- Page count indicator (visible at left edge of the dark canvas) -->
+<div class="pagestack" id="pagestack" aria-live="polite">
+  <div>
+    <div class="pc-num" id="pcNum">7</div>
+    <div class="pc-lbl">páginas</div>
+  </div>
+  <div class="pc-dots" id="pcDots">
+    <div class="pc-dot"></div>
+    <div class="pc-dot"></div>
+    <div class="pc-dot"></div>
+    <div class="pc-dot"></div>
+    <div class="pc-dot"></div>
+    <div class="pc-dot"></div>
+    <div class="pc-dot"></div>
+  </div>
+</div>
+
+<!-- Document mock behind the panel -->
+<div class="docstage">
+  <div class="docpage">
+    <div class="row-flex" style="margin-bottom: 16px;">
+      <div class="placeholder-box">60 × 60</div>
+      <div class="meta">
+        <strong>Escola Estadual Exemplo</strong>
+        Rua das Flores, 123 — Centro — São Paulo/SP<br/>
+        Telefone: (11) 1234-5678 · CNPJ: 00.000.000/0001-00
+      </div>
+    </div>
+    <hr/>
+    <div class="doc-h1">RELATÓRIO DE NOTAS — PAISAGEM</div>
+    <div style="border:1px solid var(--color-neutral-light2); border-radius: 6px; padding: 12px 16px; margin-bottom: 16px;">
+      <div style="font-size:11px; color: var(--color-primary); font-weight:600; margin-bottom: 4px;">Período letivo</div>
+      <div style="font-family: var(--font-body-family); font-size: 14px;">2024</div>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Aluno(a)</th><th>Nota 1</th><th>Nota 2</th><th>Média</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Aluno 01</td><td>7,0</td><td>6,2</td><td>7,1</td></tr>
+        <tr><td>2</td><td>Aluno 02</td><td>8,1</td><td>7,3</td><td>8,2</td></tr>
+        <tr><td>3</td><td>Aluno 03</td><td>9,2</td><td>8,4</td><td>7,3</td></tr>
+        <tr><td>4</td><td>Aluno 04</td><td>7,3</td><td>9,5</td><td>8,4</td></tr>
+        <tr><td>5</td><td>Aluno 05</td><td>8,4</td><td>6,6</td><td>7,0</td></tr>
+        <tr><td>6</td><td>Aluno 06</td><td>9,5</td><td>7,7</td><td>8,1</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sig-block">
+      <div class="sig-date" id="sigDate">São Paulo, 12 de Maio de 2026</div>
+      <div class="sig-row center" id="sigRow">
+        <div class="sig-cell">
+          <div class="role">Diretor(a)</div>
+          <div class="name">João da Silva</div>
+        </div>
+        <div class="sig-cell">
+          <div class="role">Secretário(a)</div>
+          <div class="name">Maria Oliveira</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Right panel -->
+<aside class="panel" aria-label="Configuração da página">
+  <div class="panel-head">
+    <div>
+      <h2>Configuração da página</h2>
+      <p class="sub">Ajustes aplicados ao documento atual</p>
+    </div>
+    <button class="closebtn" aria-label="Fechar painel">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+
+  <div class="panel-body">
+
+    <!-- PÁGINA -->
+    <section class="section">
+      <div class="section-head">
+        <span class="iconwrap"><span class="material-symbols-outlined" style="font-size:18px;">description</span></span>
+        <h3>Página</h3>
+      </div>
+
+      <div class="field">
+        <label class="fieldlabel">Orientação</label>
+        <div class="segmented" role="tablist" id="orient">
+          <button class="seg" data-val="retrato" role="tab">
+            <span class="material-symbols-outlined">crop_portrait</span>
+            Retrato
+          </button>
+          <button class="seg on" data-val="paisagem" role="tab">
+            <span class="material-symbols-outlined">crop_landscape</span>
+            Paisagem
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="row">
+          <label class="fieldlabel">Gap entre componentes</label>
+          <span class="value-pill" id="gapVal">12 px</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" class="eleva-range" min="0" max="48" step="2" value="12" id="gap" style="--pct: 25%;" />
+        </div>
+        <div class="range-ticks"><span>0</span><span>24</span><span>48</span></div>
+      </div>
+
+      <div class="field">
+        <div class="row">
+          <label class="fieldlabel">Margem da folha</label>
+          <span class="value-pill" id="margVal">10 px</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" class="eleva-range" min="0" max="48" step="2" value="10" id="marg" style="--pct: 20.8%;" />
+        </div>
+        <div class="range-ticks"><span>0</span><span>24</span><span>48</span></div>
+      </div>
+    </section>
+
+    <!-- TIPOGRAFIA -->
+    <section class="section">
+      <div class="section-head">
+        <span class="iconwrap"><span class="material-symbols-outlined" style="font-size:18px;">text_fields</span></span>
+        <h3>Tipografia</h3>
+      </div>
+
+      <div class="field">
+        <div class="row">
+          <label class="fieldlabel">Tamanho da fonte</label>
+          <span class="value-pill" id="fontVal">10 px</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" class="eleva-range" min="8" max="24" step="1" value="10" id="font" style="--pct: 12.5%;" />
+        </div>
+        <div class="range-ticks"><span>8</span><span>16</span><span>24</span></div>
+      </div>
+    </section>
+
+    <!-- TABELA -->
+    <section class="section">
+      <div class="section-head">
+        <span class="iconwrap"><span class="material-symbols-outlined" style="font-size:18px;">table_chart</span></span>
+        <h3>Tabela</h3>
+      </div>
+
+      <div class="field">
+        <label class="fieldlabel" style="margin-bottom:4px;">Padding das células</label>
+        <div class="cellpad-preview" aria-hidden="true">
+          <span class="mini-cell" id="padPreview"><span class="label">Aluno 01</span></span>
+        </div>
+
+        <div class="pad-axis-row">
+          <div>
+            <div class="axis-head">
+              <span class="material-symbols-outlined">height</span>
+              Vertical
+              <span class="pill" id="padYVal">8 px</span>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" class="eleva-range" min="2" max="24" step="1" value="8" id="padY" style="--pct: 27%;" />
+            </div>
+          </div>
+          <div>
+            <div class="axis-head">
+              <span class="material-symbols-outlined" style="transform: rotate(90deg);">height</span>
+              Horizontal
+              <span class="pill" id="padXVal">12 px</span>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" class="eleva-range" min="2" max="32" step="1" value="12" id="padX" style="--pct: 33%;" />
+            </div>
+          </div>
+        </div>
+
+        <div class="segmented" id="padPreset" style="grid-template-columns: 1fr 1fr 1fr; margin-top: 12px;">
+          <button class="seg" data-y="4" data-x="6" type="button">Compacto</button>
+          <button class="seg on" data-y="8" data-x="12" type="button">Padrão</button>
+          <button class="seg" data-y="14" data-x="20" type="button">Confortável</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ELEMENTOS -->
+    <section class="section">
+      <div class="section-head">
+        <span class="iconwrap"><span class="material-symbols-outlined" style="font-size:18px;">view_agenda</span></span>
+        <h3>Elementos</h3>
+      </div>
+
+      <div class="check-row">
+        <div class="left">
+          <button class="cbx on" data-cb="header" aria-pressed="true" aria-label="Cabeçalho">
+            <span class="material-symbols-outlined">check</span>
+          </button>
+          <span class="lbl">Cabeçalho</span>
+        </div>
+      </div>
+      <div class="sub-check">
+        <button class="cbx sm on" data-cb="headerAll" aria-pressed="true" aria-label="Cabeçalho em todas as páginas">
+          <span class="material-symbols-outlined">check</span>
+        </button>
+        <span class="lbl">Em todas as páginas</span>
+      </div>
+
+      <div class="check-row" style="margin-top:8px;">
+        <div class="left">
+          <button class="cbx on" data-cb="footer" aria-pressed="true" aria-label="Rodapé">
+            <span class="material-symbols-outlined">check</span>
+          </button>
+          <span class="lbl">Rodapé</span>
+        </div>
+      </div>
+
+      <div class="check-row" style="margin-top:8px;">
+        <div class="left">
+          <button class="cbx on" data-cb="sign" aria-pressed="true" aria-label="Assinaturas">
+            <span class="material-symbols-outlined">check</span>
+          </button>
+          <span class="lbl">Assinaturas</span>
+        </div>
+      </div>
+      <div class="sub-check">
+        <button class="cbx sm" data-cb="signAll" aria-pressed="false" aria-label="Assinaturas em todas as páginas">
+          <span class="material-symbols-outlined">check</span>
+        </button>
+        <span class="lbl">Em todas as páginas</span>
+      </div>
+    </section>
+
+    <!-- ASSINATURAS -->
+    <section class="section">
+      <div class="section-head">
+        <span class="iconwrap"><span class="material-symbols-outlined" style="font-size:18px;">draw</span></span>
+        <h3>Assinaturas</h3>
+      </div>
+
+      <div class="field">
+        <label class="fieldlabel">Posição da data e local</label>
+        <div class="segmented" id="sigDatePos" style="grid-template-columns: 1fr 1fr 1fr;" role="tablist">
+          <button class="seg icon-only" data-val="left" role="tab" aria-label="Esquerda">
+            <span class="material-symbols-outlined">format_align_left</span>
+          </button>
+          <button class="seg icon-only on" data-val="center" role="tab" aria-label="Centro">
+            <span class="material-symbols-outlined">format_align_center</span>
+          </button>
+          <button class="seg icon-only" data-val="right" role="tab" aria-label="Direita">
+            <span class="material-symbols-outlined">format_align_right</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="fieldlabel">Alinhamento das assinaturas</label>
+        <div class="segmented" id="sigAlign" style="grid-template-columns: 1fr 1fr 1fr;" role="tablist">
+          <button class="seg icon-only" data-val="left" role="tab" aria-label="Esquerda">
+            <span class="material-symbols-outlined">align_horizontal_left</span>
+          </button>
+          <button class="seg icon-only on" data-val="center" role="tab" aria-label="Centro">
+            <span class="material-symbols-outlined">align_horizontal_center</span>
+          </button>
+          <button class="seg icon-only" data-val="right" role="tab" aria-label="Direita">
+            <span class="material-symbols-outlined">align_horizontal_right</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="row">
+          <label class="fieldlabel">Espaçamento entre assinaturas</label>
+          <span class="value-pill" id="sigGapVal">48 px</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" class="eleva-range" min="8" max="160" step="4" value="48" id="sigGap" style="--pct: 26.3%;" />
+        </div>
+        <div class="range-ticks"><span>8</span><span>84</span><span>160</span></div>
+      </div>
+
+      <div class="check-row" style="margin-top: 4px;">
+        <div class="left">
+          <button class="cbx on" data-cb="sigRole" id="sigRoleToggle" aria-pressed="true" aria-label="Exibir cargo">
+            <span class="material-symbols-outlined">check</span>
+          </button>
+          <span class="lbl">Exibir cargo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPORTAÇÃO -->
+    <section class="section">
+      <div class="section-head">
+        <span class="iconwrap"><span class="material-symbols-outlined" style="font-size:18px;">file_save</span></span>
+        <h3>Exportação</h3>
+      </div>
+
+      <div class="field">
+        <label class="fieldlabel" for="qual">Qualidade do PDF</label>
+        <div class="select-wrap">
+          <select class="select" id="qual">
+            <option>Padrão</option>
+            <option>Alta</option>
+            <option>Máxima</option>
+          </select>
+          <span class="material-symbols-outlined chev">expand_more</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="fieldlabel" for="strat">Estratégia</label>
+        <div class="select-wrap">
+          <select class="select" id="strat">
+            <option>CSS (nativo)</option>
+            <option>Canvas</option>
+            <option>Híbrido</option>
+          </select>
+          <span class="material-symbols-outlined chev">expand_more</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="panel-foot">
+    <button class="btn outline full" id="resetBtn">
+      <span class="material-symbols-outlined" style="font-size:18px;">refresh</span>
+      Restaurar
+    </button>
+    <button class="btn fill full" id="applyBtn">
+      <span class="material-symbols-outlined" style="font-size:18px;">check</span>
+      Aplicar
+    </button>
+  </div>
+</aside>
+
+<div class="savedchip" id="savedchip">
+  <span class="material-symbols-outlined">check_circle</span>
+  Configurações aplicadas
+</div>
+
+<!-- ── Minimize pages modal ───────────────────────────────────────── -->
+<div class="min-overlay" id="minOverlay" data-state="running" aria-hidden="true">
+  <div class="min-backdrop"></div>
+  <div class="min-modal" role="dialog" aria-labelledby="minTitle" aria-modal="false">
+
+    <header class="min-head">
+      <span class="leadicon" id="minLeadIcon">
+        <span class="material-symbols-outlined">compress</span>
+      </span>
+      <h2 id="minTitle">
+        <span id="minTitleText">Minimizando páginas…</span>
+        <span class="sub" id="minTitleSub">Testando configurações ótimas</span>
+      </h2>
+      <button class="closebtn" id="minClose" aria-label="Fechar">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </header>
+
+    <!-- RUNNING state -->
+    <div class="min-running">
+      <div class="min-progress">
+        <div class="min-bar"><div class="min-bar-fill" id="minBarFill" style="width: 0%;"></div></div>
+        <div class="min-progress-text"><span id="minStepNow">0</span>/<span id="minStepTotal">7</span></div>
+      </div>
+      <div class="min-phases" id="minPhases"></div>
+    </div>
+
+    <!-- DONE-SUCCESS state -->
+    <div class="min-done-success">
+      <div class="min-result-iconbig">
+        <span class="material-symbols-outlined">check_circle</span>
+      </div>
+      <div class="min-result-title">Minimização concluída</div>
+      <div class="min-result-big">
+        <span class="from">7</span>
+        <span class="arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+        <span class="to">4</span>
+        <span class="unit">páginas</span>
+      </div>
+      <div class="min-result-list-title">Ajustes aplicados</div>
+      <div class="min-result-list">
+        <div class="min-result-item">
+          <span class="k">Gap entre componentes</span>
+          <span class="v"><span class="from-v">8 px</span><span class="arr">→</span><span class="to-v">0 px</span></span>
+        </div>
+        <div class="min-result-item">
+          <span class="k">Padding das células</span>
+          <span class="v"><span class="from-v">4 px</span><span class="arr">→</span><span class="to-v">2 px</span></span>
+        </div>
+        <div class="min-result-item">
+          <span class="k">Margem da página</span>
+          <span class="v"><span class="from-v">10 px</span><span class="arr">→</span><span class="to-v">6 px</span></span>
+        </div>
+      </div>
+      <div class="min-result-foot">
+        <button class="btn outline" id="minUndoBtn">
+          <span class="material-symbols-outlined" style="font-size:18px;">undo</span>
+          Desfazer
+        </button>
+        <button class="btn fill" id="minCloseDoneBtn">
+          <span class="material-symbols-outlined" style="font-size:18px;">check</span>
+          Fechar
+        </button>
+      </div>
+    </div>
+
+    <!-- DONE-NONE state -->
+    <div class="min-done-none">
+      <div class="min-result-iconbig info">
+        <span class="material-symbols-outlined">info</span>
+      </div>
+      <div class="min-result-title">Nenhuma redução possível</div>
+      <div class="min-result-sub">Todas as configurações já estão no mínimo possível para este documento.</div>
+      <div class="min-result-foot">
+        <button class="btn fill full" id="minCloseNoneBtn">Fechar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  // Sliders: keep value pill + track fill in sync
+  function wireSlider(id, pillId, unit) {
+    const r = document.getElementById(id);
+    const p = document.getElementById(pillId);
+    const update = () => {
+      const pct = ((r.value - r.min) / (r.max - r.min)) * 100;
+      r.style.setProperty('--pct', pct + '%');
+      p.textContent = r.value + ' ' + unit;
+    };
+    r.addEventListener('input', update);
+    update();
+  }
+  wireSlider('gap', 'gapVal', 'px');
+  wireSlider('marg', 'margVal', 'px');
+  wireSlider('font', 'fontVal', 'px');
+
+  // Table cell padding — live preview on mini-cell + real doc table
+  const docPage = document.querySelector('.docpage');
+  const padPreview = document.getElementById('padPreview');
+  function syncCellPadding() {
+    const y = document.getElementById('padY').value;
+    const x = document.getElementById('padX').value;
+    document.getElementById('padYVal').textContent = y + ' px';
+    document.getElementById('padXVal').textContent = x + ' px';
+    padPreview.style.setProperty('--prev-pad-y', y + 'px');
+    padPreview.style.setProperty('--prev-pad-x', x + 'px');
+    docPage.style.setProperty('--cell-pad-y', y + 'px');
+    docPage.style.setProperty('--cell-pad-x', x + 'px');
+    // Mark preset as active if values match
+    document.querySelectorAll('#padPreset .seg').forEach(b => {
+      b.classList.toggle('on', b.dataset.y === y && b.dataset.x === x);
+    });
+  }
+  ['padY','padX'].forEach(id => {
+    const r = document.getElementById(id);
+    r.addEventListener('input', () => {
+      const pct = ((r.value - r.min) / (r.max - r.min)) * 100;
+      r.style.setProperty('--pct', pct + '%');
+      syncCellPadding();
+    });
+  });
+  document.querySelectorAll('#padPreset .seg').forEach(b => {
+    b.addEventListener('click', () => {
+      const y = b.dataset.y, x = b.dataset.x;
+      const rY = document.getElementById('padY');
+      const rX = document.getElementById('padX');
+      rY.value = y; rX.value = x;
+      rY.style.setProperty('--pct', ((y - rY.min) / (rY.max - rY.min) * 100) + '%');
+      rX.style.setProperty('--pct', ((x - rX.min) / (rX.max - rX.min) * 100) + '%');
+      syncCellPadding();
+    });
+  });
+  syncCellPadding();
+
+  // ── Assinaturas ────────────────────────────────────────
+  const sigDateEl = document.getElementById('sigDate');
+  const sigRowEl = document.getElementById('sigRow');
+
+  document.querySelectorAll('#sigDatePos .seg').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#sigDatePos .seg').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      const v = b.dataset.val;
+      sigDateEl.style.setProperty('--sig-date-align', v === 'left' ? 'left' : v === 'right' ? 'right' : 'center');
+    });
+  });
+
+  document.querySelectorAll('#sigAlign .seg').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#sigAlign .seg').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      sigRowEl.classList.remove('left','center','right');
+      sigRowEl.classList.add(b.dataset.val);
+    });
+  });
+
+  const sigGap = document.getElementById('sigGap');
+  const sigGapVal = document.getElementById('sigGapVal');
+  sigGap.addEventListener('input', () => {
+    const pct = ((sigGap.value - sigGap.min) / (sigGap.max - sigGap.min)) * 100;
+    sigGap.style.setProperty('--pct', pct + '%');
+    sigGapVal.textContent = sigGap.value + ' px';
+    sigRowEl.style.setProperty('--sig-gap', sigGap.value + 'px');
+  });
+
+  // Show role toggle — generic .cbx handler already toggles .on; mirror onto cells
+  const sigRoleToggle = document.getElementById('sigRoleToggle');
+  sigRoleToggle.addEventListener('click', () => {
+    // Generic .cbx handler runs AFTER this one and flips .on, so the
+    // post-click state is the inverse of the current .on flag.
+    const willShowRole = !sigRoleToggle.classList.contains('on');
+    sigRowEl.querySelectorAll('.sig-cell').forEach(c => c.classList.toggle('no-role', !willShowRole));
+  });
+
+  // Segmented control
+  document.querySelectorAll('#orient .seg').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#orient .seg').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+    });
+  });
+
+  // Checkboxes
+  document.querySelectorAll('.cbx').forEach(b => {
+    b.addEventListener('click', () => {
+      const on = b.classList.toggle('on');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+
+  // Apply → show saved chip
+  const chip = document.getElementById('savedchip');
+  document.getElementById('applyBtn').addEventListener('click', () => {
+    chip.classList.add('show');
+    clearTimeout(window.__chipT);
+    window.__chipT = setTimeout(() => chip.classList.remove('show'), 2200);
+  });
+
+  // ── Minimize pages flow ────────────────────────────────────────────
+  const minBtn         = document.getElementById('minimizeBtn');
+  const printBtn       = document.getElementById('printBtn');
+  const savePdfBtn     = document.getElementById('savePdfBtn');
+  const minOverlay     = document.getElementById('minOverlay');
+  const minClose       = document.getElementById('minClose');
+  const minPhases      = document.getElementById('minPhases');
+  const minBarFill     = document.getElementById('minBarFill');
+  const minStepNow     = document.getElementById('minStepNow');
+  const minStepTotal   = document.getElementById('minStepTotal');
+  const minTitleText   = document.getElementById('minTitleText');
+  const minTitleSub    = document.getElementById('minTitleSub');
+  const minLeadIcon    = document.getElementById('minLeadIcon').querySelector('.material-symbols-outlined');
+  const minUndoBtn     = document.getElementById('minUndoBtn');
+  const minCloseDoneBtn= document.getElementById('minCloseDoneBtn');
+  const minCloseNoneBtn= document.getElementById('minCloseNoneBtn');
+  const pcNum          = document.getElementById('pcNum');
+  const pcDots         = document.getElementById('pcDots');
+  const pagestack      = document.getElementById('pagestack');
+
+  const PHASES = [
+    { name: 'Espaçamento', steps: [
+      { label: 'Reduzir gap entre componentes', from: 7, to: 5, reduced: true },
+      { label: 'Refinar gap entre componentes', from: 5, to: 5, reduced: false },
+    ]},
+    { name: 'Células da tabela', steps: [
+      { label: 'Padding vertical',   from: 5, to: 5, reduced: false },
+      { label: 'Padding horizontal', from: 5, to: 4, reduced: true },
+    ]},
+    { name: 'Margens', steps: [
+      { label: 'Margem vertical',   from: 4, to: 4, reduced: false },
+      { label: 'Margem horizontal', from: 4, to: 4, reduced: false },
+    ]},
+    { name: 'Fonte', warning: true, steps: [
+      { label: 'Reduzir tamanho da fonte', from: 4, to: 4, reduced: false },
+    ]},
+  ];
+
+  let isOptimized = false;
+  let runTimers = [];
+  let running = false;
+
+  function buildPhases() {
+    minPhases.innerHTML = '';
+    let stepIdx = 0;
+    PHASES.forEach((phase, pi) => {
+      const ph = document.createElement('div');
+      ph.className = 'min-phase';
+      const head = document.createElement('div');
+      head.className = 'min-phase-head';
+      head.innerHTML = `
+        <span class="min-phase-num">FASE ${pi + 1}</span>
+        <span class="min-phase-name">${phase.name}</span>
+        ${phase.warning ? `
+          <span class="min-phase-warning">
+            <span class="material-symbols-outlined">warning</span>
+            impacto visual
+          </span>` : ''}
+      `;
+      ph.appendChild(head);
+      const stepsEl = document.createElement('div');
+      stepsEl.className = 'min-steps';
+      phase.steps.forEach(step => {
+        const s = document.createElement('div');
+        s.className = 'min-step pending';
+        s.dataset.idx = stepIdx;
+        s.style.animationDelay = (60 * stepIdx) + 'ms';
+        s.innerHTML = `
+          <span class="ico"><span class="material-symbols-outlined">circle</span></span>
+          <span class="lbl">${step.label}</span>
+          <span class="result"></span>
+        `;
+        stepsEl.appendChild(s);
+        stepIdx++;
+      });
+      ph.appendChild(stepsEl);
+      minPhases.appendChild(ph);
+    });
+    return stepIdx; // total
+  }
+
+  function setStepState(idx, state, resultText) {
+    const el = minPhases.querySelector(`.min-step[data-idx="${idx}"]`);
+    if (!el) return;
+    el.classList.remove('pending', 'active', 'reduced', 'kept');
+    el.classList.add(state);
+    const ico = el.querySelector('.ico .material-symbols-outlined');
+    const res = el.querySelector('.result');
+    if (state === 'active') { ico.textContent = 'progress_activity'; res.textContent = 'testando…'; }
+    else if (state === 'reduced') { ico.textContent = 'check'; res.textContent = resultText || ''; }
+    else if (state === 'kept')    { ico.textContent = 'remove'; res.textContent = resultText || ''; }
+    else { ico.textContent = 'circle'; res.textContent = ''; }
+  }
+
+  function setPageCount(n) {
+    pcNum.textContent = n;
+    // Visually remove dots from the bottom
+    const dots = pcDots.querySelectorAll('.pc-dot');
+    dots.forEach((d, i) => d.classList.toggle('removed', i >= n));
+    pagestack.classList.add('flashing');
+    setTimeout(() => pagestack.classList.remove('flashing'), 360);
+  }
+
+  function clearTimers() {
+    runTimers.forEach(t => clearTimeout(t));
+    runTimers = [];
+  }
+
+  function openOverlay() {
+    minOverlay.classList.add('show');
+    minOverlay.setAttribute('aria-hidden', 'false');
+    minBtn.classList.add('active');
+  }
+  function closeOverlay() {
+    minOverlay.classList.remove('show');
+    minOverlay.setAttribute('aria-hidden', 'true');
+    minBtn.classList.remove('active');
+  }
+  function setOverlayState(state) {
+    minOverlay.dataset.state = state;
+    if (state === 'running') {
+      minTitleText.textContent = 'Minimizando páginas…';
+      minTitleSub.textContent  = 'Testando configurações ótimas';
+      minLeadIcon.textContent  = 'compress';
+    } else if (state === 'done') {
+      minTitleText.textContent = 'Otimização concluída';
+      minTitleSub.textContent  = 'O documento foi reduzido com sucesso';
+      minLeadIcon.textContent  = 'check_circle';
+    } else if (state === 'none') {
+      minTitleText.textContent = 'Otimização concluída';
+      minTitleSub.textContent  = 'Sem mais ajustes possíveis';
+      minLeadIcon.textContent  = 'info';
+    }
+  }
+
+  function setRunningButtons(isRunning) {
+    [printBtn, savePdfBtn].forEach(b => {
+      if (isRunning) b.setAttribute('disabled', 'disabled');
+      else b.removeAttribute('disabled');
+    });
+  }
+
+  function startRun() {
+    running = true;
+    clearTimers();
+    const total = buildPhases();
+    minStepTotal.textContent = total;
+    minStepNow.textContent = 0;
+    minBarFill.style.width = '0%';
+    setOverlayState('running');
+    setRunningButtons(true);
+    openOverlay();
+
+    // Pre-walk flat list to get global step info
+    const flat = [];
+    PHASES.forEach(ph => ph.steps.forEach(st => flat.push(st)));
+
+    const stepDelay = 900;       // per step duration
+    const activeHold = 600;      // how long step pulses
+    let cumDelay = 320;          // initial settle
+
+    flat.forEach((step, i) => {
+      // mark active
+      runTimers.push(setTimeout(() => {
+        if (!running) return;
+        // mark previous step as final
+        if (i > 0) {
+          const prev = flat[i - 1];
+          setStepState(i - 1, prev.reduced ? 'reduced' : 'kept',
+                       `${prev.from} → ${prev.to} pág.${prev.reduced ? '' : ' (mantido)'}`);
+        }
+        setStepState(i, 'active');
+        minStepNow.textContent = i + 1;
+        minBarFill.style.width = (((i + 1) / flat.length) * 100) + '%';
+        // simulate page change after a small delay
+        if (step.reduced) {
+          runTimers.push(setTimeout(() => { if (running) setPageCount(step.to); }, activeHold));
+        }
+      }, cumDelay));
+      cumDelay += stepDelay;
+    });
+
+    // Finalize last step + show result
+    runTimers.push(setTimeout(() => {
+      if (!running) return;
+      const last = flat[flat.length - 1];
+      setStepState(flat.length - 1, last.reduced ? 'reduced' : 'kept',
+                   `${last.from} → ${last.to} pág.${last.reduced ? '' : ' (mantido)'}`);
+      minBarFill.style.width = '100%';
+    }, cumDelay));
+
+    runTimers.push(setTimeout(() => {
+      if (!running) return;
+      running = false;
+      setRunningButtons(false);
+      const startPages = flat[0].from;
+      const endPages   = flat[flat.length - 1].to;
+      if (endPages < startPages) {
+        isOptimized = true;
+        setOverlayState('done');
+      } else {
+        setOverlayState('none');
+      }
+    }, cumDelay + 700));
+  }
+
+  function startNoReductionRun() {
+    running = true;
+    clearTimers();
+    const total = buildPhases();
+    minStepTotal.textContent = total;
+    minStepNow.textContent = 0;
+    minBarFill.style.width = '0%';
+    setOverlayState('running');
+    setRunningButtons(true);
+    openOverlay();
+
+    const flat = [];
+    PHASES.forEach(ph => ph.steps.forEach(st => flat.push(st)));
+
+    const stepDelay = 480;       // faster sweep — nothing to apply
+    const activeHold = 280;
+    let cumDelay = 280;
+
+    flat.forEach((_step, i) => {
+      runTimers.push(setTimeout(() => {
+        if (!running) return;
+        if (i > 0) setStepState(i - 1, 'kept', '4 → 4 pág. (mantido)');
+        setStepState(i, 'active');
+        minStepNow.textContent = i + 1;
+        minBarFill.style.width = (((i + 1) / flat.length) * 100) + '%';
+      }, cumDelay));
+      cumDelay += stepDelay;
+    });
+
+    runTimers.push(setTimeout(() => {
+      if (!running) return;
+      setStepState(flat.length - 1, 'kept', '4 → 4 pág. (mantido)');
+      minBarFill.style.width = '100%';
+    }, cumDelay));
+
+    runTimers.push(setTimeout(() => {
+      if (!running) return;
+      running = false;
+      setRunningButtons(false);
+      setOverlayState('none');
+    }, cumDelay + 500));
+  }
+
+  // Wire events
+  minBtn.addEventListener('click', () => {
+    if (running) return;
+    if (isOptimized) startNoReductionRun();
+    else             startRun();
+  });
+
+  function cancelRun(closeAfter = true) {
+    running = false;
+    clearTimers();
+    setRunningButtons(false);
+    if (closeAfter) closeOverlay();
+  }
+
+  minClose.addEventListener('click', () => cancelRun(true));
+  minCloseDoneBtn.addEventListener('click', () => closeOverlay());
+  minCloseNoneBtn.addEventListener('click', () => closeOverlay());
+
+  minUndoBtn.addEventListener('click', () => {
+    isOptimized = false;
+    setPageCount(7);
+    closeOverlay();
+    chip.classList.add('show');
+    chip.querySelector('.material-symbols-outlined').textContent = 'undo';
+    const chipText = chip.childNodes[chip.childNodes.length - 1];
+    chipText.textContent = ' Otimização desfeita';
+    clearTimeout(window.__chipT);
+    window.__chipT = setTimeout(() => {
+      chip.classList.remove('show');
+      chip.querySelector('.material-symbols-outlined').textContent = 'check_circle';
+      chipText.textContent = ' Configurações aplicadas';
+    }, 2200);
+  });
+
+  // ESC closes overlay
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && minOverlay.classList.contains('show')) cancelRun(true);
+  });
+</script>
+</body>
+</html>

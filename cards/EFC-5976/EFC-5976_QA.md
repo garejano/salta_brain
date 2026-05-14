@@ -63,12 +63,12 @@ ORDER BY Ordem;
 
 A tabela abaixo lista os dados reais encontrados no banco e qual cenário de teste cada um suporta.
 
-| Rede  | Agrupamento    | Ano  | Flag Separado | Ciclos CF disponíveis                   | Usada em                   |
-| ----- | -------------- | ---- | :-----------: | --------------------------------------- | -------------------------- |
-| Ábaco | 1ª série do EM | 2026 |    ✅ true     | Anual, Semestral, Trimestral, Bimestral | CT-02, CT-07, CT-08, CT-10 |
-| Ábaco | 2ª série do EM | 2026 |    ✅ true     | Semestral                               | CT-11                      |
-| Alfa  | 1ª série do EM | 2026 |    ❌ false    | Anual, Semestral, Trimestral, Bimestral | CT-04                      |
-| Ábaco | 1º ano do EFAI | 2026 |    ❌ false    | nenhum                                  | CT-01, CT-03               |
+| Rede | Agrupamento | Ano | Flag Separado | Ciclos CF disponíveis | Usada em |
+|------|-------------|-----|:---:|---|---|
+| Ábaco | 1ª série do EM | 2026 | ✅ true | Anual, Semestral, Trimestral, Bimestral | CT-02, CT-07, CT-08, CT-10 |
+| Ábaco | 2ª série do EM | 2026 | ✅ true | Semestral | CT-11 |
+| Alfa | 1ª série do EM | 2026 | ❌ false | Anual, Semestral, Trimestral, Bimestral | CT-04 |
+| Ábaco | 1º ano do EFAI | 2026 | ❌ false | nenhum | CT-01, CT-03 |
 
 > **Importante:** Nenhuma `EstruturaAvaliacao` foi configurada ainda com `ItinerarioFormativoCiclo` preenchido em homolog. Isso significa que os cenários CT-05, CT-06 e CT-12 **não têm dados para validação ainda** — eles precisam de setup manual descrito em cada caso de teste.
 
