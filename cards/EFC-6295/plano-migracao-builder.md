@@ -338,3 +338,51 @@ git checkout angular.json package.json   # reverter para estado anterior
 | Erro de compilação TypeScript | tsconfig mais estrito com esbuild | Corrigir erros de tipo que o Webpack ignorava |
 | `Cannot find configuration 'homolog'` | Bug no script (nome errado) | Já corrigido no Passo 4 para `homologation` |
 | Karma tests falhando | Karma não usa o application builder | O builder de test (`karma`) não muda — não deve afetar |
+
+---
+
+## Resultado da Execução (2026-05-21)
+
+### Desvio do Passo 4 — `--output-path.base=` não funciona
+
+O Angular CLI **não aceita** a sintaxe `--output-path.base=<caminho> --output-path.browser=`. Erro:
+```
+Error: Unknown arguments: output-path.base, output-path.browser
+```
+
+**Solução adotada:** em vez de CLI flags, foram criadas duas novas configurações no `angular.json` que já têm o `outputPath` correto para IIS:
+- `production-iis` — igual a `production` mas sem override de `outputPath` (usa o default que aponta para `wwwroot`)
+- `homologation-iis` — idem para homologação
+
+Scripts finais:
+```json
+"prod":   "ng lint && ng build --configuration=production-iis --base-href /estrutura-pedagogica/",
+"homolog":"ng lint && ng build --configuration=homologation-iis --base-href /estrutura-pedagogica/",
+"build":  "ng build --base-href /estrutura-pedagogica/",
+"build-aws": "ng build --base-href /estrutura-pedagogica/"
+```
+
+### Problema adicional — SCSS `node_modules/bootstrap/...`
+
+O esbuild não resolve o prefixo `node_modules/` no Sass. Erro de build:
+```
+Can't find stylesheet to import: @use "node_modules/bootstrap/scss/bootstrap"
+```
+
+Corrigido em `src/styles/bootstrap-custom.scss`:
+```scss
+// antes:
+@use "node_modules/bootstrap/scss/bootstrap";
+// depois:
+@use "bootstrap/scss/bootstrap";
+```
+
+### Bug adicional — `build-aws` com `--configuration=production` hardcoded
+
+Durante a migração, o script `build-aws` ficou com `--configuration=production` hardcoded. O CI executa `npm run build-aws -- --configuration=$STAGE`, gerando dois flags conflitantes. Corrigido para apenas `ng build --base-href /estrutura-pedagogica/`.
+
+### Validação
+
+- `npm run build` → `index.html` em `wwwroot/` (raiz, sem `browser/`) ✓
+- `ng serve --configuration=hot` → compila em ~60s, HMR funcional ✓
+- `@angular/build@20.3.23` já estava instalado como dependência transitiva ✓
