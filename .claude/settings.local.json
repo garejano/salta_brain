@@ -105,7 +105,13 @@
       "Bash(claude.cmd -p \"Diga apenas: funcionou\" --output-format stream-json)",
       "Bash(claude.cmd -p \"Diga apenas: funcionou\" --output-format stream-json --verbose)",
       "Bash(rm src/assets/i18n/en.json src/assets/i18n/pt-BR.json)",
-      "Bash(rmdir src/assets/i18n)"
+      "Bash(rmdir src/assets/i18n)",
+      "Bash(node -e \"try { const p = require\\('./node_modules/@angular/build/package.json'\\); console.log\\('VERSION:', p.version\\); } catch\\(e\\) { console.log\\('NOT FOUND'\\); }\")",
+      "Bash(npm run *)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\projects\\\\estrutura-pedagogica\" -Recurse -File | Where-Object { $_.Name -match \"\\(buildspec|appspec|Jenkinsfile|docker-compose|Dockerfile\\)\" -or $_.Extension -match \"\\(\\\\.tf|\\\\.yml|\\\\.yaml\\)$\" } | Select-Object FullName)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\projects\\\\estrutura-pedagogica\" -Recurse -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -eq \".github\" -or $_.Name -eq \"workflows\" -or $_.Name -eq \".aws\" -or $_.Name -eq \"deploy\" -or $_.Name -eq \"infra\" -or $_.Name -eq \".circleci\" } | Select-Object FullName)",
+      "Bash(grep -r \"\\\\$[A-Z_]*\" \"c:\\\\projects\\\\estrutura-pedagogica\\\\frontend\\\\buildspec.yml\" \"c:\\\\projects\\\\estrutura-pedagogica\\\\backend\\\\BuildCfg\" --include=\"*.sh\" --include=\"*.yml\")",
+      "Bash(grep -oE '\\\\$[A-Z_]+')"
     ],
     "additionalDirectories": [
       "c:\\projects\\notas",
