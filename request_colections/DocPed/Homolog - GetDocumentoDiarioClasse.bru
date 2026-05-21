@@ -1,0 +1,34 @@
+meta {
+  name: Homolog - GetDocumentoDiarioClasse
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://localhost/documentacao-pedagogica/api/diarioclasse/getdocumentodiarioclasse
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "hashAnoLetivo": "e55e2569-481e-4335-a2ee-1302b5fc60bd",
+    "hashRede": "194c063e-7708-40cf-aafe-1d203d0619f5",
+    "hashEscola": "a7d57855-10f2-4e9f-8357-422ac9db70f9",
+    "hashSerie": "60aac762-0961-478d-b42b-a9959604d796",
+    "hashTurma": "02d3d92a-3c58-4e2a-83c4-b81b24dc1802",
+    "hashDisciplina": "a29cfed4-c127-4124-8e67-2ce7afd189f7",
+    "dataInicio": "2025-04-14T03:00:00.000Z",
+    "dataTermino": "2025-06-10T03:00:00.000Z",
+    "exibirNomeProfessor": true,
+    "exibirFrequencia": true,
+    "exibirConteudoMinistrado": true,
+    "exibirRelatorioRendimento": true,
+    "nomeEtapa": ""
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

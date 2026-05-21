@@ -9,10 +9,13 @@ Desenvolvedor full-stack na Salta. Trabalha principalmente nos repositórios lis
 ## Estrutura do repositório
 
 ```
-cards/          # Um diretório por card Jira (EFC-xxx/). Criado e atualizado pelo /jira_sync.
-_EFC-xxx/       # Diretórios legados com anotações manuais de cards (preservar — não sobrescrever).
-_scripts/       # Scripts gerados ou sugeridos durante conversas.
-_archive/       # Arquivos arquivados / histórico.
+cards/           # Um diretório por card Jira (EFC-xxx/). Criado e atualizado pelo /jira_sync.
+_EFC-xxx/        # Diretórios legados com anotações manuais de cards (preservar — não sobrescrever).
+_scripts/        # Scripts gerados ou sugeridos durante conversas.
+_archive/        # Arquivos arquivados / histórico.
+frontend-maps/   # Mapas de frontends Angular gerados pelo /scan-frontend.
+                 #   changelog.md → data do último scan por repositório.
+                 #   <repo>-angular-map.md → estrutura comprimida do frontend (componentes, services, rotas, NgRx).
 repository_map.md  # Guia de repositórios em c:/projects/ — usado pela IA para localizar código.
 ```
 
@@ -34,3 +37,12 @@ repository_map.md  # Guia de repositórios em c:/projects/ — usado pela IA par
 |---------|-----------|
 | `/jira_sync` | Sincroniza cards abertos do Jira para `cards/` |
 | `/repo_map` | Percorre `c:/projects/` e (re)gera `repository_map.md` |
+| `/scan-frontend <path>` | Escaneia um projeto Angular com ts-morph e gera mapa em `frontend-maps/`. Atualiza `changelog.md` e `repository_map.md`. Ver `skill_scan_frontend.md` para detalhes. |
+
+## Frontend maps
+
+Quando for ajudar com código de um frontend Angular:
+
+1. Verificar se existe `frontend-maps/<repo>-angular-map.md`
+2. Checar `frontend-maps/changelog.md` — se o mapa tiver mais de 30 dias, sugerir `/scan-frontend`
+3. Carregar o mapa **antes** de explorar arquivos individuais — evita gastar contexto em leitura de diretórios

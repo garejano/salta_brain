@@ -1,0 +1,23 @@
+meta {
+  name: FIlter_Agrupamentos
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://localhost/estrutura-pedagogica/api/itinerarioformativo/filter-agrupamentos
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "hashAnoLetivo": "ea3695ab-f17b-4905-8034-b8c2a0495c06",
+    "hashRede": "cd72b088-2fda-4600-9f08-c452e107a091"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cards/_EFC-5976/EFC-5976_QA.md",
+                "file": "Sem título.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "EFC-5976_QA"
+              "title": "Sem título"
             }
           }
         ]
@@ -185,6 +185,14 @@
   },
   "active": "7c86c0f61b9ebfb4",
   "lastOpenFiles": [
+    "cards/EFC-6292/EFC-6292-testes-planning.md.tmp.3928.65bd830187ec",
+    "cards/EFC-6292/EFC-6292-testes-planning.md.tmp.3928.7f1ef412156c",
+    "cards/EFC-6292/EFC-6292-testes-planning.md.tmp.3928.fea50a8992ae",
+    "cards/EFC-6292/EFC-6292-testes-planning.md.tmp.3928.359a24de3db4",
+    "cards/EFC-6292/EFC-6292-testes-planning.md",
+    "cards/EFC-6292/EFC-6292-testes-planning.md.tmp.3928.e918b9eb47d4",
+    "repository_map.md.tmp.3928.4c410d8a935e",
+    "Sem título.md",
     "cards/_EFC-5976/EFC-5976_dev.md",
     "cards/EFC-5967/EFC-5967.md",
     "cards/_EFC-5976/duvidas do dev.md",
@@ -206,7 +214,6 @@
     "_archive/EFC-6007.md",
     "_archive/EFC-5973.md",
     "_archive/Cargas Iniciais.md",
-    "_archive",
-    "_inbox"
+    "_archive"
   ]
 }

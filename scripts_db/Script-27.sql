@@ -1,0 +1,1 @@
+select * from Pessoa p where p.Nome like '%Anderson de Jesus%';

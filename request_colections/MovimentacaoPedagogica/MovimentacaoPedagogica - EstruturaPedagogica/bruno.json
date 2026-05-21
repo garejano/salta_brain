@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "MovimentacaoPedagogica - EstruturaPedagogica",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

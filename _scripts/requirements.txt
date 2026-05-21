@@ -1,0 +1,8 @@
+# Dependências Python para _scripts/ do salta_brain
+#
+# scan_angular.py          → sem dependências externas (usa apenas stdlib)
+# bench_scan_frontend.py   → sem dependências externas (invoca `claude` CLI via subprocess)
+# scan-angular.mjs         → requer Node.js: npm install ts-morph
+#
+# Dependências opcionais:
+#   pip install tree-sitter tree-sitter-typescript   # parsing TypeScript por AST real

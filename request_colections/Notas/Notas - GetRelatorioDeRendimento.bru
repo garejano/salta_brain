@@ -1,0 +1,33 @@
+meta {
+  name: Notas - GetRelatorioDeRendimento
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://localhost/notas/api/documentos/getrelatorioderendimento
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.SRlQi4ol5I0Z0_Qrz20wKarBxohKqwhtFmXIxPgD-ja9EqLtq7PN6inOdHIggZCb2leYzZNB0gpVi3sAjYgngS1GMCMWpPP0.WUhdKoffqsIalkl7Lm2Z8w.iXjG8YU2ESVAsNtP2ooHO2b6zEP7p6ge3R6PcdpmjKbu2ovoUsVXnw0moTxwlMM1zP4M_or4HIfI3GofnWpUoYEq865mWrOrzUHM0KCivc7a6K62yP3s8RPeceX6qzNtKJREyNqPvei5iZk1hc8hqSvJMGZHdDHqPg2BAELvWy7-DaQYQeJWiaFouaQlH4q2Sxfc92agqn1dtqpIpZPQN9w6suJjPhweriLyueT0rVr2IuVNfwxR2f5GENCS2e_Z3IExT50c-0nPTeWMhC09Bmn0EcI-pLz2QK_CCOZlCQy4prbM4WbldAybS5Y4Z5kyeKDfVZmdlc29I6QvHZdtedwLqpuJRyvfh1WTcb_FUVmsGurxWIc7R0CxE95vMk4rUtDnRQnm9Y9osXupJ0Nku5l5c8OZddFAqfNVM4pmqVhMa3OLNYaMu9iblo85Y0ERgfwS4nf6SZRiGi48DHGIMrGu3aLm-h8QCFJgHRwvDCX_7UYb0zF30JCu212F16h6Own0i4K6K6bw05Tyv_7zkb1qDIudWlyhzbuebcSVP88U-OFwOyI9kVzGdjlDTwpp.KMSbfTqRp9SQwzlOLAmiwnCZfW0AwACBaRsMuamGoy0
+}
+
+body:json {
+  {
+    "hashOrigemAnoLetivo": "6e730b17-81f4-4486-91b5-e9db0bbcb5d5",
+    "hashOrigemDisciplina": "33ff820f-81ca-4517-b118-1abdb93f58c0",
+    "hashOrigemEscola": "cf3d816e-252a-4566-bfcb-e11f7a6a19c0",
+    "hashOrigemRede": "cd72b088-2fda-4600-9f08-c452e107a091",
+    "hashOrigemSerie": "81DC599D-98EB-4659-BBB1-5B6854C8192F",
+    "hashOrigemTurma": "6479f646-f27c-4d79-abf5-9b7ec1b05d53",
+    "dataInicio": "2025-01-01T20:07:36.680Z",
+    "dataTermino": "2025-10-31T20:07:36.680Z"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,1 @@
+select * from Funcionalidade f where f.Nome like '%Carga%';

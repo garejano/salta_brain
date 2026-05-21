@@ -1,0 +1,300 @@
+{
+  "events": [
+    {
+      "type": "wide-table-measure",
+      "name": "Base Nacional Comum Curricular",
+      "pageContentWidth_px": 1103,
+      "totalRows": 12,
+      "columnGroupCount": 1,
+      "rowHeights_px": [
+        21,
+        21,
+        21,
+        21,
+        21,
+        21,
+        21,
+        21,
+        21,
+        21,
+        21,
+        21
+      ],
+      "totalDataHeight_px": 252,
+      "groups": [
+        {
+          "groupIndex": 0,
+          "columns": [
+            {
+              "header": "Componente Curricular",
+              "width_px": 220
+            },
+            {
+              "header": "Área de Conhecimento",
+              "width_px": 120
+            },
+            {
+              "header": "C.H.",
+              "width_px": 50
+            },
+            {
+              "header": "1º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "1º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "1º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "1º Bimestre / Média",
+              "width_px": 55
+            },
+            {
+              "header": "2º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "2º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "2º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "2º Bimestre / Média",
+              "width_px": 55
+            },
+            {
+              "header": "3º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "3º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "3º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "3º Bimestre / Média",
+              "width_px": 55
+            },
+            {
+              "header": "4º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "4º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "4º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "4º Bimestre / Média",
+              "width_px": 55
+            }
+          ],
+          "totalWidth_px": 1090,
+          "headerHeight_px": 24,
+          "borderBottom_px": 1,
+          "totalHeight_px": 277
+        }
+      ]
+    },
+    {
+      "type": "wide-table-measure",
+      "name": "Parte Diversificada",
+      "pageContentWidth_px": 1103,
+      "totalRows": 3,
+      "columnGroupCount": 1,
+      "rowHeights_px": [
+        21,
+        21,
+        21
+      ],
+      "totalDataHeight_px": 63,
+      "groups": [
+        {
+          "groupIndex": 0,
+          "columns": [
+            {
+              "header": "Componente Curricular",
+              "width_px": 220
+            },
+            {
+              "header": "Área de Conhecimento",
+              "width_px": 120
+            },
+            {
+              "header": "C.H.",
+              "width_px": 50
+            },
+            {
+              "header": "1º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "1º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "1º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "1º Bimestre / Média",
+              "width_px": 55
+            },
+            {
+              "header": "2º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "2º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "2º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "2º Bimestre / Média",
+              "width_px": 55
+            },
+            {
+              "header": "3º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "3º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "3º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "3º Bimestre / Média",
+              "width_px": 55
+            },
+            {
+              "header": "4º Bimestre / N1",
+              "width_px": 40
+            },
+            {
+              "header": "4º Bimestre / N2",
+              "width_px": 40
+            },
+            {
+              "header": "4º Bimestre / N3",
+              "width_px": 40
+            },
+            {
+              "header": "4º Bimestre / Média",
+              "width_px": 55
+            }
+          ],
+          "totalWidth_px": 1090,
+          "headerHeight_px": 24,
+          "borderBottom_px": 1,
+          "totalHeight_px": 88
+        }
+      ]
+    },
+    {
+      "type": "layout-start",
+      "componentCount": 9,
+      "firstPageHeight_px": 676,
+      "otherPageHeight_px": 676,
+      "signatureHeight_px": 120,
+      "signatureOnAllPages": false
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Identificação",
+      "height_px": 36,
+      "freeSpaceBefore_px": 676,
+      "freeSpaceAfter_px": 640
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Turma",
+      "height_px": 36,
+      "freeSpaceBefore_px": 640,
+      "freeSpaceAfter_px": 604
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Seção — Base Nacional Comum Curricular",
+      "height_px": 40,
+      "freeSpaceBefore_px": 604,
+      "freeSpaceAfter_px": 564
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Grade — Base Nacional Comum Curricular",
+      "height_px": 287,
+      "freeSpaceBefore_px": 564,
+      "freeSpaceAfter_px": 277
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Seção — Parte Diversificada",
+      "height_px": 40,
+      "freeSpaceBefore_px": 277,
+      "freeSpaceAfter_px": 237
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Grade — Parte Diversificada",
+      "height_px": 98,
+      "freeSpaceBefore_px": 237,
+      "freeSpaceAfter_px": 139
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Legenda",
+      "height_px": 36,
+      "freeSpaceBefore_px": 139,
+      "freeSpaceAfter_px": 103
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Resumo",
+      "height_px": 36,
+      "freeSpaceBefore_px": 103,
+      "freeSpaceAfter_px": 67
+    },
+    {
+      "type": "layout-place",
+      "pageIndex": 0,
+      "component": "Observações",
+      "height_px": 46,
+      "freeSpaceBefore_px": 67,
+      "freeSpaceAfter_px": 21
+    },
+    {
+      "type": "layout-signature",
+      "action": "new-page-created",
+      "pageIndex": 1,
+      "freeSpaceAvailable_px": 21,
+      "signatureHeight_px": 120
+    }
+  ]
+}

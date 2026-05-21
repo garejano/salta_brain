@@ -1,0 +1,26 @@
+meta {
+  name: Filter Rede
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://localhost/estrutura-pedagogica/api/alteracaodecarga/get-professores
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "hashAnoLetivo": "6e730b17-81f4-4486-91b5-e9db0bbcb5d5",
+    "hashRede": "281c9abf-3a98-479b-beb6-fd2fa3f0b828",
+    "hashEscola": "f38f6cee-46c5-45db-8394-e93cb338d68c",
+    "hashProfessor": null,
+    "pagina": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Enfileirar
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://localhost/processador-boletim/api/consultaprocessamentoboletim/enfileirar
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "hashAnoLetivo": "6e730b17-81f4-4486-91b5-e9db0bbcb5d5",
+    "hashRede": null,
+    "hashEscola": null,
+    "hashAgrupamento": null,
+    "pagina": 1,
+    "hashProcessamentoBoletim": [
+      "d52aefe3-b4f2-4943-91d0-0787e7abf0c1"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

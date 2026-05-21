@@ -1,0 +1,25 @@
+meta {
+  name: Filter Professor
+  type: http
+  seq: 8
+}
+
+post {
+  url: https://localhost/estrutura-pedagogica/api/movimentacaopedagogica/filter-professores
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "hashAnoLetivo": "6e730b17-81f4-4486-91b5-e9db0bbcb5d5",
+    "hashRede": "4f79adec-4d7f-43e8-b4ef-b0172dc000db",
+    "hashEscola": null,
+    "hashProfessor": null
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

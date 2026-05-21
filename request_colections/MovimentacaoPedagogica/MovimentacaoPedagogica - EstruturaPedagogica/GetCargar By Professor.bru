@@ -1,0 +1,24 @@
+meta {
+  name: GetCargar By Professor
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://localhost/estrutura-pedagogica/api/alteracaodecarga/cargas-professor
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "hash": "9109807e-3e5b-4d75-93ab-7e2058dfc6f6",
+    "hashAnoLetivo": "6e730b17-81f4-4486-91b5-e9db0bbcb5d5",
+    "hashRede": "8505aeab-fef1-4cd8-8307-205cca3cfe3c"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

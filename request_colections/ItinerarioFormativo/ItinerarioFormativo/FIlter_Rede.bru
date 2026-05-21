@@ -1,0 +1,22 @@
+meta {
+  name: FIlter_Rede
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://localhost/estrutura-pedagogica/api/itinerarioformativo/filter-rede
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "hashAnoLetivo": "ea3695ab-f17b-4905-8034-b8c2a0495c06"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

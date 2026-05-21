@@ -1,0 +1,33 @@
+meta {
+  name: Notas - FichaIndividual
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://localhost/notas/api/documentos/getfichaindividual
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.hE3KQ3Zd-XSykT4DdLEITJkve7b9i9sR75De9pxQTYVbuEHGOqY2VXXVTcqeNQKAM1FhtGQj9ZiZ8kKxiXm25AiuVd2oewSJ.29PKYJR1eZX7qp-_tzse1g.yxgL1xYyracULczScOgEOQAiiXOr_Yafw6zQpoxHiHBTJ8q6md31TP5hmOAOEHjm3RSfQ684Kh_N6zvlFCyfhLTs-sLV6CA0qmbkEGOfgCVzxl06DRb8MixcO6DQyGY6b_RPmaWW3HP9fibGAyv_zKJBD3-4u8U9FemVcr-wE7BohGU6JwhtoMqpc6ycfz-hc4etiLZVE8AG9QNsS7qg2i4xx2KymCSgcOT_GomTrB2NgLCxnvpGcdv3OAugnUNt9x0_2kp6qZ_VhxSNsYpwPUhQDUuLIrs0yO9Aw3d6jJ5Mrh_D38G6YILwf989gTpoof4TEXcQcgOejhU9WDJyABmt9_QJfSDP2Ij3fjcT55-EdTStdXl9h86zcJD9bHGik1DYMzsO8S0QbfcGqX9Epf_23ATSTM6iao-fd99Z5OLEB4XN2EkMQZrmZFn7KZTW4e1KOCggPwjfRXnfswDrP1RN9FH9uNfqmrCHg9KdIYY498VaYhIhF49geAB1TYwy_3At7nhRdtSKsbAOYYoUtjsF1ae9ndGP7FuRf4gQRml3EcTUHw23yQBsDK5Ozek3.Vtc5pqaJMH5oR1eooWcvKVqBDHFJhsVF3vO2yZYCY50
+}
+
+body:json {
+  { 
+    "hashOrigemAnoLetivo": "6e730b17-81f4-4486-91b5-e9db0bbcb5d5",
+    "hashOrigemDisciplina": "33ff820f-81ca-4517-b118-1abdb93f58c0",
+    "hashOrigemEscola": "cf3d816e-252a-4566-bfcb-e11f7a6a19c0",
+    "hashOrigemRede": "cd72b088-2fda-4600-9f08-c452e107a091",
+    "hashOrigemSerie": "81DC599D-98EB-4659-BBB1-5B6854C8192F",
+    "hashOrigemTurma": "6479f646-f27c-4d79-abf5-9b7ec1b05d53",
+     "dataInicio": "2025-01-01T20:07:36.680Z",
+    "dataTermino": "2025-10-31T20:07:36.680Z"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
