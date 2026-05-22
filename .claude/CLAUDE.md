@@ -39,6 +39,14 @@ repository_map.md  # Guia de repositórios em c:/projects/ — usado pela IA par
 | `/repo_map` | Percorre `c:/projects/` e (re)gera `repository_map.md` |
 | `/scan-frontend <path>` | Escaneia um projeto Angular com ts-morph e gera mapa em `frontend-maps/`. Atualiza `changelog.md` e `repository_map.md`. Ver `skill_scan_frontend.md` para detalhes. |
 
+## Schema do banco (ElevaPortalHomolog) — curiosidades
+
+- **`AlunoEscola.AlunoEscola_key`** é FK para `PessoaEscolaAcesso.Id`, **não** para `Pessoa.Id`.  
+  Para obter o hash do aluno: `AlunoEscola_key → PessoaEscolaAcesso.Id → PessoaEscolaAcesso.PessoaEscola → PessoaEscola.Pessoa → Pessoa.Hash`.
+- **`AnoLetivo.Id`** = o próprio ano (ex: `2026`). O campo `Vigente = 1` indica o ano letivo corrente.  
+  `AlunoEscola.AnoLetivo` armazena diretamente esse valor numérico (ex: `2026`).
+- Tabelas sem sufixo `Id` nas FKs: `Turma.EscolaSerie`, `EscolaSerie.Escola`, `Escola.Rede`, `EscolaSerie.Serie`, `EscolaSerie.AnoLetivo` — todas são IDs diretos, sem o sufixo convencional.
+
 ## Frontend maps
 
 Quando for ajudar com código de um frontend Angular:
