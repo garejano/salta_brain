@@ -115,7 +115,11 @@
       "PowerShell(claude.cmd mcp list 2>&1)",
       "Bash(claude.cmd mcp *)",
       "Bash(Get-Content \"C:\\\\Users\\\\gustavo.arejano\\\\AppData\\\\Roaming\\\\Claude\\\\claude_desktop_config.json\")",
-      "mcp__sqlserver__get_foreign_keys"
+      "mcp__sqlserver__get_foreign_keys",
+      "mcp__sqlserver__list_views",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\projects\\\\pde_salta\\\\cards\\\\EFC-6405\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"ok\")"
     ],
     "additionalDirectories": [
       "c:\\projects\\notas",

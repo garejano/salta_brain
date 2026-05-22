@@ -55,12 +55,20 @@ Banco (ElevaPortalHomolog) → _scripts/db_map/run_all.py → _pde/db_map/ → I
 **Conexão:** mesmos parâmetros do MCP — lidos automaticamente de `%APPDATA%\Claude\claude_desktop_config.json`.  
 Servidor: `belerofonte.eleva.local` | Banco: `ElevaPortalHomolog` | Usuário: `mcp.readonly`
 
-**Quando usar o db_map (em vez do MCP ao vivo):**
+### Regra obrigatória: db_map primeiro, MCP depois
 
-1. Checar `_pde/db_map/changelog.md` — se a extração for < 30 dias, carregar os arquivos relevantes.
-2. Para queries em um domínio: `domains/<dominio>.md` + `schema/joins.yaml`.
-3. Para queries cross-domínio: `schema/tables.yaml` + `schema/relations.yaml`.
-4. Usar MCP ao vivo apenas para dados dinâmicos (contagens, exemplos de valor).
+**Nunca usar o MCP `sqlserver` para explorar schema.** O MCP existe apenas para executar queries já construídas. O contexto de tabelas, colunas e joins deve ser obtido exclusivamente do db_map.
+
+**Fluxo obrigatório para qualquer query:**
+
+1. Checar `_pde/db_map/changelog.md` — se a extração for < 30 dias, o mapa está válido.
+2. Carregar os arquivos relevantes **antes** de escrever qualquer SQL:
+   - Query em um domínio: `domains/<dominio>.md` + `schema/joins.yaml`
+   - Query cross-domínio: `schema/tables.yaml` + `schema/relations.yaml`
+3. Construir a query com base no mapa carregado.
+4. Só então usar o MCP `execute_query` para executar — e apenas para isso.
+
+**O MCP `list_tables`, `describe_table`, `get_foreign_keys` e similares não devem ser usados** enquanto o db_map estiver atualizado. Usá-los é sinal de que o fluxo foi ignorado.
 
 **Para gerar/atualizar o db_map:**
 ```powershell

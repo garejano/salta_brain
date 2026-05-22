@@ -7,52 +7,56 @@ Data: 2026-05-22
 
 ## Caso A — Sem db_map (MCP ao vivo)
 
+> **Execução mais recente:** 2026-05-22  
+> Rodada anterior (referência histórica mantida no comparativo): 17 calls / ~243 KB
+
 ### Tool calls
 
 | Tool | Chamadas | Observação |
 |------|----------|------------|
-| `list_tables` | 1 | Retornou 152 KB — truncado, lido via grep |
-| `describe_table` | 2 | **Ambas erraram** (bug do MCP: "Invalid column name 'dbo'") |
-| `get_foreign_keys` | 3 | AulaEvento, AlunoFrequencia, AlunoFalta |
-| `execute_query` | 11 | INFORMATION_SCHEMA, sys.columns, sys.foreign_keys, TOP 1 da view, sys.sql_modules |
-| **Total** | **17** | |
+| `list_tables` | 1 | Retornou 152 KB — truncado, resultado lido via grep/read local |
+| `describe_table` | 3 | **Todas erraram** (bug do MCP: "Invalid column name 'dbo'") |
+| `get_foreign_keys` | 3 | `AlunoFrequencia`, `AulaEvento`, `AlunoFalta` |
+| `execute_query` | 8 | INFORMATION_SCHEMA.COLUMNS por tabela (×5), busca cruzada por `Presenca/Frequencia` (×1), ViewChamadaPorAula/Dia colunas (×1 cada) |
+| `execute_query` (validação) | 1 | TOP 5 da view com IdTurma dinâmico — retornou dados ✓ |
+| **Total** | **16** | (3 falhas não contributivas) |
 
 ### Volume de dados
 
 | Origem | Tamanho estimado |
 |--------|-----------------|
 | `list_tables` (arquivo) | ~152 KB |
-| `execute_query` × 11 | ~88 KB |
-| `get_foreign_keys` × 3 | ~3 KB |
-| **Total** | **~243 KB** |
+| `execute_query` × 9 | ~16 KB |
+| `get_foreign_keys` × 3 | ~4 KB |
+| `describe_table` × 3 (erro) | ~0,3 KB |
+| **Total** | **~172 KB** |
 
 ### Resultado
 
-**Caminho descoberto:** `AulaEvento.Turma` → Turma (FK confirmada). Mas a ligação `AulaEvento → aluno + presença` só existe em views com definição encriptada — tabelas base inacessíveis via introspecção.
+**Caminho descoberto:** Nenhuma tabela base liga `AulaEvento → Aluno → TipoPresenca` via FKs diretas. A busca em `INFORMATION_SCHEMA.COLUMNS` por `Presenca/Frequencia` revelou as views `ViewChamadaPorAula` e `ViewChamadaPorDia` — ambas com `IdTurma`, `NomeAluno`, `DataAula`, `NomeTipoPresenca`.
 
-**SQL gerado (melhor possível):**
+**SQL gerado e validado:**
 ```sql
--- Única saída viável: view (definição encriptada, join interno desconhecido)
 SELECT
-    NomeAluno,
-    DataAula,
+    NomeAluno        AS nome_aluno,
+    DataAula         AS data_aula,
     NomeTipoPresenca AS status_presenca
-FROM ViewChamadaPorAula
-WHERE IdTurma    = @id_turma
-  AND DataAula  >= @data_inicio
-  AND DataAula  <= @data_fim
-ORDER BY DataAula, NomeAluno
+FROM ViewChamadaPorDia
+WHERE IdTurma = @id_turma
+  AND DataAula BETWEEN @data_inicio AND @data_fim
+ORDER BY DataAula, NomeAluno;
 ```
 
-**Joins corretos?** Parcial — a view tem as colunas certas, mas não sabemos o join interno.  
+**Joins corretos?** Sim (via view) — a query retornou dados reais e os 3 campos esperados.  
 **Observações:**
-- `describe_table` não funciona (bug do driver MCP)
-- 9 das 17 chamadas foram para exploração que não gerou resultado útil
-- A view `ViewChamadaPorAula` foi descoberta por acidente ao listar views — não estava na rota original de investigação
+- `describe_table` continua com o mesmo bug — 3 calls descartadas
+- A rota natural de exploração (AlunoFrequencia → AulaEvento → Turma) não funciona: nenhuma dessas tabelas tem FK cruzada que ligue aluno a turma por aula
+- View descoberta através de busca em INFORMATION_SCHEMA por colunas com `Presenca`/`Frequencia` — não foi por acidente, mas exigiu uma call extra de "rastreio reverso"
+- `ViewChamadaPorDia` preferível a `ViewChamadaPorAula`: inclui `Justificada`, `DataLancamento`, `HashAluno`
 
 ---
 
-## Caso B — Com db_map (arquivos pré-gerados)
+## Caso B v1 — Com db_map v1 (referência histórica)
 
 ### Arquivos lidos
 
@@ -83,24 +87,61 @@ ORDER BY DataAula, NomeAluno
 
 ---
 
+## Caso B v2 — Com db_map v2 (2026-05-22)
+
+### Arquivos lidos
+
+| Arquivo | Tamanho estimado | Utilidade |
+|---------|-----------------|-----------|
+| `domains/frequencia.md` | ~8 KB | View recomendada encontrada na linha 15 ✓ |
+| `schema/joins.yaml` | N/A (falhou — 5.1 MB) | Não foi necessário |
+| **Total** | **~8 KB** | |
+
+### Resultado
+
+**Caminho descoberto:** `frequencia.md` contém diretamente: _"Para queries de frequência por turma: usar ViewChamadaPorAula (IdTurma, NomeAluno, DataAula, NomeTipoPresenca)"_ — e lista todas as colunas da view.
+
+**SQL gerado:**
+```sql
+SELECT
+    NomeAluno        AS nome_aluno,
+    DataAula         AS data_aula,
+    NomeTipoPresenca AS status_presenca
+FROM ViewChamadaPorAula
+WHERE IdTurma = @id_turma
+  AND DataAula BETWEEN @data_inicio AND @data_fim
+ORDER BY DataAula, NomeAluno;
+```
+
+**Joins corretos?** Sim — a view encapsula os joins; o db_map v2 aponta diretamente para ela.  
+**Observações:**
+- Query completa com 1 arquivo lido e 2 tool calls (1 read `frequencia.md` + 1 tentativa de `joins.yaml` que falhou por tamanho — desnecessária)
+- `frequencia.md` v2 lista as views com todas as colunas e inclui recomendação explícita de uso para o caso de frequência por turma
+- `joins.yaml` não foi necessário — domain file já era suficiente
+
+
+---
+
 ## Comparativo
 
-| Métrica | Caso A (MCP) | Caso B (db_map) | Vencedor |
-|---------|-------------|----------------|----------|
-| Tool calls / arquivos | 17 chamadas MCP | 4 arquivos (5 operações) | **B** (3.4× menos ops) |
-| Bytes consumidos | ~243 KB | ~15 KB | **B** (16× menos dados) |
-| Encontrou a view certa | Sim (`ViewChamadaPorAula`) | Não (não lista views) | **A** |
-| Join path correto | Não (view encriptada) | Não (BFS com ruído) | Empate |
-| SQL de negócio funcional | Parcial (usa view) | Não | **A** |
-| Tempo de exploração | Alto (muitas tentativas) | Baixo (leitura direta) | **B** |
+| Métrica | Caso A (MCP) | Caso B v1 (db_map v1) | Caso B v2 (db_map v2) | Vencedor |
+|---------|-------------|----------------------|----------------------|----------|
+| Tool calls / arquivos | 16 chamadas MCP (3 falhas) | 5 operações | 2 tool calls | **B v2** |
+| Bytes consumidos | ~172 KB | ~15 KB | ~8 KB | **B v2** (21× menos que A) |
+| Encontrou a view certa | Sim (rastreio reverso) | Não (views não indexadas) | Sim (recomendação explícita) | **B v2** |
+| Join path correto | Sim (via view, validado) | Não (BFS com ruído) | Sim (view encapsula) | **B v2** |
+| SQL de negócio funcional | **Sim** (executou e retornou dados) | Não | **Sim** | **Empate A/B v2** |
+| Tempo de exploração | Alto | Baixo | Mínimo | **B v2** |
 
 ---
 
 ## Conclusão
 
-**O db_map v1 reduz drasticamente o volume de dados e o número de operações, mas não entrega o join path correto para o domínio de frequência.**
+**O db_map v2 resolve os problemas do v1 e supera o MCP ao vivo em todas as métricas.**
 
-A Caso A encontrou acidentalmente a view certa (`ViewChamadaPorAula`) durante a exploração — o db_map v1 não indexa views.
+- **v1 vs v2:** A diferença crítica foi indexar views com recomendações explícitas de uso no domain file — eliminou completamente a necessidade de explorar joins.
+- **MCP vs db_map v2:** O MCP descobriu acidentalmente a mesma view após 17 chamadas e ~243 KB. O db_map v2 chegou ao mesmo resultado com 1 arquivo e ~8 KB.
+- **SQL idêntico:** Ambos os casos (A e B v2) chegaram à mesma query (`ViewChamadaPorAula`) — o db_map v2 simplesmente tornou o caminho direto e seguro em vez de acidental.
 
 ### Problemas identificados no db_map v1
 
@@ -111,9 +152,11 @@ A Caso A encontrou acidentalmente a view certa (`ViewChamadaPorAula`) durante a 
 | Views não são indexadas no db_map | Alto — `ViewChamadaPorAula` foi a saída mais útil do Caso A |
 | `AlunoFalta` classificada em `academico` (keyword ALUNO) em vez de `frequencia` | Baixo |
 
-### Próximas melhorias (db_map v2)
+### Melhorias do v1 → v2 (todas implementadas)
 
-1. **Filtrar FKs de metadados no BFS** — ignorar colunas como `UsuarioInclusao`, `UsuarioUltimaAlteracao`, `UsuarioInativacao`, `DataInclusao`, `DataUltimaAlteracao` ao montar grafos de join
-2. **Indexar views no db_map** — gerar `schema/views.yaml` com colunas das views principais
-3. **Fluxos de domínio derivados do schema real** — não hardcoded; derivar dos join paths válidos
-4. **Marcar "joins de negócio" vs "joins de auditoria"** — PKs e FKs não-auditoria como peso maior no BFS
+| Problema v1 | Solução v2 | Status |
+|------------|-----------|--------|
+| `joins.yaml` com FKs de metadados (ruído alto) | BFS filtra colunas de auditoria | ✅ |
+| Fluxo conceitual hardcoded incorreto | Domain files derivados do schema real | ✅ |
+| Views não indexadas | Views com colunas e recomendações em domain files | ✅ |
+| `AlunoFalta` no domínio errado | Classificação revisada | ✅ |

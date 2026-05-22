@@ -1,3 +1,8 @@
+## 2026-05-22 13:57
+- Banco: `ElevaPortalHomolog` em `belerofonte.eleva.local` (usuário: `mcp.readonly`)
+- Tabelas: 1204  |  FKs: 2949  |  Views: 468
+- Tempo de extração: 41.6s
+
 ## 2026-05-22 13:54
 - Banco: `ElevaPortalHomolog` em `belerofonte.eleva.local` (usuário: `mcp.readonly`)
 - Tabelas: 1204  |  FKs: 2949  |  Views: 468
