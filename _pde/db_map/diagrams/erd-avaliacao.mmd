@@ -4,7 +4,6 @@ graph TD
   AlunoNota --> TipoJustificativaNota
   AlunoNota --> Avaliacao
   AlunoNota --> TipoNotaFormativa
-  AlunoNota --> ProdutoLancamentoNota
   AlunoNotaDetalhamento --> Avaliacao
   AlunoNotaLinha --> AlunoNota
   AlunoNotaRecomendacao --> Avaliacao
@@ -49,8 +48,6 @@ graph TD
   EstruturaAvaliacaoImportacaoEstrutura --> TipoAvaliacao
   EstruturaAvaliacaoImportacaoSerie --> EstruturaAvaliacaoImportacao
   EstruturaAvaliacaoSubstituicao --> EstruturaAvaliacao
-  LancamentoNotasBusca --> TipoAvaliacao
-  LancamentoNotasStatusPorTurma --> Avaliacao
   MediaAvaliacaoEscola --> Avaliacao
   NotaFormativa --> TipoNotaFormativa
   PesquisaNotaAvaliacao --> NotaAvaliacao
@@ -67,7 +64,6 @@ graph TD
   AlunoNotaEscolaEleva
   AlunoNota_bkp
   AvaliacaoEditora
-  BaseDeLancamentoNotas
   BaseDeNotas
   EstruturaAvaliacaoLiberacaoBoletim
   EstruturaAvaliacaoLiberacaoSituacao
@@ -84,7 +80,6 @@ graph TD
   ProcessamentoBaseAvaliacoes
   RedacaoNotaCache
   RelatorioAlunoNotaEE
-  RelatorioLancamentoNotasEscolaEleva
   TemporalNotasTRIEscola
   TemporalNotasTRIRede
   logAlunoNota

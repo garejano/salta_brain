@@ -1,7 +1,9 @@
 graph TD
   AlunoAvaliacaoPresenca --> Chamada
   AlunoAvaliacaoPresenca --> TipoPresenca
+  AlunoFalta --> TipoPresenca
   AlunoFrequencia --> TipoFrequencia
+  Aula_LancamentoComportamento --> LancamentoComportamento
   AulaEvento --> TipoAulaEvento
   AulaEventoAnotacoes --> AulaEvento
   AulaEventoDeverDeCasa --> AulaEvento
@@ -20,22 +22,31 @@ graph TD
   HistoricoHoraAulaSegmentoPgto --> HoraAulaSegmentoPgto
   HoraAulaPgto --> TipoHoraAula
   HoraAulaSegmentoPgto --> TipoHoraAula
+  LancamentoNotasBusca --> Chamada
+  LancamentoNotasStatusPorTurma --> Chamada
   LIV_FeedbackAula --> LIV_FeedbackCadastroAulas
   LIV_FeedbackAulaRespostas --> LIV_FeedbackAula
+  MonitoriaMonitorPresenca --> TipoAbonoFalta
   MonitoriaMonitorPresenca --> TipoPresenca
   MotivoFrequenciaProfessor --> MotivoFrequenciaProfessor
   MotivoFrequenciaProfessorTipoPresenca --> MotivoFrequenciaProfessor
   MotivoFrequenciaProfessorTipoPresenca --> TipoPresenca
+  ProtocoloLancamento --> Chamada
+  ProtocoloLancamentoAluno --> ProtocoloLancamento
+  ProtocoloLancamentoAluno --> ProtocoloLancamentoStatus
+  ProtocoloLancamentoBusca --> Chamada
   TipoAulaOnlineRede --> TipoAulaOnline
   TipoAulaOnlineRedeSerie --> TipoAulaOnline
   AlunoAvaliacaoPresenca_bkp
   AlunoAvaliacaoPresenca_bkp2
+  AlunoFaltas
+  AlunoJustificativaFalta
   AulaEventoConfiguracao
   AulaEventoPautaMensal
   AulaEventoPautaSemanal
   AulaEventoUltimaAlteracao
   Aula_ComentarioComportamento
-  Aula_LancamentoComportamento
+  BaseDeLancamentoNotas
   DiaSemAula
   DuracaoTempoAula
   HoraAulaPadrao
@@ -48,6 +59,8 @@ graph TD
   PercentualFrequencia
   PercentualFrequenciaLog
   PeriodoLancamentoFrequenciaProfessor
+  ProdutoLancamentoNota
+  RelatorioLancamentoNotasEscolaEleva
   RelatorioLancamentoPresencas
   RelatorioPresencaEE
   RelatorioPresencaEmSimulados

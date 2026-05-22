@@ -1,53 +1,28 @@
 graph TD
   AcessoSeesaw --> Pessoa
-  AcessoSeesaw --> Usuario
   AnamnesePessoa --> Pessoa
-  AnamnesePessoa --> Usuario
   AnamnesePessoaResposta --> AnamnesePessoa
   AnamnesePessoaResposta --> AnamnesePessoaResposta
-  AnamnesePessoaResposta --> Usuario
   AnamnesePessoaRespostaOpcao --> AnamnesePessoaResposta
-  AnamnesePessoaRespostaOpcao --> Usuario
   AtendimentoEspecialistaPessoa --> EspecialistaPessoa
-  AtendimentoEspecialistaPessoa --> Usuario
   AtendimentoPessoa --> Pessoa
-  AtendimentoPessoa --> Usuario
-  ConfiguracaoGlobalUsuario --> Usuario
   ConteudoOnlinePerfil --> PerfilAcesso
-  ConteudoOnlinePerfil --> Usuario
   EspecialistaPessoa --> AnamnesePessoaResposta
   EspecialistaPessoa --> Pessoa
-  EspecialistaPessoa --> Usuario
   ExcecoesDeAcesso --> PerfilAcesso
-  ExcecoesDeAcesso --> Usuario
   FotoPessoa --> Pessoa
-  FotoPessoa --> Usuario
   GrupoPerguntaPerfilAcesso --> PerfilAcesso
-  GrupoPerguntaPerfilAcesso --> Usuario
   LIV_ImportacaoDadosLinhasUsuario --> PerfilAcesso
-  LIV_ImportacaoDadosLinhasUsuario --> Usuario
-  LIV_NotificacaoUsuario --> Usuario
   LIV_PerfilAcessoAcaoMarketing --> PerfilAcesso
   LIV_PerfilAcessoMaterial --> PerfilAcesso
   LIV_PerfilAcessoNoticia --> PerfilAcesso
-  LIV_UsuarioInativo --> Usuario
-  LIV_UsuarioSegmento --> Usuario
-  LogAcesso --> Usuario
   LogAcessoPlataformaAdaptativa --> LogAcessoProduto
   LogAcessoProduto --> LogAcesso
-  LogAcessoResultadoBimestral --> Usuario
   LogUpdateDadosPessoais --> Pessoa
-  LogUpdateDadosPessoais --> Usuario
   LogUpdateFotoPessoa --> Pessoa
-  LogUpdateFotoPessoa --> Usuario
   PerfilAcessoFuncionalidade --> PerfilAcesso
-  PerfilAcessoFuncionalidade --> Usuario
-  PerfilAcessoFuncionalidadeSegmentoAgrupamento --> Usuario
   PerfilAcessoTipoRede --> PerfilAcesso
-  PerfilAcessoTipoRede --> Usuario
   PerfilDeAcessoDoUsuario --> PerfilAcesso
-  PerfilDeAcessoDoUsuario --> Usuario
-  PesquisaOpiniaoUsuario --> Usuario
   PesquisaSatisfacaoUsuario --> PerfilAcesso
   PesquisaSatisfacaoUsuario --> Pessoa
   Pessoa --> Pessoa
@@ -55,55 +30,55 @@ graph TD
   PessoaDadosAlterados --> Pessoa
   PessoaDePara --> Pessoa
   PessoaDocumento --> Pessoa
-  PessoaDocumento --> Usuario
-  PessoaJuridica --> Usuario
   PessoaRedeEmail --> Pessoa
-  PessoaRedeEmail --> Usuario
   PessoaSegmento --> Pessoa
-  PessoaSegmento --> Usuario
   PessoaTelefone --> Pessoa
   POAPessoa --> Pessoa
   ProdutoPermissao --> PerfilAcesso
-  ProdutoPermissao --> Usuario
   ProfessorPerfilVigente --> Pessoa
   ProfessorPerfilVigente --> PessoaTelefone
-  RedeAcesso --> Usuario
   ServicoPerfilAcesso --> PerfilAcesso
-  ServicoPerfilAcesso --> Usuario
   TermosDeUsoRedePerfil --> PerfilAcesso
-  TermosDeUsoRedePerfil --> Usuario
-  Usuario --> Usuario
   Usuario --> Pessoa
-  UsuarioAcessoGuia --> Usuario
-  UsuarioAcessoGuiaFinanceiro --> Usuario
-  UsuarioAuthToken --> Usuario
   UsuarioLinha --> Usuario
-  UsuarioLogarComo --> Usuario
-  UsuarioProdutoDestaque --> Usuario
   UsuarioUltimoFiltro --> UsuarioUltimoFiltro
-  UsuarioVisualizouCampanha --> Usuario
-  UsuarioVisualizouRegraPLAD --> Usuario
   BaseDeAcessos
   BaseDeUsuariosParaMarketing
+  ConfiguracaoGlobalUsuario
   FalhaLogin
   LIV_LOG_Acessos
+  LIV_NotificacaoUsuario
+  LIV_UsuarioInativo
+  LIV_UsuarioSegmento
   LIV_WebinarPerfilAcesso
+  LogAcessoResultadoBimestral
   LogAcessoTipo
   LogInconsistenciaImportacaoPedidoEditora
   POAPessoa_Modulo
+  PerfilAcessoFuncionalidadeSegmentoAgrupamento
   PermissaoCartaoCredito
   PermissaoDW
+  PesquisaOpiniaoUsuario
   PesquisaPublicoPerfilAcesso
   PesquisaResultadoPerfilAcesso
   PessoaEndereco
+  PessoaJuridica
+  RedeAcesso
   RelatorioAcessoFinanceiro
   TempLogUpdateUsuario
   UsuarioAcesso
+  UsuarioAcessoGuia
+  UsuarioAcessoGuiaFinanceiro
+  UsuarioAuthToken
   UsuarioFuncionalidade
   UsuarioLIV
   UsuarioLIVConteudoLIV
+  UsuarioLogarComo
+  UsuarioProdutoDestaque
   UsuarioRede
   UsuarioSismat
+  UsuarioVisualizouCampanha
+  UsuarioVisualizouRegraPLAD
   Usuario_Origem
   Usuario_id_origem
   UsuariosNotificacaoEnvioCartao
