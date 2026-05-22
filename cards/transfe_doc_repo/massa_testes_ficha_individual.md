@@ -6,6 +6,8 @@
 **Banco:** ElevaPortalHomolog  
 
 > **Nota:** Os nomes dos alunos no ambiente de homologação são anonimizados (padrão "LOREM IPSUM"). Isso é esperado — os hashes abaixo são válidos para uso nos requests.
+>
+> **AnoLetivo:** O `documentacao-pedagogica` de homolog está defasado, portanto os cenários de "Cursando" e "Grade Grande" usam dados de **2025**. Aprovado e Reprovado só existem no homolog para **2022** — usar esses dados para validar exibição do resultado final.
 
 ---
 
@@ -39,9 +41,9 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 
 ## Cenários de Teste com Dados Reais
 
-### Cenário 1 — Aluno Cursando (ano letivo vigente 2026)
+### Cenário 1 — Aluno Cursando (AnoLetivo 2025)
 
-**Objetivo:** Validar a ficha de um aluno com matrícula ativa no ano corrente. `ResultadoFinal` deve aparecer como vazio ou "Cursando".
+**Objetivo:** Validar a ficha de um aluno com matrícula ativa. `ResultadoFinal` deve aparecer como vazio ou "Cursando".
 
 | Campo | Valor |
 |---|---|
@@ -49,34 +51,34 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 | Escola | Ipiranga |
 | Turma | 1ª série A - M |
 | HashRede | `A43C39F2-91B7-4425-8921-1849090C1804` |
-| HashTurma | `9FBB71B9-E5E8-467F-BAC0-518128E1E698` |
+| HashTurma | `BD93C9B1-CEA9-41B9-9673-088A3D2D897D` |
 
 **Alunos disponíveis (qualquer um serve):**
 
 | HashAluno | Nome (anonimizado) |
 |---|---|
-| `E52F3658-BE77-4B69-B0B4-F70B476F2A45` | AMALOREM IPSUM... |
-| `95A4C11D-F633-43E2-8CEF-0B3BD00CC100` | CARLOREM IPSUM... |
-| `0B5CE9C9-3A9F-4994-8580-EA871E7268DD` | SOFLOREM IPSUM... |
-| `0169F3F4-896B-485A-84DD-D4AD3642CB06` | ANTLOREM IPSUM... |
+| `72F60410-0C4F-42A3-96E5-1BED54C52774` | MANLOREM IPSUM... |
+| `9F2986F3-B34D-4207-8E70-861D8CE1429E` | CAMLOREM IPSUM... |
+| `3CDC526B-D99A-4E73-B150-878BBA8C9C18` | HELLOREM IPSUM... |
+| `306FA049-ACED-4460-892C-D68CD8886921` | ISALOREM IPSUM... |
 
 **Request pronto:**
 ```json
 {
   "hashRede": "A43C39F2-91B7-4425-8921-1849090C1804",
-  "hashUsuario": "E52F3658-BE77-4B69-B0B4-F70B476F2A45",
-  "hashTurma": "9FBB71B9-E5E8-467F-BAC0-518128E1E698",
+  "hashUsuario": "72F60410-0C4F-42A3-96E5-1BED54C52774",
+  "hashTurma": "BD93C9B1-CEA9-41B9-9673-088A3D2D897D",
   "ativo": true
 }
 ```
 
 ---
 
-### Cenário 2 — Aluno Aprovado (resultado final fechado)
+### Cenário 2 — Aluno Aprovado (AnoLetivo 2022)
 
 **Objetivo:** Validar que "Aprovado" aparece no rodapé e a frequência está preenchida.
 
-> **Observação:** No homolog, registros com `Status = 'Aprovado'` existem apenas no AnoLetivo 2022. Usar esses dados para validar a exibição do resultado final.
+> No homolog, registros com `Status = 'Aprovado'` existem apenas no AnoLetivo 2022.
 
 | Campo | Valor |
 |---|---|
@@ -106,9 +108,11 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 
 ---
 
-### Cenário 3 — Aluno Reprovado
+### Cenário 3 — Aluno Reprovado (AnoLetivo 2022)
 
-**Objetivo:** Validar exibição de resultado "Reprovado" e possível baixa frequência.
+**Objetivo:** Validar exibição de resultado "Reprovado".
+
+> No homolog, o único registro com `Status = 'Reprovado'` é do AnoLetivo 2022.
 
 | Campo | Valor |
 |---|---|
@@ -129,7 +133,7 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 }
 ```
 
-**Alternativa — Em Recuperação:**
+**Alternativa — Em Recuperação (2022):**
 
 | Campo | Valor |
 |---|---|
@@ -142,7 +146,7 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 
 ---
 
-### Cenário 4 — Aluno com Observações Preenchidas
+### Cenário 4 — Aluno com Observações Preenchidas (AnoLetivo 2025)
 
 **Objetivo:** Validar que o campo "Observações" aparece na ficha quando preenchido.
 
@@ -168,77 +172,60 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 }
 ```
 
-**Alternativa (observação diferente):**
-
-| HashAluno | Escola | Observação resumida |
-|---|---|---|
-| `9A7E9DAA-DF3A-4F7B-BD3C-6CA7483993A0` | Mais Belvedere | "Colégio Santa Maria Minas - Unidade Nova Lima, antigo Liceu Santa Maria Imaculada..." |
-
-```json
-{
-  "hashRede": "98CD62E1-0350-4DB8-9181-420BA0EEE1FC",
-  "hashUsuario": "9A7E9DAA-DF3A-4F7B-BD3C-6CA7483993A0",
-  "hashTurma": "D3F751FE-E8C8-4CF0-A700-26977B2F79E8",
-  "ativo": true
-}
-```
-
 ---
 
-### Cenário 5 — Grade Grande (validar quebra de colunas)
+### Cenário 5 — Grade Grande (AnoLetivo 2025, validar quebra de colunas)
 
-**Objetivo:** O LayoutEngine deve quebrar automaticamente quando as colunas não cabem em uma página. Turmas com 40 disciplinas garantem essa quebra.
+**Objetivo:** O LayoutEngine deve quebrar automaticamente quando as colunas não cabem em uma página.
 
-#### Opção A — Rede Nota 10 (40 disciplinas)
+#### Opção A — Rede Embraer / SJC (50 disciplinas) ⭐ recomendada
 
 | Campo | Valor |
 |---|---|
-| Rede | **Nota 10** |
-| Escola | Garças |
-| Turma | Pré-vestibular A - N |
-| HashRede | `73380414-983F-4271-82DF-0CCBF19F08EE` |
-| HashTurma | `2E482BCA-DB0F-445E-8DAF-CA39A1078D73` |
-| QtdDisciplinas | **40** |
+| Rede | **Embraer** |
+| Escola | SJC |
+| Turma | 1ª série C - I |
+| HashRede | `35A4C874-DAD6-48F1-B6F1-7521E8943F5E` |
+| HashTurma | `EF5AAF35-A83E-4C4D-853A-B9D14BC6DF90` |
+| QtdDisciplinas | **50** |
 
 **Alunos disponíveis:**
 
 | HashAluno | Nome (anonimizado) |
 |---|---|
-| `B3B4AF68-628C-4B2E-8095-50443948313F` | ALFLOREM IPSUM... |
-| `A6105B02-1F38-4B16-B997-D99EE4EDCE4B` | ALLLOREM IPSUM... |
-| `9852591A-4C71-4C9A-AA4D-EBBCBA29D89F` | ALLLOREM IPSUM... |
+| `BEC475F4-01F9-4162-A7EA-E7642E8AFFA2` | ANALOREM IPSUM... |
+| `5B96D18D-332E-45D3-83A1-164749327208` | ANALOREM IPSUM... |
+| `0C67A537-F89E-4EA8-803F-5E9070432F8D` | ANALOREM IPSUM... |
 
 **Request pronto:**
 ```json
 {
-  "hashRede": "73380414-983F-4271-82DF-0CCBF19F08EE",
-  "hashUsuario": "B3B4AF68-628C-4B2E-8095-50443948313F",
-  "hashTurma": "2E482BCA-DB0F-445E-8DAF-CA39A1078D73",
+  "hashRede": "35A4C874-DAD6-48F1-B6F1-7521E8943F5E",
+  "hashUsuario": "BEC475F4-01F9-4162-A7EA-E7642E8AFFA2",
+  "hashTurma": "EF5AAF35-A83E-4C4D-853A-B9D14BC6DF90",
   "ativo": true
 }
 ```
 
-#### Opção B — Rede Integrado, Escola Jaó (40 disciplinas)
+#### Opção B — Rede Embraer / Botucatu (48 disciplinas)
 
 | Campo | Valor |
 |---|---|
-| Rede | **Integrado** |
-| Escola | Jaó |
-| Turma | 3ª série A - M |
-| HashRede | `A7D29956-021C-4873-A23D-E1D35C4B040E` |
-| HashTurma | `26CC5191-69F3-4185-9256-C7C9DE157090` |
-| QtdDisciplinas | **40** |
+| Rede | **Embraer** |
+| Escola | Botucatu |
+| Turma | 1ª série B - I |
+| HashRede | `35A4C874-DAD6-48F1-B6F1-7521E8943F5E` |
+| HashTurma | `F4B59F09-74CB-4BC8-85CA-B5455B1F8F6E` |
 
-#### Opção C — Rede Nota 10, Internacional Dourados (36 disciplinas)
+#### Opção C — Rede Nosso CEI / Romualdo Galvão (48 disciplinas)
 
 | Campo | Valor |
 |---|---|
-| Rede | **Nota 10** |
-| Escola | Internacional Dourados |
-| Turma | 1ª série A - I |
-| HashRede | `73380414-983F-4271-82DF-0CCBF19F08EE` |
-| HashTurma | `63D4C6F4-BF98-4C45-9A7E-CD713944FDF2` |
-| QtdDisciplinas | **36** |
+| Rede | **Nosso CEI** |
+| Escola | Romualdo Galvão |
+| Turma | 2ª série B - M |
+| HashRede | `6F2E00CB-95CB-4BC6-BB20-3E20365C7CD1` |
+| HashTurma | `3E259C19-C3F4-4FC0-A9D8-16D46211B9A8` |
 
 ---
 
@@ -246,7 +233,7 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 
 **Objetivo:** Validar que o endpoint `getResumida` retorna estrutura diferente e é renderizado corretamente.
 
-Usar os mesmos pares `(HashRede, HashAluno, HashTurma)` dos cenários anteriores, mas chamar a rota de resumida:
+Usar os mesmos pares dos cenários anteriores com a rota de resumida:
 
 - **Endpoint:** `POST /api/fichaindividual/impressaoresumida`
 - **Request:** mesmo body
