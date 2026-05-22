@@ -1,0 +1,840 @@
+graph TD
+  Agendamento --> ServicoAgendado
+  Agrupamento --> Agrupamento
+  AgrupamentoLegendaRedacao --> LegendaRedacao
+  AgrupamentoLegendaRedacao --> Agrupamento
+  AlocacaoFolha --> DisciplinaFolha
+  AlocacaoFolha --> MotivosSaida
+  AlocacaoFolhaLicenca --> AlocacaoFolha
+  AlocacaoFolhaLicenca --> MotivosSaida
+  AlocacaoFolhaLicenca --> ProfessorLicenca
+  AlocacaoProfessores --> AlocacaoProfessoresEtapa
+  AlocacaoProfessores --> Rede
+  AlocacaoProfessoresLinha --> AlocacaoProfessores
+  AlocacaoProfessoresLinha --> Disciplina
+  AlocacaoRede --> Rede
+  Assunto --> Disciplina
+  Atendimento --> MotivoAtendimento
+  Atendimento --> SolicitanteAtendimento
+  Atendimento --> TipoPublicoAtendido
+  AtendimentoEnfermaria --> TipoDeIntervalo
+  AtendimentoProcedimentoEnfermagem --> AtendimentoEnfermaria
+  AtendimentoProcedimentoEnfermagemItem --> AtendimentoProcedimentoEnfermagem
+  AtendimentoProcedimentoEnfermagemItem --> ProcedimentoEnfermagem
+  AtendimentoProcedimentoEnfermagemItemMedicamentoFormato --> AtendimentoProcedimentoEnfermagemItem
+  AtendimentoProcedimentoEnfermagemItemMedicamentoFormato --> MedicamentoFormato
+  AtendimentoRegistroEnfermagem --> AtendimentoEnfermaria
+  AtendimentoResultadoFinal --> AtendimentoEnfermaria
+  AtendimentoSV --> AtendimentoEnfermaria
+  Atualidade --> Assunto
+  Atualidade --> Conteudo
+  AtualidadeLinkRelacionado --> Atualidade
+  AutorSegmentoDisciplina --> Disciplina
+  AutorSegmentoDisciplina --> Segmento
+  BaseDeDatasFeriados --> BaseDeDatas
+  BaseDeDatasFeriados --> Cidade
+  BloqueioBoletim --> Ciclo
+  BloqueioMaterialComplementar --> Agrupamento
+  BloqueioMaterialComplementar --> ConteudoOnline
+  BloqueioMaterialComplementar --> Disciplina
+  BloqueioMaterialComplementar --> Rede
+  BonusCriterioPublico --> BonusCriterio
+  BonusCriterioPublico --> Etapa
+  BonusCriterioPublico --> Rede
+  BonusCriterioPublico --> Segmento
+  BonusCriterioPublicoFaixa --> BonusCriterioPublico
+  BonusCriterioPublicoVolume --> BonusCriterioPublico
+  BonusCriterioPublicoVolume --> Ciclo
+  CadernoResultadosLiberacao --> Prova
+  CadernoResultadosMedia --> CadernoResultadosLiberacao
+  CaixaDeSaidaDeEmail --> EstadoEnvio
+  CaixaDeSaidaDeEmail --> Produto
+  CalendarioEvento --> CalendarioEventoRecorrencia
+  CalendarioEvento --> CalendarioGrupo
+  CalendarioEvento --> Disciplina
+  CalendarioEvento --> TipoAtividadeAgenda
+  CalendarioEventoRecorrencia --> CalendarioTipoRecorrencia
+  CalendarioGrupo --> Rede
+  CalendarioGrupo --> TipoAtividadeAgenda
+  CalendarioGrupo --> Turno
+  CampanhaPermissoes --> Campanha
+  CampanhaPermissoes --> Segmento
+  CampanhaPermissoes --> Rede
+  CampoDinamicoListaEspecifica --> CampoDinamico
+  CargaDisciplinaAlteracao --> MotivosSaida
+  CargaHoraria --> Disciplina
+  CargaHoraria --> Rede
+  CargaHorariaLinha --> CargaHoraria
+  CargaProfessorEntrando --> CargaDisciplinaAlteracao
+  CargaProfessorSaindo --> CargaDisciplinaAlteracao
+  CargoPagamentoCargo --> Cargo
+  CargoPagamentoCargo --> CargoPagamento
+  Cartao --> RedeQuesito
+  CartaoResposta --> Cartao
+  CartaoResposta --> RedeOpcao
+  ChamadoOtrsTicket --> ChamadoOtrsTipo
+  ChamadoOtrsTicket --> Rede
+  ChamadoOtrsTipo --> ChamadoOtrsFila
+  ChamadoOtrsTipo --> ChamadoOtrsSLA
+  ChamadoOtrsTipo --> ChamadoOtrsTipo
+  ChamadoOtrsTipo --> Rede
+  ChamadoOtrsTipoCampo --> ChamadoOtrsCampo
+  ChamadoOtrsTipoCampo --> ChamadoOtrsTipo
+  Ciclo --> Etapa
+  Ciclo --> Ciclo
+  Cidade --> Estado
+  ClasseExemplo --> Rede
+  ClassePagamento --> RedePagamento
+  Classroom --> Disciplina
+  ClassroomBoletim --> Ciclo
+  ClassroomBoletim --> Classroom
+  ClassroomBoletim --> Disciplina
+  ClassroomCoordenador --> Classroom
+  ClassroomProfessor --> Classroom
+  Colaborador --> Cargo
+  ComentarioComportamento --> Disciplina
+  ComentarioRedacao --> LegendaRedacao
+  ComentarioRedacao --> Redacao
+  CompetenciaAgrupamento --> Agrupamento
+  CompetenciaAgrupamento --> Competencia
+  ComunicadoCanalEnvio --> CanalEnvio
+  ComunicadoCanalEnvio --> Comunicado
+  ComunicadoImagem --> Comunicado
+  ComunicadoLogEnvio --> ComunicadoCanalEnvio
+  ComunicadoLogEnvio --> EstadoEnvio
+  ComunicadoLogEnvioHistorico --> ComunicadoCanalEnvio
+  ComunicadoLogEnvioHistorico --> EstadoEnvio
+  ComunicadoMobile --> Comunicado
+  ComunicadoMobileLido --> Comunicado
+  ComunicadoPublico --> Comunicado
+  ComunicadoTemplate --> Rede
+  ConfiguracaoTempoPadrao --> Turno
+  ConselhoClasse --> Rede
+  ConselhoClassePublico --> ConselhoClasse
+  ConselhoClassePublicoFaixa --> ConselhoClassePublico
+  Conteudo --> TipoArquivo
+  ConteudoOnline --> Agrupamento
+  ConteudoOnline --> ConteudoOnlineExtensao
+  ConteudoOnline --> ConteudoOnlineTipo
+  ConteudoOnline --> Disciplina
+  ConteudoOnline --> Rede
+  ConteudoOnline --> TipoRede
+  ConteudoOnlineRede --> ConteudoOnline
+  ConteudoOnlineRede --> Rede
+  CoordenadorDisciplina --> Disciplina
+  DataEspecificaDeUmaRecorrencia --> CalendarioEventoRecorrencia
+  DiarioClasseConfiguracao --> Rede
+  Disciplina --> Disciplina
+  Disciplina --> GrupoDisciplina
+  Disciplina --> Rede
+  DisciplinaDeParaImportacao --> Disciplina
+  DisciplinaHisDisciplina --> Disciplina
+  DisciplinaHisDisciplina --> HisDisciplina
+  DisciplinaPadrao --> TipoRede
+  DocumentoPedagogicoRede --> DocumentoPedagogico
+  DocumentoPedagogicoRede --> Rede
+  EnvioLeitura --> Agrupamento
+  EnvioLeitura --> LeituraTipoRedacao
+  EnvioLeitura --> Prova
+  EnvioLeitura --> LeituraTipo
+  EnvioLeitura --> Turno
+  EnvioLeitura --> GradeRedacao
+  EnvioLeituraCartao --> EnvioLeitura
+  EnvioLeituraCartao --> LeituraCartaoStatus
+  EnvioLeituraCartao --> RedacaoDigital
+  EnvioLeituraCartao --> EnvioLeituraCartao
+  EnvioLeituraCartaoResposta --> EnvioLeituraCartao
+  EnvioLeituraStatus --> EnvioLeitura
+  EnvioLeituraStatus --> LeituraStatus
+  Estado --> Pais
+  EstatisticaClassroom --> Disciplina
+  EstatisticaClassroom --> Rede
+  EstatisticaClassroom --> Segmento
+  Etapa --> Etapa
+  Etapa --> Rede
+  FaleConosco --> Rede
+  FolhaAlteracaoCarga --> Periodo
+  FolhaChecklistCargasIndevidas --> Periodo
+  FolhaChecklistCargasIndevidas --> Situacao
+  FolhaChecklistProfessorAcimaDoLimite --> Periodo
+  FolhaChecklistProfessorSemSC --> Periodo
+  FolhaChecklistSemTitular --> Disciplina
+  FolhaChecklistSemTitular --> Periodo
+  FolhaProfessorLicenca --> Disciplina
+  FolhaProfessorLicenca --> MotivosSaida
+  FolhaProfessorLicenca --> Periodo
+  FolhaProfessorLicenca --> Segmento
+  FolhaProfessorPorPeriodo --> Periodo
+  FolhaProfessorPorPeriodoTotal --> Periodo
+  FormularioAtendimento --> MotivoAtendimento
+  FormularioAtendimento --> TipoPublicoAtendido
+  FormularioAtendimentoQuestao --> FormularioAtendimento
+  FormularioAtendimentoQuestao --> FormularioAtendimentoQuestaoOpcao
+  FormularioAtendimentoQuestaoOpcao --> FormularioAtendimentoQuestao
+  FormularioAtendimentoResposta --> Atendimento
+  FormularioAtendimentoResposta --> FormularioAtendimentoQuestao
+  FormularioAtendimentoResposta --> Ocorrencia
+  FormularioAtendimentoRespostaOpcao --> FormularioAtendimentoResposta
+  FormularioAtendimentoRespostaOpcao --> Disciplina
+  FormularioAtendimentoRespostaOpcao --> FormularioAtendimentoQuestaoOpcao
+  FuncionalidadeAcessada --> MenuItem
+  FuncionalidadeAcessada --> Rede
+  FuncionalidadeSegmento --> Funcionalidade
+  FuncionalidadeSegmento --> Segmento
+  GabaritoComentado --> Simulado
+  GradeHoraria --> Rede
+  GradeHorariaLinha --> GradeHoraria
+  GradeRedacaoAgrupamento --> Agrupamento
+  GradeRedacaoAgrupamento --> GradeRedacao
+  GradeRedacaoAgrupamentoProva --> GradeRedacaoAgrupamento
+  GradeRedacaoAgrupamentoProva --> Prova
+  GradeRedacaoAgrupamentoRede --> Rede
+  GradeRedacaoAgrupamentoRede --> GradeRedacaoAgrupamento
+  GradeRedacaoCompetencia --> Competencia
+  GradeRedacaoCompetencia --> GradeRedacao
+  GradeRedacaoCompetenciaLegenda --> Competencia
+  GradeRedacaoCompetenciaLegenda --> GradeRedacao
+  GradeRedacaoCompetenciaLegenda --> LegendaRedacao
+  GradeRedacaoCompetenciaLegendaIA --> Competencia
+  GradeRedacaoCompetenciaLegendaIA --> GradeRedacao
+  GradeRedacaoCompetenciaLegendaIA --> LegendaRedacao
+  GradeRedacaoLegenda --> GradeRedacao
+  GradeRedacaoLegenda --> LegendaRedacao
+  GradeRedacaoRegraGeral --> GradeRedacao
+  GradeRedacaoRegraGeral --> RegraGeralRedacao
+  GuiaFinanceiro --> Rede
+  GuiaPortal --> Rede
+  HabilidadeEnem --> AreaConhecimento
+  HabilidadesBNCC --> Disciplina
+  HabilidadesENEM --> AreaConhecimento
+  HisCargaHoraria --> HisDisciplina
+  HisCargaHoraria --> Rede
+  HisHistorico --> HisFundamentacaoLegal
+  HisNucleoComum --> HisDisciplina
+  IconDisciplinaPladGame --> Disciplina
+  ImportacaoTRI --> ProvaModelo
+  ImportacaoTRILinha --> ImportacaoTRI
+  Inbox --> CanalEnvio
+  Inbox --> Comunicado
+  InformacaoSaidaAutorizacao --> InformacaoSaida
+  InformacaoSaidaAutorizacaoDiaSemana --> InformacaoSaidaAutorizacao
+  InformacaoSaidaAutorizacaoOutros --> InformacaoSaidaAutorizacao
+  InformacaoSaidaAutorizacaoOutrosDetalhe --> InformacaoSaidaAutorizacaoOutros
+  InformacaoSaidaAutorizacaoResponsavel --> InformacaoSaidaAutorizacao
+  InformacaoSaidaAutorizacaoResponsavelDetalhe --> InformacaoSaidaAutorizacaoResponsavel
+  InformacaoSaidaAutorizacaoServico --> InformacaoSaidaAutorizacao
+  ItinerarioFormativo --> ItinerarioFormativoCiclo
+  ItinerarioFormativo --> ItinerarioFormativoTipo
+  ItinerarioFormativoOferta --> ItinerarioFormativo
+  ItinerarioFormativoOferta --> ItinerarioFormativoPeriodo
+  ItinerarioFormativoPeriodo --> ItinerarioFormativoCiclo
+  JobParameter --> Job
+  LancamentoComportamento --> Disciplina
+  LancamentoComportamento --> TipoComportamento
+  LegendaRedacao --> TipoLegenda
+  LeituraImportacao --> LeituraTipoImportacao
+  LeituraImportacaoLinha --> LeituraImportacao
+  LeituraTipoRede --> LeituraTipo
+  LeituraTipoRede --> Rede
+  LiberacaoRede --> Rede
+  LiberacaoRede --> Simulado
+  LiberacaoUnidade --> Simulado
+  LIV_AcaoMarketing --> LIV_TipoMaterial
+  LIV_AcaoMarketing --> LIV_ClasseSubtipoMaterial
+  LIV_AcaoMarketing --> LIV_SubTipoMaterial
+  LIV_AcaoMarketingSegmento --> LIV_AcaoMarketing
+  LIV_AcaoMarketingSegmento --> SegmentoLIV
+  LIV_AtualizacaoCadastro --> LIV_ImportacaoDados
+  LIV_AtualizacaoCadastroAnos --> LIV_AtualizacaoCadastroIndividual
+  LIV_AtualizacaoCadastroCargos --> LIV_AtualizacaoCadastroIndividual
+  LIV_CarometroComentario --> Segmento
+  LIV_ClasseSubtipoMaterial --> LIV_SubTipoMaterial
+  LIV_HabilidadesAct --> SegmentoLIV
+  LIV_ImportacaoDadosLog --> LIV_ImportacaoDados
+  LIV_LOG_MaterialLinks --> LIV_MaterialLinks
+  LIV_LOG_TipoMaterial --> LIV_Material
+  LIV_Material --> LIV_TipoMaterial
+  LIV_MaterialLinks --> LIV_Material
+  LIV_MaterialSegmento --> LIV_Material
+  LIV_MaterialSegmento --> SegmentoLIV
+  LIV_PercursoTrilhaMomento --> LIV_PercursoMomento
+  LIV_PercursoTrilhaMomentoLink --> LIV_PercursoTrilhaMomento
+  LIV_PercursoTrilhaMomentoLinkItem --> LIV_PercursoTrilhaMomentoLink
+  LIV_PercursoTrilhaMomentoProgresso --> LIV_PercursoTrilhaMomento
+  LIV_PesquisaAnos --> LIV_Pesquisa
+  LIV_PesquisaQuestoes --> LIV_Pesquisa
+  LIV_Playbook --> SegmentoLIV
+  LIV_QuestionarioItem --> LIV_Questionario
+  LIV_SubTipoMaterial --> LIV_TipoMaterial
+  LIV_WebinarSegmento --> LIV_Webinar
+  LogAlteracaoPrazoCorrecaoRedacao --> Redacao
+  LogClassroom --> TipoLogClassroom
+  LogClassroom --> Disciplina
+  LogClassroom --> OperacaoClassroom
+  LogErroClassroom --> Disciplina
+  LogErroClassroom --> OperacaoClassroom
+  LogMaterialEletiva --> MaterialEletivaConteudo
+  LogMaterialEletiva --> SemestreEletiva
+  LogQuestaoSimilar --> Questao
+  LogTermosDeUsoPortal --> TermosDeUso
+  Marca --> TipoRede
+  MaterialComplementar --> ConteudoOnline
+  MaterialComplementar --> MaterialEletivaConteudo
+  MaterialComplementar --> SemestreEletiva
+  MaterialComplementar --> MaterialComplementar
+  MaterialComplementar --> Rede
+  MaterialDidatico --> MaterialDidatico
+  MaterialDidaticoColecaoComercial --> ColecaoComercial
+  MaterialDidaticoColecaoComercial --> MaterialDidaticoPlanejamento
+  MaterialDidaticoData --> MaterialDidatico
+  MaterialDidaticoDeParaTipoMaterialImportacao --> MaterialDidaticoTipoMaterial
+  MaterialDidaticoDeParaVolume --> MaterialDidatico
+  MaterialDidaticoLote --> MaterialDidaticoTipoFrete
+  MaterialDidaticoLote --> MaterialDidaticoTipoMovimento
+  MaterialDidaticoLote --> MaterialDidaticoCondicaoPagamento
+  MaterialDidaticoMonitoriaPedido --> MaterialDidaticoMonitoriaQuestao
+  MaterialDidaticoMonitoriaPedido --> MaterialDidaticoMonitoriaStatus
+  MaterialDidaticoMonitoriaQuestao --> MaterialDidaticoTipoQuestao
+  MaterialDidaticoMonitoriaQuestao --> MaterialDidaticoVolumeModulo
+  MaterialDidaticoPlanejamento --> MaterialDidaticoTipoMaterial
+  MaterialDidaticoPlanejamento --> MaterialDidaticoVolume
+  MaterialDidaticoPlanejamento --> Rede
+  MaterialDidaticoPlanejamentoConteudo --> MaterialDidaticoPlanejamento
+  MaterialDidaticoProblema --> MaterialDidaticoProblemaAssunto
+  MaterialDidaticoProblema --> MaterialDidaticoProblemaTipo
+  MaterialDidaticoProblema --> MaterialDidaticoVolume
+  MaterialDidaticoProduto --> MaterialDidatico
+  MaterialDidaticoProduto --> MaterialDidaticoCapa
+  MaterialDidaticoVolume --> Disciplina
+  MaterialDidaticoVolume --> MaterialDidatico
+  MaterialDidaticoVolumeModulo --> MaterialDidaticoVolume
+  MaterialEletiva --> SemestreEletiva
+  MaterialEletiva --> Disciplina
+  MaterialEletivaConteudo --> ConteudoOnlineTipo
+  MaterialEletivaConteudo --> MaterialEletiva
+  MedicamentoFormato --> Formato
+  MedicamentoFormato --> Medicamento
+  MedicamentoPrescritoHorario --> MedicamentoPrescrito
+  MenuItem --> Funcionalidade
+  MenuItem --> MenuItem
+  MenuItem --> TipoRede
+  MenuItemLateral --> Funcionalidade
+  MenuItemLateral --> MenuItemLateral
+  MetaAtendimentoTipoAtendimento --> MetaAtendimento
+  MetaAtendimentoTipoAtendimento --> Segmento
+  MetaAtendimentoTipoAtendimento --> TipoAtendimento
+  MetaEvasao --> Rede
+  ModuloFeedback --> Simulado
+  MonitoriaEscala --> Disciplina
+  MonitoriaEscala --> MonitoriaMonitor
+  MonitoriaMonitor --> Cidade
+  MonitoriaMonitor --> Rede
+  MonitoriaMonitorDisciplina --> Disciplina
+  MonitoriaMonitorDisciplina --> MonitoriaMonitor
+  MotivoAtendimento --> TipoAtendimento
+  MotivoAtendimentoTipoPublicoAtendido --> MotivoAtendimento
+  MotivoAtendimentoTipoPublicoAtendido --> TipoPublicoAtendido
+  MotivosSaida --> Rede
+  NomeUraniaDisciplina --> Rede
+  NomeUraniaDisciplinaLinha --> NomeUraniaDisciplina
+  Ocorrencia --> TipoOcorrencia
+  OpcaoResposta --> Pergunta
+  Opiniao --> MaterialDidaticoMonitoriaQuestao
+  Opiniao --> Produto
+  Opiniao --> PublicacaoCanal
+  Opiniao --> Questao
+  OrdenacaoAtendimentoRede --> OrdenacaoAtendimento
+  OrdenacaoAtendimentoRede --> Rede
+  ParametrosFolhaPorRede --> Rede
+  ParametrosFolhaPorRede --> ParametrosFolha
+  Pergunta --> GrupoPergunta
+  Pergunta --> TipoRespostaAnamnese
+  PerguntaCondicionalOpcaoResposta --> OpcaoResposta
+  PerguntaCondicionalOpcaoResposta --> PerguntaVersaoAnamnese
+  PerguntaTipoPergunta --> Pergunta
+  PerguntaTipoPergunta --> TipoPergunta
+  PerguntaVersaoAnamnese --> Pergunta
+  PerguntaVersaoAnamnese --> PerguntaVersaoAnamnese
+  PerguntaVersaoAnamnese --> VersaoAnamnese
+  PerguntaVersaoAnamneseTipoPergunta --> PerguntaVersaoAnamnese
+  PerguntaVersaoAnamneseTipoPergunta --> TipoPergunta
+  PerguntaVersaoAnamneseTipoPerguntaOpcaoResposta --> OpcaoResposta
+  PerguntaVersaoAnamneseTipoPerguntaOpcaoResposta --> PerguntaVersaoAnamneseTipoPergunta
+  PeriodosDeExclusaoCorretores --> AlocacaoCorretorStatus
+  PesquisaIntencaoPergunta --> PesquisaIntencao
+  PesquisaIntencaoPublico --> PesquisaIntencao
+  PesquisaIntencaoResposta --> PesquisaIntencaoPergunta
+  PesquisaOpiniaoPergunta --> PesquisaOpiniaoPergunta
+  PesquisaOpiniaoPergunta --> PesquisaOpiniao
+  PesquisaOpiniaoPergunta --> PesquisaOpiniaoTipoResposta
+  PesquisaOpiniaoResposta --> PesquisaOpiniaoPergunta
+  PesquisaPublica --> Pesquisa
+  PesquisaPublico --> Pesquisa
+  PesquisaPublicoSegmento --> PesquisaPublico
+  PesquisaResposta --> Pesquisa
+  PesquisaResultadoSegmento --> PesquisaResultado
+  PesquisaSatisfacaoPergunta --> PesquisaSatisfacao
+  PesquisaSatisfacaoPergunta --> PesquisaSatisfacaoTipoPergunta
+  PesquisaSatisfacaoResposta --> PesquisaSatisfacaoPergunta
+  PLADMaterialEstudo --> Conteudo
+  PLADQuestaoGame --> Questao
+  POACartao --> EnvioLeituraCartao
+  POACartaoOpcao --> POACartao
+  POACartaoOpcao --> POAOpcao
+  POAOpcao --> POAPeriodo
+  POAPeriodo --> POATipoAplicacao
+  POAPeriodoRede --> POAPeriodo
+  POAPeriodoRede --> Rede
+  POAProfessor --> Disciplina
+  POAQuesito --> POAPeriodo
+  POAQuesito --> Segmento
+  Pontuacao --> Agrupamento
+  Pontuacao --> Competencia
+  Pontuacao --> GradeRedacao
+  PontuacaoIA --> Competencia
+  PontuacaoIA --> GradeRedacao
+  PreviaCarga --> Rede
+  PreviaCargaPublico --> PreviaCarga
+  PreviaCargaPublico --> TwilioFilaEnvio
+  Problema --> MaterialDidaticoMonitoriaQuestao
+  Problema --> Produto
+  Problema --> PublicacaoCanal
+  Problema --> Questao
+  Produto --> ProdutoGrupo
+  Professor --> Rede
+  Professor --> Segmento
+  Professor --> TipoProfessor
+  ProfessorCarga --> Disciplina
+  ProfessorCarga --> MotivosSaida
+  ProfessorCargaSubstituto --> MotivosSaida
+  ProfessorCargaSubstituto --> ProfessorCarga
+  ProfessorChapa --> Cargo
+  ProfessorClassePagamento --> ClassePagamento
+  ProfessorDisciplina --> Disciplina
+  ProfessorLicenca --> SituacaoProfessor
+  ProfessorLicencaTempos --> ProfessorLicenca
+  ProfessorLicencaTempos --> Segmento
+  ProfessorOcorrencia --> ProfessorOcorrenciaTipo
+  ProtocoloLancamentoBusca --> Agrupamento
+  ProtocoloLancamentoBusca --> Disciplina
+  ProtocoloLancamentoBusca --> Rede
+  Prova --> Agrupamento
+  Prova --> Ciclo
+  Prova --> TipoCartaoResposta
+  ProvaCodigo --> Prova
+  ProvaCodigo --> ProvaModelo
+  ProvaCodigo --> ProvaModeloCodigo
+  ProvaEditora --> Agrupamento
+  ProvaEditora --> ParametroProvaEditora
+  ProvaModelo --> Agrupamento
+  ProvaModelo --> Ciclo
+  ProvaModelo --> ProvaEditora
+  ProvaModelo --> ProvaModelo
+  ProvaModelo --> StatusProvaModelo
+  ProvaModelo --> Turno
+  ProvaModeloCodigo --> ProvaModelo
+  ProvaModeloCodigoQuestao --> ProvaModeloCodigo
+  ProvaModeloCodigoQuestao --> Questao
+  ProvaModeloConveniadoQuestao --> ProvaModeloConveniado
+  ProvaModeloConveniadoQuestao --> Questao
+  ProvaModeloRede --> ProvaModelo
+  ProvaModeloRede --> Rede
+  PublicacaoCanal --> Assunto
+  PublicacaoCanal --> Conteudo
+  PublicacaoCanal --> Disciplina
+  PublicacaoCanal --> PublicacaoCanalTipo
+  PublicacaoCanalLIV --> ConteudoLIV
+  PublicacaoCanalMaterialRelacionado --> Conteudo
+  PublicacaoCanalMaterialRelacionado --> PublicacaoCanal
+  Questao --> Conteudo
+  Questao --> Questao
+  QuestaoAutor --> AprovacaoQuestao
+  QuestaoAutor --> Conteudo
+  QuestaoAutor --> Questao
+  QuestaoClassificacao --> Rede
+  QuestaoClassificacao --> HabilidadeEnem
+  QuestaoClassificacao --> PublicacaoCanal
+  QuestaoClassificacao --> Segmento
+  QuestaoClassificacao --> Assunto
+  QuestaoClassificacao --> Disciplina
+  QuestaoClassificacao --> HabilidadesBNCC
+  QuestaoClassificacao --> HabilidadesENEM
+  QuestaoClassificacao --> Questao
+  QuestaoClassificacao --> QuestaoFonte
+  QuestaoClassificacao --> QuestaoNivelDificuldade
+  QuestaoClassificacao --> QuestaoStatus
+  QuestaoClassificacao --> QuestaoTipo
+  QuestaoClassificacao --> Tag
+  QuestaoClassificacao --> Video
+  QuestaoFeedback --> Origem
+  QuestaoFeedback --> Questao
+  QuestaoFeedback --> QuestaoTipoErro
+  QuestaoLaplace --> Questao
+  QuestaoLaplaceConsumida --> ConsumoQuestoesLaplace
+  QuestaoLaplaceConsumidaErrosDeValidacao --> QuestaoLaplaceConsumida
+  QuestaoOpcaoResposta --> Conteudo
+  QuestaoOpcaoResposta --> Questao
+  QuestaoRespostaDiscursiva --> Questao
+  QuestaoRespostaObjetiva --> Questao
+  QuestaoRespostaObjetivaMetrica --> QuestaoRespostaObjetiva
+  QuestaoSimilar --> Questao
+  QuestaoTag --> Questao
+  QuestaoTag --> Tag
+  Redacao --> EnvioLeituraCartao
+  Redacao --> Redacao
+  Redacao --> StatusRedacao
+  Redacao --> GradeRedacao
+  RedacaoCompetencia --> Competencia
+  RedacaoCompetencia --> Redacao
+  RedacaoCorrecaoIAAcompanhamento --> Redacao
+  RedacaoCorrecaoIAAcompanhamento --> StatusCorrecaoIA
+  RedacaoCorrecaoIAAcompanhamento --> TipoErroCorrecaoIA
+  RedacaoHistorico --> Redacao
+  RedacaoHistorico --> StatusRedacao
+  RedacaoHistoricoRevisaoIA --> Redacao
+  RedacaoRegraGeral --> Redacao
+  RedacaoRegraGeral --> RegraGeralRedacao
+  RedacaoRevisao --> Redacao
+  RedacaoRevisao --> StatusRedacaoRevisao
+  RedacaoStatusHistorico --> Redacao
+  Rede --> Rede
+  Rede --> Periodo
+  Rede --> Marca
+  Rede --> TipoRede
+  RedeIdioma --> Idioma
+  RedeIdioma --> Rede
+  RedeIntegracoes --> Rede
+  RedeLivroDigital --> Rede
+  RedeMaterialDidatico --> Rede
+  RedeOpcao --> Opcao
+  RedeOpcao --> Rede
+  RedePagamentoRede --> Rede
+  RedePagamentoRede --> RedePagamento
+  RedeQuesito --> Quesito
+  RedeQuesito --> Rede
+  RedeSegmento --> Rede
+  RelatorioFolhaPeriodo --> TipoRelatorioFolha
+  RelatorioFolhaPublico --> Rede
+  RelatorioFolhaPublico --> TipoRelatorioFolha
+  ReleaseNotes --> Funcionalidade
+  ReleaseNotesVisualizacao --> ReleaseNotes
+  ResponsavelAtendimento --> MotivoAtendimento
+  ResponsavelAtendimento --> SolicitanteAtendimento
+  RestricaoRankingSimuladoRede --> Rede
+  RestricaoRankingSimuladoRede --> Simulado
+  Resumo --> Assunto
+  Resumo --> Disciplina
+  Resumo --> Segmento
+  Segmento --> Segmento
+  SegmentoPagamento --> RedePagamento
+  SegmentoSindical --> RedePagamento
+  ServicoCampoDinamico --> CampoDinamicoListaEspecifica
+  ServicoCampoDinamico --> ChamadoOtrsTipo
+  ServicoCampoDinamico --> CampoDinamico
+  SimuladoAgrupamento --> Simulado
+  SimuladoAgrupamento --> SimuladoTRI
+  SimuladoQuestaoDetalhe --> CadernoProva
+  SimuladoQuestaoDetalhe --> Simulado
+  SimuladoTRIAreaConhecimento --> AreaConhecimento
+  SimuladoTRIAreaConhecimento --> SimuladoTRI
+  SimuladoTRICalculo --> SimuladoTRI
+  SimuladoTRIGabaritoOficial --> SimuladoTRI
+  SimuladoTRIProvaCodigo --> ProvaCodigo
+  SimuladoTRIProvaCodigo --> SimuladoTRI
+  SimuladoTRIStatusCalculo --> SimuladoTRI
+  SiteInstitucionalWhiteList --> Rede
+  Situacao --> Rede
+  SolicitanteAtendimentoPorTipoRede --> SolicitanteAtendimento
+  SolicitanteAtendimentoPorTipoRede --> TipoRede
+  State --> Job
+  Tag --> Disciplina
+  Tag --> Segmento
+  Tag --> Tag
+  Tags --> Conteudo
+  Tags --> Tag
+  TemplateEmail --> Rede
+  TemporalMediasTCTRede --> Simulado
+  TemporalMediasTCTUnidade --> Simulado
+  TemporalQuestaoPercentual --> CadernoProva
+  TemporalQuestaoPercentual --> Simulado
+  TemporalRank --> Rede
+  TemporalRank --> Simulado
+  Ticket --> Produto
+  TicketProblemaMD --> MaterialDidaticoProblema
+  TipoAtendimentoPorTipoRede --> TipoAtendimento
+  TipoAtendimentoPorTipoRede --> TipoRede
+  TipoCartaoRespostaSomatorioAlternativa --> TipoCartaoResposta
+  TipoCartaoRespostaSomatorioValor --> TipoCartaoResposta
+  TipoComportamentoConfiguracao --> Rede
+  TipoComportamentoConfiguracao --> Segmento
+  TipoComportamentoConfiguracao --> TipoComportamento
+  TipoDocumento --> GrupoDocumento
+  TipoEvento --> RedePagamento
+  TipoEvento --> TipoEvento
+  TipoEvento --> TipoPagamento
+  TipoOcorrencia --> TipoOcorrencia
+  TipoPublicoAtendidoPorTipoRede --> TipoPublicoAtendido
+  TipoPublicoAtendidoPorTipoRede --> TipoRede
+  TipoRedeFuncionalidadePadrao --> Funcionalidade
+  TipoRedeFuncionalidadePadrao --> TipoRede
+  TipoRedeResultado --> TipoRede
+  TipoRedeResultado --> TipoResultado
+  TRI --> SimuladoTRI
+  TRILinha --> TRI
+  TwilioFilaEnvio --> TwilioRemetente
+  TwilioFilaEnvio --> TwilioTemplate
+  TwilioFilaEnvioParametro --> TwilioFilaEnvio
+  TwilioFilaEnvioParametro --> TwilioTemplateParametro
+  TwilioRemetenteRede --> Rede
+  TwilioRemetenteRede --> TwilioRemetente
+  TwilioTemplate --> Funcionalidade
+  TwilioTemplateParametro --> TwilioTemplate
+  ValorPgtoProfessor --> ProfessorHaPgto
+  ValorPgtoProfessorSegmento --> ProfessorHaSegmentoPgto
+  VersaoAnamnesePadrao --> Segmento
+  VersaoAnamnesePadrao --> TipoRede
+  VersaoAnamnesePadrao --> VersaoAnamnese
+  Video --> Assunto
+  Video --> Disciplina
+  Video --> VideoTipo
+  'META FINAL$'
+  'Tabelameta2019$'
+  AggregatedCounter
+  AgrupadorDeMeses
+  AlocacaoCorretor
+  AlocacaoFeriados
+  AlocacaoProfessoresStatus
+  AnoQuestao
+  AtendimentoMeta2019
+  AtendimentoTipoRelatorio
+  Avatar
+  BNCC
+  BaseCanalEleva
+  BaseDeAtualidades
+  BaseDeComprometimento
+  BaseDeDesempenho
+  BaseDeDesempenhoDisciplina
+  BaseDeDisciplinas
+  BaseDeDisciplinasParaLuppa
+  BaseDeEletivasExcelencia
+  BaseDeEsforcoResultado
+  BaseDeProfessoresParaLuppa
+  BaseDeResponsaveis
+  BaseDeSituacao
+  BaseDeTRI
+  BaseDesempenhoPlataforma
+  BaseEstrelasPlataforma
+  BaseLivroDigital
+  BaseMonitoriaOnline
+  BonusPlataformaAdaptativa
+  BuscaQuery
+  CabecalhoBoletim
+  CanalChatBotConectado
+  CanalElevaControleAzureIndexer
+  CandidatoBolsao
+  CaracteresInvalidosParaEmail
+  CargaHorariaProfResumida
+  CargaHorariaSubstituicoes
+  CartaoValidacao
+  ChamadoOtrsGrupo
+  ClassePgto
+  CombinacoesSimuladoSomatorio
+  CombinacoesSimuladoSomatorioResultado
+  Comentario
+  ConfiguracaoAlocacao
+  ConfiguracaoPeriodoLetivo
+  ConteudoVisualizacao
+  ContratacaoPS
+  ControleErroFotos
+  ControleFotos
+  ControleLinhasFotoTotvs
+  Counter
+  Curso
+  CustomClassroom
+  DATAS
+  DashboardEditora
+  Data
+  DiaLetivoExtra
+  DisciplinaCargaHoraria
+  DisciplinaLinha
+  Disciplina_Origem
+  Disciplinas
+  DispositivoConectado
+  Dissidio
+  Dummy
+  EscopoBoletim
+  EtapaDeResultadosSemelhante
+  EventosProfessor
+  Feriado
+  FichaMedica
+  Filiacao
+  FiltroBaseDeDesempenho
+  Fluig
+  FonteQuestao
+  FormaSolicitacaoPasse
+  FormatoQuestao
+  Fornecedor
+  Handbook
+  Hash
+  HisResultadoFinal
+  HistoricoCargaProfessorEntrando
+  HistoricoCargaProfessorSaindo
+  HistoricoLiberacaoPedido
+  ImportTemp
+  ImportTempEE
+  ImportacaoClientesLog
+  ImportacaoDependencias
+  ImportacaoLIVCoordenador
+  ImportacaoLIVProfessor
+  Importacao_Eletivas_Semestral
+  Indicador
+  InformacaoSaidaLogModificacao
+  IntegracaoEditora
+  IntegralAlun
+  IntencaoChatBot
+  JobQueue
+  Kiduca
+  LIV_Aprovacao
+  LIV_Carometro
+  LIV_Comportamento
+  LIV_Feedback
+  LIV_FeedbackPerguntas
+  LIV_GoogleAuthData
+  LIV_LOG_Engajamento
+  LIV_LOG_TermosDeUso
+  LIV_MigrationHistory
+  LIV_MigrationHistorySeed
+  LIV_Noticia
+  LIV_Notificacao
+  LIV_TermosDeUso
+  LIV_VideoLinks
+  LiberacaoBoletim
+  LinhaOrcamento
+  List
+  LogAgenteImportacao
+  LogAgenteImportacaoColecaoComercial
+  LogClassificacaoQuestao
+  LogDevolutivasHome
+  LogErrosPrevia
+  LogExecucao
+  LogFluig
+  LogFolha
+  LogGoogleMeet
+  LogImportacaoPedidoEditora
+  LogMangaHigh
+  LogProcessamentoBoletim
+  LogRecuperacaoSenha
+  LogTrocaDeSenha
+  MangaHigh
+  ManutencaoOpcoes
+  Marca_Origem
+  MaterialDidaticoClassificacaoMovimento
+  MaterialDidaticoContratoData
+  MaterialDidaticoContratoData_backup
+  MaterialDidaticoDeParaNaturezaFiscal
+  MaterialDidaticoImportacao
+  MaterialDidaticoLocalSaida
+  MaterialDidaticoProdutoTipo
+  MaterialDidaticoStatus
+  MaterialDidaticoStatusPedido
+  MaterialDidaticoTipoPedido
+  MaterialPlanejamentoPedagogico
+  Mensageria
+  MenuDevolutivas
+  MenuLink
+  Meta permanência 2017'
+  NivelQuestao
+  Notificacao
+  NotificacaoErroOtrs
+  NovasFuncionalidadesId
+  OTRSServiceIDs
+  OperacaoGoogleMeet
+  OrdenarTempos
+  POAAgenda
+  POAOpcao_Modulo
+  POAPeriodoRede_Modulo
+  POAPeriodo_Modulo
+  POAProfessor_Modulo
+  POAQuesito_Modulo
+  POAStatus
+  POATipoAplicacao_Modulo
+  ParamentrosSLA
+  Parametro
+  PeriodoCargaGoogleMeetRede
+  PesquisaRespondida
+  PlanilhaLote
+  Portaria
+  PreviaCargaProfessores
+  ProblemaStatus
+  ProcessamentoBoletim
+  ProcessamentoDeTickets
+  ProdutoTotvs
+  ProfessorTotalTempos
+  ProtocoloLancamento
+  ProtocoloLancamentoStatus
+  ProvaCodigoArquivo
+  ProvaOnline
+  ProvaSituacao
+  QRCodeWhitelist
+  QuestaoLaPlaceImportar
+  RA_Maracaju_20180405
+  RedacaoCompetencia_BKP
+  RedacaoDigitalRegras
+  Rede_Origem
+  RegistrosImportacaoPedidoEditoraCSV
+  RelacaoDisciplinaPlanejamentoPedagogico
+  RelatorioComunicados
+  RelatorioComunicadosLOG
+  RelatorioFolha
+  RelatorioPlataformaAdaptativa
+  RelatorioPreviaCarga
+  RelatorioSimulado
+  RelatorioUploadCartoes
+  RelatorioUploadCartoesAnalitico
+  RotinasImportacao
+  Sala
+  Schema
+  SegmentoPgto
+  Segmento_Origem
+  Server
+  ServicosCamposDinamicosOTRS
+  ServicosContratadosTipoRelatorio
+  Set
+  SimuladoDetalhe
+  SituacaoQuestoesLaplace
+  StatusAtividadeClassroom
+  StatusBoletim
+  StatusControleEmail
+  StatusCovid
+  StatusQuestao
+  TEMP_DBA_JHY
+  TempArquivoFileServerDelete
+  TempServerIPLog
+  TipoAbonoFalta
+  TipoArredondamento
+  TipoCalculo
+  TipoDisciplina
+  TipoDivisaoChapa
+  TipoEspacamento
+  TipoFarol
+  TipoMeta
+  TipoModal
+  TipoParentesco
+  TipoProfissionalSaude
+  TipoQuestao
+  TipoSanguineo
+  TipoSituacaoBinaria
+  TipoSubstituicao
+  ToDoTarefa
+  UnidadePgto
+  ValidacaoDeBoletim
+  VersionInfo
+  _DELETEME_TempEnem1
+  _DELETEME_TempRankEnem1
+  _MigrationHistory
+  dummy
+  logclassroom
+  segmentoProfessor
+  sysdiagrams
+  tempEmailEnviados
+  temp_EnvioLeitura

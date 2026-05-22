@@ -16,6 +16,11 @@ _archive/        # Arquivos arquivados / histórico.
 frontend-maps/   # Mapas de frontends Angular gerados pelo /scan-frontend.
                  #   changelog.md → data do último scan por repositório.
                  #   <repo>-angular-map.md → estrutura comprimida do frontend (componentes, services, rotas, NgRx).
+_pde/db_map/     # Mapa do banco de dados gerado por _scripts/db_map/run_all.py.
+                 #   changelog.md → data da última extração.
+                 #   schema/ → tables.yaml, relations.yaml, joins.yaml
+                 #   domains/ → frequencia.md, avaliacao.md, academico.md, acesso.md
+                 #   diagrams/ → erd.mmd e erd-<domínio>.mmd
 repository_map.md  # Guia de repositórios em c:/projects/ — usado pela IA para localizar código.
 ```
 
@@ -38,6 +43,31 @@ repository_map.md  # Guia de repositórios em c:/projects/ — usado pela IA par
 | `/jira_sync` | Sincroniza cards abertos do Jira para `cards/` |
 | `/repo_map` | Percorre `c:/projects/` e (re)gera `repository_map.md` |
 | `/scan-frontend <path>` | Escaneia um projeto Angular com ts-morph e gera mapa em `frontend-maps/`. Atualiza `changelog.md` e `repository_map.md`. Ver `skill_scan_frontend.md` para detalhes. |
+
+## db_map — mapa do banco para a IA
+
+O MCP `sqlserver` permite explorar o schema ao vivo, mas é caro em tokens. O pipeline correto é:
+
+```
+Banco (ElevaPortalHomolog) → _scripts/db_map/run_all.py → _pde/db_map/ → IA
+```
+
+**Conexão:** mesmos parâmetros do MCP — lidos automaticamente de `%APPDATA%\Claude\claude_desktop_config.json`.  
+Servidor: `belerofonte.eleva.local` | Banco: `ElevaPortalHomolog` | Usuário: `mcp.readonly`
+
+**Quando usar o db_map (em vez do MCP ao vivo):**
+
+1. Checar `_pde/db_map/changelog.md` — se a extração for < 30 dias, carregar os arquivos relevantes.
+2. Para queries em um domínio: `domains/<dominio>.md` + `schema/joins.yaml`.
+3. Para queries cross-domínio: `schema/tables.yaml` + `schema/relations.yaml`.
+4. Usar MCP ao vivo apenas para dados dinâmicos (contagens, exemplos de valor).
+
+**Para gerar/atualizar o db_map:**
+```powershell
+pip install pyodbc pyyaml   # apenas na primeira vez
+cd _scripts/db_map
+python run_all.py
+```
 
 ## Schema do banco (ElevaPortalHomolog) — curiosidades
 

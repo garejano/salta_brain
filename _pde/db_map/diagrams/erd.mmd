@@ -1,0 +1,2350 @@
+graph TD
+  AcessoSeesaw --> AnoLetivo
+  AcessoSeesaw --> Pessoa
+  AcessoSeesaw --> Usuario
+  AdminEscola --> Escola
+  AdminEscola --> Pessoa
+  AdminEscola --> Rede
+  AdminEscola --> Segmento
+  Agendamento --> ServicoAgendado
+  Agrupamento --> Agrupamento
+  Agrupamento --> Usuario
+  AgrupamentoLegendaRedacao --> LegendaRedacao
+  AgrupamentoLegendaRedacao --> Agrupamento
+  AlocacaoCorretor --> Usuario
+  AlocacaoCorretor --> PessoaEscolaAcesso
+  AlocacaoCorretorStatus --> Usuario
+  AlocacaoFeriados --> Usuario
+  AlocacaoFolha --> DisciplinaFolha
+  AlocacaoFolha --> MotivosSaida
+  AlocacaoFolha --> PessoaEscolaAcesso
+  AlocacaoFolha --> Turma
+  AlocacaoFolhaLicenca --> AlocacaoFolha
+  AlocacaoFolhaLicenca --> MotivosSaida
+  AlocacaoFolhaLicenca --> PessoaEscolaAcesso
+  AlocacaoFolhaLicenca --> ProfessorLicenca
+  AlocacaoProfessores --> AlocacaoProfessoresEtapa
+  AlocacaoProfessores --> AnoLetivo
+  AlocacaoProfessores --> Rede
+  AlocacaoProfessoresLinha --> AlocacaoProfessores
+  AlocacaoProfessoresLinha --> Disciplina
+  AlocacaoProfessoresLinha --> Escola
+  AlocacaoProfessoresLinha --> ProfessorPerfilVigente
+  AlocacaoProfessoresLinha --> Turma
+  AlocacaoRede --> Rede
+  AlocacaoRede --> Usuario
+  AlunoAP --> AnoLetivo
+  AlunoAP --> Pessoa
+  AlunoAtendimento --> AlunoEscola
+  AlunoAtendimento --> MotivoAtendimento
+  AlunoAvaliacaoPresenca --> Avaliacao
+  AlunoAvaliacaoPresenca --> Chamada
+  AlunoAvaliacaoPresenca --> Pessoa
+  AlunoAvaliacaoPresenca --> TipoPresenca
+  AlunoAvaliacaoPresenca --> Usuario
+  AlunoCartao --> EnvioLeituraCartao
+  AlunoCartao --> Pessoa
+  AlunoCartao --> ProvaCodigo
+  AlunoCartao --> AnoLetivo
+  AlunoCartao --> Rede
+  AlunoCartao --> Usuario
+  AlunoCartaoLinha --> AlunoCartao
+  AlunoCartaoLinha --> Usuario
+  AlunoCartaoNota --> AlunoCartao
+  AlunoCartaoNota --> Avaliacao
+  AlunoCartaoNota --> Chamada
+  AlunoCartaoNota --> AlunoCartaoNota
+  AlunoConselhoClasse --> Avaliacao
+  AlunoConselhoClasse --> Pessoa
+  AlunoConselhoClasse --> Usuario
+  AlunoEletiva --> AnoLetivo
+  AlunoEletiva --> Rede
+  AlunoEletiva --> Usuario
+  AlunoEletivaLinha --> AlunoEletiva
+  AlunoEletivaLinha --> Usuario
+  AlunoEscola --> FotoPessoa
+  AlunoEscola --> PessoaEscolaAcesso
+  AlunoEscola --> Pessoa
+  AlunoEscola --> TipoSaidaAluno
+  AlunoEscola --> Turma
+  AlunoEscolaDependencia --> Usuario
+  AlunoEscolaDependencia --> AlunoEscola
+  AlunoEscolaDependencia --> Disciplina
+  AlunoEscolaDisciplina --> Disciplina
+  AlunoEscolaDisciplina --> AlunoEscola
+  AlunoEscolaDisciplina --> ItinerarioFormativoCiclo
+  AlunoEscolaDisciplina --> ItinerarioFormativoPeriodo
+  AlunoEscolaDisciplinaComportamento --> AlunoEscola
+  AlunoEscolaDisciplinaComportamento --> Disciplina
+  AlunoEscolaDisciplinaComportamento --> TipoComportamentoAluno
+  AlunoEscolaDisciplinaComportamento --> Usuario
+  AlunoEscolaEletiva --> AlunoEscola
+  AlunoEscolaEletiva --> Disciplina
+  AlunoEscolaEletiva --> SemestreEletiva
+  AlunoEscolaEletiva --> Usuario
+  AlunoEscolaItinerarioFormativo --> AlunoEscola
+  AlunoEscolaItinerarioFormativo --> ItinerarioFormativo
+  AlunoEscolaItinerarioFormativo --> ItinerarioFormativoOferta
+  AlunoEscolaItinerarioFormativo --> Usuario
+  AlunoEscolaLinguaEstrangeira --> AlunoEscola
+  AlunoEscolaLinguaEstrangeira --> Disciplina
+  AlunoEscolaLinguaEstrangeira --> Usuario
+  AlunoEscolaResponsavel --> AlunoEscola
+  AlunoEscolaResponsavel --> Pessoa
+  AlunoExecucaoProva --> AlunoProva
+  AlunoExecucaoProva --> ProvaSituacao
+  AlunoFalta --> Pessoa
+  AlunoFalta --> TipoPresenca
+  AlunoFaltas --> Avaliacao
+  AlunoFaltas --> Pessoa
+  AlunoFrequencia --> Escola
+  AlunoFrequencia --> Pessoa
+  AlunoFrequencia --> TipoFrequencia
+  AlunoFrequencia --> Turno
+  AlunoJustificativaFalta --> Pessoa
+  AlunoLaudoMedico --> Pessoa
+  AlunoNecessidadesEspeciais --> Pessoa
+  AlunoNecessidadesEspeciaisRelatorio --> Agrupamento
+  AlunoNecessidadesEspeciaisRelatorio --> AnoLetivo
+  AlunoNecessidadesEspeciaisRelatorio --> Pessoa
+  AlunoNota --> TipoJustificativaNota
+  AlunoNota --> Avaliacao
+  AlunoNota --> Chamada
+  AlunoNota --> TipoNotaFormativa
+  AlunoNota --> ProdutoLancamentoNota
+  AlunoNota --> Pessoa
+  AlunoNota --> Situacao
+  AlunoNota --> AnoLetivo
+  AlunoNota --> Rede
+  AlunoNota --> Usuario
+  AlunoNotaDetalhamento --> Avaliacao
+  AlunoNotaDetalhamento --> Pessoa
+  AlunoNotaLinha --> AlunoNota
+  AlunoNotaLinha --> Usuario
+  AlunoNotaRecomendacao --> Avaliacao
+  AlunoNotaRecomendacao --> Pessoa
+  AlunoNotaTRI --> Avaliacao
+  AlunoNotaTRI --> Pessoa
+  AlunoNotaTRI --> Usuario
+  AlunoOcorrencia --> AlunoEscola
+  AlunoOcorrencia --> Ocorrencia
+  AlunoParaSincronizacao --> Usuario
+  AlunoParentesco --> AlunoEscola
+  AlunoParentesco --> TipoParentesco
+  AlunoParentesco --> Usuario
+  AlunoProva --> AvaliacaoFormativa
+  AlunoProva --> Pessoa
+  AlunoProva --> ProvaSituacao
+  AlunoProvaResposta --> AlunoProva
+  AlunoProvaResposta --> QuestaoRespostaObjetiva
+  AlunoSemNecessidadesEspeciais --> Pessoa
+  AlunoTendencia --> Ciclo
+  AlunoTendencia --> Disciplina
+  AlunoTendencia --> Pessoa
+  AlunoTendencia --> Turma
+  AnamnesePessoa --> Pessoa
+  AnamnesePessoa --> Usuario
+  AnamnesePessoa --> VersaoAnamnese
+  AnamnesePessoaResposta --> AnamnesePessoa
+  AnamnesePessoaResposta --> AnamnesePessoaResposta
+  AnamnesePessoaResposta --> PerguntaVersaoAnamnese
+  AnamnesePessoaResposta --> AlunoEscola
+  AnamnesePessoaResposta --> Usuario
+  AnamnesePessoaRespostaOpcao --> AnamnesePessoaResposta
+  AnamnesePessoaRespostaOpcao --> Disciplina
+  AnamnesePessoaRespostaOpcao --> OpcaoResposta
+  AnamnesePessoaRespostaOpcao --> Usuario
+  AnoLetivo --> Usuario
+  AnoLetivoProduto --> AnoLetivo
+  AnoLetivoProduto --> Produto
+  AnoLetivoSemanas --> AnoLetivo
+  Anotacao --> Redacao
+  AnotacaoLegendaRedacao --> LegendaRedacao
+  AnotacaoLegendaRedacao --> Competencia
+  AnotacaoLegendaRedacao --> Anotacao
+  AnotacaoRegraGeralRedacao --> RegraGeralRedacao
+  AnotacaoRegraGeralRedacao --> Anotacao
+  AoVivoSerie --> Serie
+  AreaConhecimento --> Usuario
+  Assunto --> Disciplina
+  Atendimento --> AlunoEscola
+  Atendimento --> MotivoAtendimento
+  Atendimento --> SolicitanteAtendimento
+  Atendimento --> TipoPublicoAtendido
+  Atendimento --> Usuario
+  AtendimentoAvaliacao --> AtendimentoEnfermaria
+  AtendimentoAvaliacao --> Usuario
+  AtendimentoAvaliacaoItem --> AtendimentoAvaliacao
+  AtendimentoAvaliacaoItem --> Avaliacao
+  AtendimentoAvaliacaoItem --> Usuario
+  AtendimentoEnfermaria --> AlunoEscola
+  AtendimentoEnfermaria --> EscolaSerieDisciplina
+  AtendimentoEnfermaria --> Pessoa
+  AtendimentoEnfermaria --> TipoDeIntervalo
+  AtendimentoEnfermaria --> Usuario
+  AtendimentoEscolaEleva --> Pessoa
+  AtendimentoEscolaEleva --> TipoAtendimentoEscolaEleva
+  AtendimentoEspecialistaPessoa --> EspecialistaPessoa
+  AtendimentoEspecialistaPessoa --> Usuario
+  AtendimentoPessoa --> Atendimento
+  AtendimentoPessoa --> Pessoa
+  AtendimentoPessoa --> Usuario
+  AtendimentoProcedimentoEnfermagem --> AtendimentoEnfermaria
+  AtendimentoProcedimentoEnfermagem --> Usuario
+  AtendimentoProcedimentoEnfermagemItem --> AtendimentoProcedimentoEnfermagem
+  AtendimentoProcedimentoEnfermagemItem --> ProcedimentoEnfermagem
+  AtendimentoProcedimentoEnfermagemItem --> Usuario
+  AtendimentoProcedimentoEnfermagemItemMedicamentoFormato --> AtendimentoProcedimentoEnfermagemItem
+  AtendimentoProcedimentoEnfermagemItemMedicamentoFormato --> MedicamentoFormato
+  AtendimentoProcedimentoEnfermagemItemMedicamentoFormato --> Usuario
+  AtendimentoRegistroEnfermagem --> AtendimentoEnfermaria
+  AtendimentoRegistroEnfermagem --> Usuario
+  AtendimentoResultadoFinal --> AtendimentoEnfermaria
+  AtendimentoResultadoFinal --> Usuario
+  AtendimentoSV --> AtendimentoEnfermaria
+  AtendimentoSV --> Usuario
+  Atualidade --> Assunto
+  Atualidade --> Conteudo
+  AtualidadeLinkRelacionado --> Atualidade
+  AtualidadeRedeEscola --> Atualidade
+  AtualidadeRedeEscola --> Escola
+  AtualidadeRedeEscola --> Rede
+  AtualidadeSerie --> Atualidade
+  AtualidadeSerie --> Serie
+  AtualidadeTurma --> Atualidade
+  AtualidadeTurma --> Turma
+  Aula_ComentarioComportamento --> ComentarioComportamento
+  Aula_ComentarioComportamento --> Disciplina
+  Aula_ComentarioComportamento --> Pessoa
+  Aula_ComentarioComportamento --> Turma
+  Aula_LancamentoComportamento --> Disciplina
+  Aula_LancamentoComportamento --> LancamentoComportamento
+  Aula_LancamentoComportamento --> Pessoa
+  Aula_LancamentoComportamento --> TipoComportamento
+  Aula_LancamentoComportamento --> Turma
+  AulaEvento --> DiaLetivoExtra
+  AulaEvento --> Disciplina
+  AulaEvento --> TipoAulaEvento
+  AulaEvento --> Turma
+  AulaEvento --> TurmaTempo
+  AulaEvento --> Turno
+  AulaEventoAnotacoes --> AulaEvento
+  AulaEventoAnotacoes --> Usuario
+  AulaEventoConfiguracao --> AnoLetivo
+  AulaEventoConfiguracao --> Rede
+  AulaEventoConfiguracao --> Usuario
+  AulaEventoDeverDeCasa --> AulaEvento
+  AulaEventoDeverDeCasa --> Usuario
+  AulaEventoPauta --> AulaEvento
+  AulaEventoPautaMensal --> Disciplina
+  AulaEventoPautaMensal --> Turma
+  AulaEventoPautaSemanal --> Disciplina
+  AulaEventoPautaSemanal --> Turma
+  AulaEventoUltimaAlteracao --> Turma
+  AulaOnline --> TipoAulaOnline
+  AulaOnline --> Usuario
+  AulaOnline --> AulaOnline
+  AulaOnlineAcesso --> AulaOnline
+  AulaOnlineAcesso --> PerfilDeAcessoDoUsuario
+  AulaOnlineAcesso --> PessoaEscolaAcesso
+  AulaOnlineAcesso --> Usuario
+  AulaOnlineAcessoPing --> AulaOnlineAcesso
+  AulaOnlineAcessoPing --> Usuario
+  AutorSegmentoDisciplina --> Disciplina
+  AutorSegmentoDisciplina --> PerfilDeAcessoDoUsuario
+  AutorSegmentoDisciplina --> Segmento
+  Avaliacao --> Agrupamento
+  Avaliacao --> AreaConhecimento
+  Avaliacao --> Ciclo
+  Avaliacao --> Disciplina
+  Avaliacao --> Conteudo
+  Avaliacao --> EstruturaAvaliacaoImportacaoEstrutura
+  Avaliacao --> Avaliacao
+  Avaliacao --> TipoAvaliacao
+  Avaliacao --> TipoDivisaoEscola
+  Avaliacao --> TipoResultado
+  Avaliacao --> Usuario
+  AvaliacaoDisciplina --> Avaliacao
+  AvaliacaoDisciplina --> Disciplina
+  AvaliacaoDisciplina --> Usuario
+  AvaliacaoEditora --> Disciplina
+  AvaliacaoEditora --> ProvaEditora
+  AvaliacaoEditora --> TipoQuestao
+  AvaliacaoEscola --> Avaliacao
+  AvaliacaoEscola --> Escola
+  AvaliacaoEscolaEleva --> Avaliacao
+  AvaliacaoEscolaEleva --> Classroom
+  AvaliacaoEscolaEleva --> Disciplina
+  AvaliacaoEscolaTurma --> AvaliacaoEscolaTurmaStatus
+  AvaliacaoEscolaTurma --> AvaliacaoFormativa
+  AvaliacaoEscolaTurma --> Escola
+  AvaliacaoEscolaTurma --> Rede
+  AvaliacaoEscolaTurma --> Serie
+  AvaliacaoEscolaTurma --> Turma
+  AvaliacaoEscolaTurma --> Usuario
+  AvaliacaoEscolaTurmaStatus --> Usuario
+  AvaliacaoFormativa --> Usuario
+  AvaliacaoFormativaDisciplina --> AvaliacaoFormativa
+  AvaliacaoFormativaDisciplina --> Disciplina
+  AvaliacaoFormativaDisciplina --> Usuario
+  AvaliacaoFormativaEscola --> AvaliacaoFormativa
+  AvaliacaoFormativaEscola --> Escola
+  AvaliacaoFormativaEscola --> Usuario
+  AvaliacaoFormativaMarcaPublico --> AvaliacaoFormativa
+  AvaliacaoFormativaMarcaPublico --> Marca
+  AvaliacaoFormativaMarcaPublico --> Segmento
+  AvaliacaoFormativaMarcaPublico --> Serie
+  AvaliacaoFormativaMarcaPublico --> Usuario
+  AvaliacaoFormativaProva --> AvaliacaoFormativa
+  AvaliacaoFormativaProva --> Prova
+  AvaliacaoFormativaProva --> Usuario
+  AvaliacaoFormativaPublico --> AvaliacaoFormativa
+  AvaliacaoFormativaPublico --> Rede
+  AvaliacaoFormativaPublico --> Segmento
+  AvaliacaoFormativaPublico --> Serie
+  AvaliacaoFormativaPublico --> Usuario
+  AvaliacaoFormativaQuestoes --> AvaliacaoFormativa
+  AvaliacaoFormativaQuestoes --> Questao
+  AvaliacaoFormativaQuestoes --> Usuario
+  AvaliacaoIA --> Usuario
+  AvaliacaoMediaAvaliacao --> Avaliacao
+  AvaliacaoModelo --> Disciplina
+  AvaliacaoModelo --> Conteudo
+  AvaliacaoModelo --> ProvaModelo
+  AvaliacaoModelo --> StatusAvaliacaoModelo
+  AvaliacaoModelo --> TipoQuestao
+  AvaliacaoModelo --> Usuario
+  AvaliacaoModeloChat --> AvaliacaoModelo
+  AvaliacaoModeloChat --> PerfilAcesso
+  AvaliacaoModeloChat --> Usuario
+  AvaliacaoModeloHistorico --> AvaliacaoModelo
+  AvaliacaoModeloHistorico --> StatusAvaliacaoModelo
+  AvaliacaoModeloQuestao --> AvaliacaoModelo
+  AvaliacaoModeloQuestao --> Questao
+  AvaliacaoSerie --> Avaliacao
+  AvaliacaoSerie --> Escola
+  AvaliacaoSerie --> Serie
+  AvaliacaoSerie --> Usuario
+  Avatar --> Usuario
+  BaseDeAvaliacoesAluno --> BaseDeAlunos
+  BaseDeAvaliacoesAluno --> BaseDeAvaliacoes
+  BaseDeDatasFeriados --> BaseDeDatas
+  BaseDeDatasFeriados --> Cidade
+  BloqueioBoletim --> Ciclo
+  BloqueioBoletim --> TipoAvaliacao
+  BloqueioBoletim --> Turma
+  BloqueioBoletim --> Usuario
+  BloqueioMaterialComplementar --> Agrupamento
+  BloqueioMaterialComplementar --> ConteudoOnline
+  BloqueioMaterialComplementar --> Disciplina
+  BloqueioMaterialComplementar --> Escola
+  BloqueioMaterialComplementar --> Usuario
+  BloqueioMaterialComplementar --> Rede
+  BoletimEscolaEleva --> Pessoa
+  BoletimEscolaEleva --> Ciclo
+  BonusCriterio --> AnoLetivo
+  BonusCriterio --> Usuario
+  BonusCriterioPublico --> BonusCriterio
+  BonusCriterioPublico --> Etapa
+  BonusCriterioPublico --> Rede
+  BonusCriterioPublico --> Segmento
+  BonusCriterioPublico --> Usuario
+  BonusCriterioPublicoFaixa --> BonusCriterioPublico
+  BonusCriterioPublicoFaixa --> Usuario
+  BonusCriterioPublicoVolume --> BonusCriterioPublico
+  BonusCriterioPublicoVolume --> Usuario
+  BonusCriterioPublicoVolume --> Ciclo
+  BonusPlataformaAdaptativa --> BaseDeAlunos
+  BuscaQuery --> Usuario
+  CadernoProva --> Usuario
+  CadernoResultadosLiberacao --> Escola
+  CadernoResultadosLiberacao --> Prova
+  CadernoResultadosMedia --> Avaliacao
+  CadernoResultadosMedia --> CadernoResultadosLiberacao
+  CaixaDeSaidaDeEmail --> Usuario
+  CaixaDeSaidaDeEmail --> EstadoEnvio
+  CaixaDeSaidaDeEmail --> Produto
+  CalendarioEvento --> Avaliacao
+  CalendarioEvento --> CalendarioEventoRecorrencia
+  CalendarioEvento --> CalendarioGrupo
+  CalendarioEvento --> Disciplina
+  CalendarioEvento --> PessoaEscolaAcesso
+  CalendarioEvento --> TipoAtividadeAgenda
+  CalendarioEventoAluno --> CalendarioEvento
+  CalendarioEventoRecorrencia --> CalendarioTipoRecorrencia
+  CalendarioGrupo --> Rede
+  CalendarioGrupo --> Serie
+  CalendarioGrupo --> TipoAtividadeAgenda
+  CalendarioGrupo --> Turma
+  CalendarioGrupo --> Turno
+  Campanha --> Usuario
+  CampanhaPermissoes --> Campanha
+  CampanhaPermissoes --> Escola
+  CampanhaPermissoes --> PerfilAcesso
+  CampanhaPermissoes --> Segmento
+  CampanhaPermissoes --> Serie
+  CampanhaPermissoes --> Usuario
+  CampanhaPermissoes --> Rede
+  CampoDinamicoListaEspecifica --> CampoDinamico
+  CanalChatBotConectado --> AlunoEscola
+  CanalChatBotConectado --> Usuario
+  CandidatoBolsao --> AnoLetivo
+  CandidatoBolsao --> Escola
+  CandidatoBolsao --> PessoaEscolaAcesso
+  CandidatoBolsao --> Serie
+  CargaDisciplinaAlteracao --> MotivosSaida
+  CargaDisciplinaAlteracao --> TurmaDisciplina
+  CargaHoraria --> Disciplina
+  CargaHoraria --> EscolaSerie
+  CargaHoraria --> RedeSerie
+  CargaHoraria --> Usuario
+  CargaHoraria --> AnoLetivo
+  CargaHoraria --> Rede
+  CargaHorariaLinha --> CargaHoraria
+  CargaProfessorEntrando --> CargaDisciplinaAlteracao
+  CargaProfessorEntrando --> PessoaEscolaAcesso
+  CargaProfessorSaindo --> CargaDisciplinaAlteracao
+  CargaProfessorSaindo --> PessoaEscolaAcesso
+  CargoPagamentoCargo --> Cargo
+  CargoPagamentoCargo --> CargoPagamento
+  Cartao --> ProfessorTurmaDisciplina
+  Cartao --> RedeQuesito
+  Cartao --> Turma
+  CartaoResposta --> Cartao
+  CartaoResposta --> RedeOpcao
+  CategoriaSerie --> Usuario
+  ChamadoOtrsTicket --> ChamadoOtrsTipo
+  ChamadoOtrsTicket --> Escola
+  ChamadoOtrsTicket --> Rede
+  ChamadoOtrsTipo --> ChamadoOtrsFila
+  ChamadoOtrsTipo --> ChamadoOtrsSLA
+  ChamadoOtrsTipo --> ChamadoOtrsTipo
+  ChamadoOtrsTipo --> Rede
+  ChamadoOtrsTipoCampo --> ChamadoOtrsCampo
+  ChamadoOtrsTipoCampo --> ChamadoOtrsTipo
+  Ciclo --> Etapa
+  Ciclo --> Ciclo
+  Ciclo --> Usuario
+  CicloDeMatriculas --> Rede
+  CicloDeMatriculas --> Usuario
+  Cidade --> Estado
+  Cidade --> Usuario
+  ClasseExemplo --> AnoLetivo
+  ClasseExemplo --> Rede
+  ClasseExemplo --> Usuario
+  ClasseExemploEscola --> ClasseExemplo
+  ClasseExemploEscola --> Escola
+  ClasseExemploEscola --> Usuario
+  ClassePagamento --> RedePagamento
+  ClasseTurmaSegmentoPgto --> ClassePgto
+  ClasseTurmaSegmentoPgto --> SegmentoPgto
+  ClasseTurmaSegmentoPgto --> Turma
+  Classroom --> Disciplina
+  Classroom --> Turma
+  ClassroomAluno --> Classroom
+  ClassroomBoletim --> Ciclo
+  ClassroomBoletim --> Classroom
+  ClassroomBoletim --> Disciplina
+  ClassroomCoordenador --> Classroom
+  ClassroomProfessor --> Classroom
+  Colaborador --> Cargo
+  Colaborador --> Pessoa
+  ColecaoComercial --> Usuario
+  ColecaoComercial --> AnoLetivo
+  ColecaoComercial --> Serie
+  ColecaoComercialEscola --> Usuario
+  ColecaoComercialEscola --> ColecaoComercial
+  ColecaoComercialEscola --> Escola
+  ComentarioComportamento --> Disciplina
+  ComentarioComportamento --> Pessoa
+  ComentarioComportamento --> Turma
+  ComentarioRedacao --> LegendaRedacao
+  ComentarioRedacao --> Redacao
+  CompetenciaAgrupamento --> Agrupamento
+  CompetenciaAgrupamento --> Competencia
+  ComunicadoCanalEnvio --> CanalEnvio
+  ComunicadoCanalEnvio --> Comunicado
+  ComunicadoEscolaSerieTurma --> Comunicado
+  ComunicadoEscolaSerieTurma --> Escola
+  ComunicadoEscolaSerieTurma --> Rede
+  ComunicadoEscolaSerieTurma --> Serie
+  ComunicadoEscolaSerieTurma --> Turma
+  ComunicadoImagem --> Comunicado
+  ComunicadoImagem --> Usuario
+  ComunicadoLogEnvio --> ComunicadoCanalEnvio
+  ComunicadoLogEnvio --> EstadoEnvio
+  ComunicadoLogEnvio --> Usuario
+  ComunicadoLogEnvioHistorico --> ComunicadoCanalEnvio
+  ComunicadoLogEnvioHistorico --> EstadoEnvio
+  ComunicadoLogEnvioHistorico --> Usuario
+  ComunicadoMobile --> Comunicado
+  ComunicadoMobileEscolaSerieTurma --> AlunoEscola
+  ComunicadoMobileEscolaSerieTurma --> ComunicadoMobile
+  ComunicadoMobileEscolaSerieTurma --> Escola
+  ComunicadoMobileEscolaSerieTurma --> Rede
+  ComunicadoMobileEscolaSerieTurma --> Serie
+  ComunicadoMobileEscolaSerieTurma --> Turma
+  ComunicadoMobileLido --> Comunicado
+  ComunicadoPublico --> Comunicado
+  ComunicadoPublico --> PerfilAcesso
+  ComunicadoTemplate --> Rede
+  ConfiguracaoAlocacao --> Usuario
+  ConfiguracaoGlobalUsuario --> Usuario
+  ConfiguracaoPeriodoLetivo --> EscolaSerie
+  ConfiguracaoPeriodoLetivo --> TipoChamada
+  ConfiguracaoTempoPadrao --> EscolaSerie
+  ConfiguracaoTempoPadrao --> Turno
+  ConselhoClasse --> AnoLetivo
+  ConselhoClasse --> Rede
+  ConselhoClasse --> Usuario
+  ConselhoClassePublico --> ConselhoClasse
+  ConselhoClassePublico --> Escola
+  ConselhoClassePublico --> EstruturaAvaliacao
+  ConselhoClassePublico --> Serie
+  ConselhoClassePublico --> Usuario
+  ConselhoClassePublicoFaixa --> ConselhoClassePublico
+  ConselhoClassePublicoFaixa --> Usuario
+  ConsumoQuestoesLaplace --> Usuario
+  Conteudo --> TipoArquivo
+  ConteudoOnline --> Agrupamento
+  ConteudoOnline --> AnoLetivo
+  ConteudoOnline --> ConteudoOnlineExtensao
+  ConteudoOnline --> ConteudoOnlineTipo
+  ConteudoOnline --> Disciplina
+  ConteudoOnline --> Rede
+  ConteudoOnline --> TipoRede
+  ConteudoOnline --> Usuario
+  ConteudoOnlineEscola --> ConteudoOnline
+  ConteudoOnlineEscola --> Escola
+  ConteudoOnlineEscola --> Usuario
+  ConteudoOnlineExtensao --> Usuario
+  ConteudoOnlinePerfil --> ConteudoOnline
+  ConteudoOnlinePerfil --> PerfilAcesso
+  ConteudoOnlinePerfil --> Usuario
+  ConteudoOnlineRede --> ConteudoOnline
+  ConteudoOnlineRede --> Rede
+  ConteudoOnlineRede --> Usuario
+  ConteudoOnlineTipo --> Usuario
+  ConteudoOnlineTurma --> ConteudoOnline
+  ConteudoOnlineTurma --> Turma
+  ConteudoOnlineTurma --> Usuario
+  ControleMatricula --> Usuario
+  ControleMatricula --> PerfilAcesso
+  ControleMatricula --> Rede
+  CoordenadorDisciplina --> Disciplina
+  CoordenadorDisciplina --> PessoaEscolaAcesso
+  CoordenadorDisciplina --> Serie
+  CoordenadorEscola --> Escola
+  CoordenadorEscola --> Pessoa
+  CoordenadorEscola --> Rede
+  CoordenadorEscola --> Segmento
+  Curso --> Usuario
+  CustomClassroom --> Usuario
+  Data --> AnoLetivo
+  DataEspecificaDeUmaRecorrencia --> CalendarioEventoRecorrencia
+  DiaLetivoExtra --> AnoLetivo
+  DiaLetivoExtra --> Escola
+  DiarioClasseConfiguracao --> Rede
+  DiaSemAula --> Turma
+  DiaSemAulaMotivo --> AnoLetivo
+  DiaSemAulaMotivo --> DiaSemAulaTipo
+  DiaSemAulaMotivo --> Escola
+  DiaSemAulaTurma --> Turma
+  DiaSemAulaTurma --> DiaSemAulaMotivo
+  DiretorEscola --> Escola
+  DiretorEscola --> Pessoa
+  DiretorEscola --> Rede
+  Disciplina --> Disciplina
+  Disciplina --> GrupoDisciplina
+  Disciplina --> Usuario
+  Disciplina --> Rede
+  DisciplinaDeParaImportacao --> Disciplina
+  DisciplinaHisDisciplina --> Disciplina
+  DisciplinaHisDisciplina --> HisDisciplina
+  DisciplinaLinha --> Usuario
+  DisciplinaPadrao --> TipoRede
+  DisciplinaPadrao --> Usuario
+  Disciplinas --> EscolaSerieDisciplina
+  Disciplinas --> PessoaEscolaAcesso
+  DispositivoConectado --> AlunoEscola
+  DispositivoConectado --> Usuario
+  DissidioAnoLetivo --> AnoLetivo
+  DissidioAnoLetivo --> Dissidio
+  DocumentoPedagogico --> Usuario
+  DocumentoPedagogicoRede --> AnoLetivo
+  DocumentoPedagogicoRede --> DocumentoPedagogico
+  DocumentoPedagogicoRede --> Rede
+  DocumentoPedagogicoRede --> Usuario
+  Dummy --> Usuario
+  DuracaoTempoAula --> RedeSerie
+  DuracaoTempoAula --> Usuario
+  EnvioLeitura --> Agrupamento
+  EnvioLeitura --> Escola
+  EnvioLeitura --> LeituraTipoRedacao
+  EnvioLeitura --> POATurma
+  EnvioLeitura --> Prova
+  EnvioLeitura --> Serie
+  EnvioLeitura --> LeituraTipo
+  EnvioLeitura --> Turno
+  EnvioLeitura --> GradeRedacao
+  EnvioLeituraCartao --> AlunoCartao
+  EnvioLeituraCartao --> EnvioLeitura
+  EnvioLeituraCartao --> LeituraCartaoStatus
+  EnvioLeituraCartao --> RedacaoDigital
+  EnvioLeituraCartao --> EnvioLeituraCartao
+  EnvioLeituraCartaoResposta --> EnvioLeituraCartao
+  EnvioLeituraStatus --> EnvioLeitura
+  EnvioLeituraStatus --> LeituraStatus
+  Escola --> Cidade
+  Escola --> Escola
+  Escola --> Estado
+  Escola --> Rede
+  Escola --> TipoEscola
+  Escola --> Usuario
+  EscolaAnoLetivo --> AnoLetivo
+  EscolaAnoLetivo --> Escola
+  EscolaAnoLetivo --> Usuario
+  EscolaConfiguracao --> Escola
+  EscolaConfiguracao --> Usuario
+  EscolaFeriado --> Escola
+  EscolaFeriado --> Rede
+  EscolaFeriado --> Turma
+  EscolaGerencial --> Rede
+  EscolaGerencialEscola --> AnoLetivo
+  EscolaGerencialEscola --> Escola
+  EscolaGerencialEscola --> EscolaGerencial
+  EscolaGSuiteCredential --> Escola
+  EscolaGSuiteCredential --> Rede
+  EscolaGSuiteCredential --> Usuario
+  EscolaMeta --> AnoLetivo
+  EscolaMeta --> Escola
+  EscolaMeta --> TipoMeta
+  EscolaPagamento --> RedePagamento
+  EscolaPagamentoEscola --> AnoLetivo
+  EscolaPagamentoEscola --> Escola
+  EscolaPagamentoEscola --> EscolaPagamento
+  EscolaSerie --> Agrupamento
+  EscolaSerie --> AnoLetivo
+  EscolaSerie --> Escola
+  EscolaSerie --> Serie
+  EscolaSerie --> TipoSerie
+  EscolaSerieCargaHoraria --> Disciplina
+  EscolaSerieCargaHoraria --> EscolaSerie
+  EscolaSerieDisciplina --> Disciplina
+  EscolaSerieDisciplina --> EscolaSerie
+  EscolaSerieDisciplinaCiclo --> EscolaSerieDisciplina
+  EscolaSerieDisciplinaCiclo --> RedeSerieCiclo
+  EscolaSerieDisciplinaCiclo --> Usuario
+  EscolaSerieDisciplinaEletiva --> EscolaSerie
+  EscolaSerieDisciplinaEletiva --> EscolaSerieDisciplina
+  EscolaSerieDisciplinaEletiva --> Usuario
+  EscolaSerieDisciplinaGrupoDisciplina --> EscolaSerieDisciplina
+  EscolaSerieDisciplinaGrupoDisciplina --> GrupoDisciplina
+  EscolaSerieDisciplinaGrupoDisciplina --> Usuario
+  EscolaSerieEtapa --> EscolaSerie
+  EscolaSerieEtapa --> Etapa
+  EspecialistaPessoa --> AnamnesePessoaResposta
+  EspecialistaPessoa --> Pessoa
+  EspecialistaPessoa --> TipoProfissionalSaude
+  EspecialistaPessoa --> Usuario
+  Estado --> Pais
+  Estado --> Usuario
+  EstatisticaClassroom --> AnoLetivo
+  EstatisticaClassroom --> Disciplina
+  EstatisticaClassroom --> Escola
+  EstatisticaClassroom --> Rede
+  EstatisticaClassroom --> Segmento
+  EstatisticaClassroom --> Serie
+  EstatisticaClassroom --> Turma
+  EstatisticaClassroom --> Usuario
+  EstatisticaTurmaClassroom --> EstatisticaClassroom
+  EstatisticaTurmaClassroom --> TurmaClassroom
+  EstatisticaTurmaClassroom --> Usuario
+  EstruturaAvaliacao --> Agrupamento
+  EstruturaAvaliacao --> AnoLetivo
+  EstruturaAvaliacao --> Ciclo
+  EstruturaAvaliacao --> EstruturaAvaliacao
+  EstruturaAvaliacao --> ItinerarioFormativoCiclo
+  EstruturaAvaliacao --> Rede
+  EstruturaAvaliacao --> TipoAvaliacao
+  EstruturaAvaliacao --> TipoCartaoResposta
+  EstruturaAvaliacao --> TipoResultado
+  EstruturaAvaliacao --> TipoSubstituicao
+  EstruturaAvaliacao --> Usuario
+  EstruturaAvaliacaoAprovacao --> Escola
+  EstruturaAvaliacaoAprovacao --> EstruturaAvaliacao
+  EstruturaAvaliacaoConfiguracao --> TipoArredondamento
+  EstruturaAvaliacaoConfiguracao --> Agrupamento
+  EstruturaAvaliacaoConfiguracao --> AnoLetivo
+  EstruturaAvaliacaoConfiguracao --> GrupoNotaFormativa
+  EstruturaAvaliacaoConfiguracao --> Rede
+  EstruturaAvaliacaoConfiguracao --> TipoCalculo
+  EstruturaAvaliacaoConfiguracao --> EstruturaAvaliacaoConfiguracao
+  EstruturaAvaliacaoConfiguracaoEscopo --> EscopoBoletim
+  EstruturaAvaliacaoConfiguracaoEscopo --> EstruturaAvaliacaoConfiguracao
+  EstruturaAvaliacaoEscopo --> Usuario
+  EstruturaAvaliacaoImportacao --> Agrupamento
+  EstruturaAvaliacaoImportacao --> AnoLetivo
+  EstruturaAvaliacaoImportacao --> EstruturaAvaliacaoEscopo
+  EstruturaAvaliacaoImportacao --> Rede
+  EstruturaAvaliacaoImportacao --> Usuario
+  EstruturaAvaliacaoImportacaoAprovacao --> EstruturaAvaliacaoImportacao
+  EstruturaAvaliacaoImportacaoAprovacao --> EstruturaAvaliacao
+  EstruturaAvaliacaoImportacaoAprovacao --> Usuario
+  EstruturaAvaliacaoImportacaoEstrutura --> Ciclo
+  EstruturaAvaliacaoImportacaoEstrutura --> EstruturaAvaliacaoImportacao
+  EstruturaAvaliacaoImportacaoEstrutura --> EstruturaAvaliacao
+  EstruturaAvaliacaoImportacaoEstrutura --> Etapa
+  EstruturaAvaliacaoImportacaoEstrutura --> TipoAvaliacao
+  EstruturaAvaliacaoImportacaoEstrutura --> Usuario
+  EstruturaAvaliacaoImportacaoSerie --> EstruturaAvaliacaoImportacao
+  EstruturaAvaliacaoImportacaoSerie --> Serie
+  EstruturaAvaliacaoImportacaoSerie --> Usuario
+  EstruturaAvaliacaoLiberacaoBoletim --> Agrupamento
+  EstruturaAvaliacaoLiberacaoBoletim --> AnoLetivo
+  EstruturaAvaliacaoLiberacaoBoletim --> Rede
+  EstruturaAvaliacaoLiberacaoBoletim --> Usuario
+  EstruturaAvaliacaoLiberacaoSituacao --> Agrupamento
+  EstruturaAvaliacaoLiberacaoSituacao --> AnoLetivo
+  EstruturaAvaliacaoLiberacaoSituacao --> Rede
+  EstruturaAvaliacaoOrdemDisciplina --> Agrupamento
+  EstruturaAvaliacaoOrdemDisciplina --> AnoLetivo
+  EstruturaAvaliacaoOrdemDisciplina --> Disciplina
+  EstruturaAvaliacaoOrdemDisciplina --> Rede
+  EstruturaAvaliacaoOrdemDisciplina --> Usuario
+  EstruturaAvaliacaoSubstituicao --> EstruturaAvaliacao
+  EstruturaAvaliacaoSubstituicao --> Usuario
+  Etapa --> AnoLetivo
+  Etapa --> EstruturaAvaliacaoEscopo
+  Etapa --> Etapa
+  Etapa --> Rede
+  Etapa --> Usuario
+  ExcecoesDeAcesso --> Escola
+  ExcecoesDeAcesso --> Funcionalidade
+  ExcecoesDeAcesso --> PerfilAcesso
+  ExcecoesDeAcesso --> Usuario
+  ExcecoesDeAcesso --> Rede
+  ExtracaoBaseDeNotas --> AnoLetivo
+  ExtracaoBaseDeNotas --> Usuario
+  FaleConosco --> Escola
+  FaleConosco --> Rede
+  FichaMedica --> Pessoa
+  Filiacao --> Pessoa
+  Filiacao --> Usuario
+  FolhaAlteracaoCarga --> Periodo
+  FolhaChecklistCargasIndevidas --> Periodo
+  FolhaChecklistCargasIndevidas --> ProfessorPerfilVigente
+  FolhaChecklistCargasIndevidas --> Situacao
+  FolhaChecklistProfessorAcimaDoLimite --> Periodo
+  FolhaChecklistProfessorAcimaDoLimite --> ProfessorPerfilVigente
+  FolhaChecklistProfessorSemSC --> Periodo
+  FolhaChecklistProfessorSemSC --> ProfessorPerfilVigente
+  FolhaChecklistSemTitular --> Disciplina
+  FolhaChecklistSemTitular --> Periodo
+  FolhaChecklistSemTitular --> Turma
+  FolhaProfessorLicenca --> Disciplina
+  FolhaProfessorLicenca --> Escola
+  FolhaProfessorLicenca --> MotivosSaida
+  FolhaProfessorLicenca --> Periodo
+  FolhaProfessorLicenca --> ProfessorPerfilVigente
+  FolhaProfessorLicenca --> Segmento
+  FolhaProfessorPorPeriodo --> Periodo
+  FolhaProfessorPorPeriodo --> ProfessorPerfilVigente
+  FolhaProfessorPorPeriodoTotal --> Periodo
+  FolhaProfessorPorPeriodoTotal --> ProfessorPerfilVigente
+  Formato --> Usuario
+  FormularioAtendimento --> MotivoAtendimento
+  FormularioAtendimento --> TipoPublicoAtendido
+  FormularioAtendimento --> Usuario
+  FormularioAtendimentoQuestao --> FormularioAtendimento
+  FormularioAtendimentoQuestao --> FormularioAtendimentoQuestaoOpcao
+  FormularioAtendimentoQuestao --> Usuario
+  FormularioAtendimentoQuestaoOpcao --> FormularioAtendimentoQuestao
+  FormularioAtendimentoQuestaoOpcao --> Usuario
+  FormularioAtendimentoResposta --> Atendimento
+  FormularioAtendimentoResposta --> FormularioAtendimentoQuestao
+  FormularioAtendimentoResposta --> Ocorrencia
+  FormularioAtendimentoResposta --> Usuario
+  FormularioAtendimentoRespostaOpcao --> FormularioAtendimentoResposta
+  FormularioAtendimentoRespostaOpcao --> Disciplina
+  FormularioAtendimentoRespostaOpcao --> FormularioAtendimentoQuestaoOpcao
+  FormularioAtendimentoRespostaOpcao --> Usuario
+  FotoPessoa --> AnoLetivo
+  FotoPessoa --> Pessoa
+  FotoPessoa --> Usuario
+  FrequenciaProfessor --> FrequenciaProfessor
+  FrequenciaProfessor --> MotivoFrequenciaProfessorTipoPresenca
+  FrequenciaProfessor --> PessoaEscolaAcesso
+  FrequenciaProfessor --> Usuario
+  FrequenciaProfessorSubstituto --> FrequenciaProfessor
+  FrequenciaProfessorSubstituto --> PessoaEscolaAcesso
+  FrequenciaProfessorSubstituto --> Turma
+  FrequenciaProfessorSubstituto --> Usuario
+  Funcionalidade --> AnoLetivo
+  Funcionalidade --> Usuario
+  FuncionalidadeAcessada --> PerfilAcesso
+  FuncionalidadeAcessada --> Usuario
+  FuncionalidadeAcessada --> Escola
+  FuncionalidadeAcessada --> MenuItem
+  FuncionalidadeAcessada --> Rede
+  FuncionalidadeSegmento --> Funcionalidade
+  FuncionalidadeSegmento --> Segmento
+  FuncionalidadeTipoPresenca --> Funcionalidade
+  FuncionalidadeTipoPresenca --> TipoPresenca
+  GabaritoComentado --> Simulado
+  GabaritoComentado --> Usuario
+  GradeHoraria --> AnoLetivo
+  GradeHoraria --> Rede
+  GradeHoraria --> Usuario
+  GradeHorariaLinha --> GradeHoraria
+  GradeHorariaLinha --> Usuario
+  GradeRedacao --> Usuario
+  GradeRedacaoAgrupamento --> Agrupamento
+  GradeRedacaoAgrupamento --> GradeRedacao
+  GradeRedacaoAgrupamento --> Usuario
+  GradeRedacaoAgrupamentoProva --> GradeRedacaoAgrupamento
+  GradeRedacaoAgrupamentoProva --> Prova
+  GradeRedacaoAgrupamentoProva --> Usuario
+  GradeRedacaoAgrupamentoRede --> Rede
+  GradeRedacaoAgrupamentoRede --> Usuario
+  GradeRedacaoAgrupamentoRede --> GradeRedacaoAgrupamento
+  GradeRedacaoCompetencia --> Competencia
+  GradeRedacaoCompetencia --> GradeRedacao
+  GradeRedacaoCompetencia --> Usuario
+  GradeRedacaoCompetenciaLegenda --> Competencia
+  GradeRedacaoCompetenciaLegenda --> GradeRedacao
+  GradeRedacaoCompetenciaLegenda --> LegendaRedacao
+  GradeRedacaoCompetenciaLegenda --> Usuario
+  GradeRedacaoCompetenciaLegendaIA --> Competencia
+  GradeRedacaoCompetenciaLegendaIA --> GradeRedacao
+  GradeRedacaoCompetenciaLegendaIA --> LegendaRedacao
+  GradeRedacaoLegenda --> GradeRedacao
+  GradeRedacaoLegenda --> LegendaRedacao
+  GradeRedacaoLegenda --> Usuario
+  GradeRedacaoRegraGeral --> GradeRedacao
+  GradeRedacaoRegraGeral --> RegraGeralRedacao
+  GradeRedacaoRegraGeral --> Usuario
+  GrupoDisciplina --> Usuario
+  GrupoDocumento --> Usuario
+  GrupoNotaFormativa --> Rede
+  GrupoPergunta --> Usuario
+  GrupoPerguntaPerfilAcesso --> GrupoPergunta
+  GrupoPerguntaPerfilAcesso --> PerfilAcesso
+  GrupoPerguntaPerfilAcesso --> Usuario
+  GuiaFinanceiro --> Rede
+  GuiaFinanceiro --> Usuario
+  GuiaPortal --> PerfilAcesso
+  GuiaPortal --> Rede
+  GuiaPortal --> Usuario
+  HabilidadeEnem --> AreaConhecimento
+  HabilidadesBNCC --> Disciplina
+  HabilidadesENEM --> AreaConhecimento
+  HisAnoLetivo --> AnoLetivo
+  HisCargaHoraria --> HisAnoLetivo
+  HisCargaHoraria --> HisDisciplina
+  HisCargaHoraria --> HisSerie
+  HisCargaHoraria --> Rede
+  HisEscola --> Escola
+  HisEscolaComp --> HisAnoLetivo
+  HisEscolaComp --> HisEscola
+  HisEscolaComp --> HisSerie
+  HisEscolaCompDisc --> HisDisciplina
+  HisEscolaCompDisc --> HisEscolaComp
+  HisHistorico --> HisFundamentacaoLegal
+  HisHistorico --> PessoaEscolaAcesso
+  HisHistoricoAnoLetivo --> HisEscolaComp
+  HisHistoricoAnoLetivo --> HisHistorico
+  HisHistoricoAnoLetivo --> HisResultadoFinal
+  HisHistoricoNotas --> HisEscolaCompDisc
+  HisHistoricoNotas --> HisHistoricoAnoLetivo
+  HisNucleoComum --> HisDisciplina
+  HisNucleoComum --> HisSerie
+  HistoricoHoraAulaPgto --> HoraAulaPgto
+  HistoricoHoraAulaSegmentoPgto --> HoraAulaSegmentoPgto
+  HoraAulaPadrao --> AnoLetivo
+  HoraAulaPadrao --> ClassePagamento
+  HoraAulaPadrao --> EscolaPagamento
+  HoraAulaPadrao --> SegmentoPagamento
+  HoraAulaPgto --> TipoHoraAula
+  HoraAulaPgto --> DissidioAnoLetivo
+  HoraAulaPgto --> UnidadePgto
+  HoraAulaSegmentoPgto --> ClasseTurmaSegmentoPgto
+  HoraAulaSegmentoPgto --> DissidioAnoLetivo
+  HoraAulaSegmentoPgto --> TipoHoraAula
+  HoraAulaSegmentoPgto --> UnidadePgto
+  IconDisciplinaPladGame --> Disciplina
+  ImportacaoTRI --> ProvaModelo
+  ImportacaoTRI --> Usuario
+  ImportacaoTRILinha --> ImportacaoTRI
+  ImportacaoTRILinha --> Usuario
+  Inbox --> Escola
+  Inbox --> CanalEnvio
+  Inbox --> Comunicado
+  Indicador --> Usuario
+  IndicadorEscola --> AnoLetivo
+  IndicadorEscola --> Escola
+  IndicadorEscola --> Indicador
+  IndicadorEscola --> Usuario
+  IndicadorEscolaObjeto --> IndicadorEscola
+  IndicadorEscolaObjeto --> ManutencaoOpcoes
+  IndicadorEscolaObjetoValor --> IndicadorEscolaObjeto
+  IndicadorEscolaValor --> Usuario
+  IndicadorEscolaValor --> IndicadorEscola
+  IndicadorEscolaValorOrcado --> IndicadorEscola
+  InformacaoSaida --> Usuario
+  InformacaoSaidaAluno --> AlunoEscola
+  InformacaoSaidaAluno --> InformacaoSaida
+  InformacaoSaidaAluno --> Usuario
+  InformacaoSaidaAutorizacao --> InformacaoSaida
+  InformacaoSaidaAutorizacao --> Usuario
+  InformacaoSaidaAutorizacaoDiaSemana --> InformacaoSaidaAutorizacao
+  InformacaoSaidaAutorizacaoDiaSemana --> Usuario
+  InformacaoSaidaAutorizacaoOutros --> InformacaoSaidaAutorizacao
+  InformacaoSaidaAutorizacaoOutros --> Usuario
+  InformacaoSaidaAutorizacaoOutrosDetalhe --> InformacaoSaidaAutorizacaoOutros
+  InformacaoSaidaAutorizacaoOutrosDetalhe --> Usuario
+  InformacaoSaidaAutorizacaoResponsavel --> InformacaoSaidaAutorizacao
+  InformacaoSaidaAutorizacaoResponsavel --> Pessoa
+  InformacaoSaidaAutorizacaoResponsavel --> Usuario
+  InformacaoSaidaAutorizacaoResponsavelDetalhe --> InformacaoSaidaAutorizacaoResponsavel
+  InformacaoSaidaAutorizacaoResponsavelDetalhe --> Usuario
+  InformacaoSaidaAutorizacaoServico --> InformacaoSaidaAutorizacao
+  InformacaoSaidaAutorizacaoServico --> Usuario
+  InformacaoSaidaLogModificacao --> AlunoEscola
+  InformacaoSaidaLogModificacao --> Usuario
+  IntencaoChatBot --> Usuario
+  ItinerarioFormativo --> ItinerarioFormativoCiclo
+  ItinerarioFormativo --> ItinerarioFormativoTipo
+  ItinerarioFormativo --> Usuario
+  ItinerarioFormativoOferta --> ItinerarioFormativo
+  ItinerarioFormativoOferta --> ItinerarioFormativoPeriodo
+  ItinerarioFormativoPeriodo --> ItinerarioFormativoCiclo
+  ItinerarioFormativoRedeSerie --> ItinerarioFormativo
+  ItinerarioFormativoRedeSerie --> RedeSerie
+  ItinerarioFormativoRedeSerie --> Usuario
+  ItinerarioFormativoRedeSerieDisciplina --> Disciplina
+  ItinerarioFormativoRedeSerieDisciplina --> ItinerarioFormativoRedeSerie
+  ItinerarioFormativoRedeSerieDisciplina --> Usuario
+  JobParameter --> Job
+  LancamentoComportamento --> Disciplina
+  LancamentoComportamento --> Pessoa
+  LancamentoComportamento --> TipoComportamento
+  LancamentoComportamento --> Turma
+  LancamentoNotasBusca --> Agrupamento
+  LancamentoNotasBusca --> AnoLetivo
+  LancamentoNotasBusca --> Chamada
+  LancamentoNotasBusca --> Disciplina
+  LancamentoNotasBusca --> Escola
+  LancamentoNotasBusca --> Rede
+  LancamentoNotasBusca --> TipoAvaliacao
+  LancamentoNotasBusca --> Turma
+  LancamentoNotasStatusPorTurma --> Avaliacao
+  LancamentoNotasStatusPorTurma --> Chamada
+  LancamentoNotasStatusPorTurma --> ProvaTurma
+  LegendaRedacao --> TipoLegenda
+  LeituraImportacao --> LeituraTipoImportacao
+  LeituraImportacaoLinha --> LeituraImportacao
+  LeituraTipoRede --> AnoLetivo
+  LeituraTipoRede --> LeituraTipo
+  LeituraTipoRede --> Rede
+  LiberacaoBoletim --> EstruturaAvaliacao
+  LiberacaoBoletim --> Turma
+  LiberacaoBoletim --> Usuario
+  LiberacaoRede --> Rede
+  LiberacaoRede --> Simulado
+  LiberacaoRede --> Usuario
+  LiberacaoUnidade --> Escola
+  LiberacaoUnidade --> Simulado
+  LiberacaoUnidade --> Usuario
+  LIV_AcaoMarketing --> LIV_TipoMaterial
+  LIV_AcaoMarketing --> LIV_ClasseSubtipoMaterial
+  LIV_AcaoMarketing --> LIV_SubTipoMaterial
+  LIV_AcaoMarketingSegmento --> LIV_AcaoMarketing
+  LIV_AcaoMarketingSegmento --> SegmentoLIV
+  LIV_AtualizacaoCadastro --> LIV_ImportacaoDados
+  LIV_AtualizacaoCadastroAnos --> LIV_AtualizacaoCadastroIndividual
+  LIV_AtualizacaoCadastroAnos --> Serie
+  LIV_AtualizacaoCadastroCargos --> LIV_AtualizacaoCadastroIndividual
+  LIV_AtualizacaoCadastroIndividual --> Usuario
+  LIV_Carometro --> Usuario
+  LIV_Carometro --> AnoLetivo
+  LIV_Carometro --> Escola
+  LIV_Carometro --> Serie
+  LIV_Carometro --> Turma
+  LIV_CarometroComentario --> PessoaEscolaAcesso
+  LIV_CarometroComentario --> Escola
+  LIV_CarometroComentario --> Pessoa
+  LIV_CarometroComentario --> Segmento
+  LIV_CarometroComentario --> Serie
+  LIV_CarometroComentario --> Turma
+  LIV_ClasseSubtipoMaterial --> LIV_SubTipoMaterial
+  LIV_Comportamento --> Serie
+  LIV_EscolaSegmentoLivMais --> Escola
+  LIV_EscolaSegmentoLivMais --> SegmentoLIV
+  LIV_FeedbackAula --> AnoLetivo
+  LIV_FeedbackAula --> LIV_FeedbackCadastroAulas
+  LIV_FeedbackAula --> Escola
+  LIV_FeedbackAula --> Pessoa
+  LIV_FeedbackAula --> Serie
+  LIV_FeedbackAulaRespostas --> LIV_FeedbackAula
+  LIV_FeedbackAulaRespostas --> LIV_FeedbackPerguntas
+  LIV_HabilidadesAct --> SegmentoLIV
+  LIV_ImportacaoDados --> Usuario
+  LIV_ImportacaoDados --> Escola
+  LIV_ImportacaoDadosLinhasUsuario --> LIV_ImportacaoDados
+  LIV_ImportacaoDadosLinhasUsuario --> PerfilAcesso
+  LIV_ImportacaoDadosLinhasUsuario --> Usuario
+  LIV_ImportacaoDadosLog --> LIV_ImportacaoDados
+  LIV_INEPEscola --> Escola
+  LIV_LOG_Acessos --> Escola
+  LIV_LOG_Engajamento --> Escola
+  LIV_LOG_MaterialLinks --> LIV_MaterialLinks
+  LIV_LOG_MaterialSerieVideoLinks --> LIV_MaterialSerieVideoLinks
+  LIV_LOG_TermosDeUso --> Escola
+  LIV_LOG_TipoMaterial --> Escola
+  LIV_LOG_TipoMaterial --> Serie
+  LIV_LOG_TipoMaterial --> LIV_Material
+  LIV_Material --> LIV_TipoMaterial
+  LIV_Material --> AnoLetivo
+  LIV_MaterialLinks --> LIV_Material
+  LIV_MaterialLinks --> Pessoa
+  LIV_MaterialPlanoAula --> Usuario
+  LIV_MaterialSegmento --> LIV_Material
+  LIV_MaterialSegmento --> SegmentoLIV
+  LIV_MaterialSerie --> LIV_Material
+  LIV_MaterialSerie --> TipoSerie
+  LIV_MaterialSerieVideo --> LIV_Material
+  LIV_MaterialSerieVideoLinks --> Pessoa
+  LIV_MaterialSerieVideoLinks --> LIV_MaterialSerieVideo
+  LIV_Notificacao --> PerfilAcesso
+  LIV_NotificacaoUsuario --> LIV_Notificacao
+  LIV_NotificacaoUsuario --> Usuario
+  LIV_ParametroEscolaMaterial --> LIV_ParametroEscola
+  LIV_ParametroEscolaMaterial --> LIV_TipoMaterial
+  LIV_PercursoTrilhaMomento --> LIV_PercursoMomento
+  LIV_PercursoTrilhaMomentoLink --> LIV_PercursoTrilhaMomento
+  LIV_PercursoTrilhaMomentoLink --> LIV_MaterialPlanoAula
+  LIV_PercursoTrilhaMomentoLinkItem --> LIV_PercursoTrilhaMomentoLink
+  LIV_PercursoTrilhaMomentoLinkItem --> LIV_MaterialPlanoAula
+  LIV_PercursoTrilhaMomentoProgresso --> LIV_PercursoTrilhaMomento
+  LIV_PercursoTrilhaMomentoProgresso --> Usuario
+  LIV_PerfilAcessoAcaoMarketing --> LIV_AcaoMarketing
+  LIV_PerfilAcessoAcaoMarketing --> PerfilAcesso
+  LIV_PerfilAcessoMaterial --> LIV_Material
+  LIV_PerfilAcessoMaterial --> PerfilAcesso
+  LIV_PerfilAcessoNoticia --> LIV_Noticia
+  LIV_PerfilAcessoNoticia --> PerfilAcesso
+  LIV_Pesquisa --> Usuario
+  LIV_PesquisaAnos --> LIV_Pesquisa
+  LIV_PesquisaAnos --> Serie
+  LIV_PesquisaQuestoes --> LIV_Pesquisa
+  LIV_PessoaSerie --> Escola
+  LIV_PessoaSerie --> Pessoa
+  LIV_PessoaSerie --> Serie
+  LIV_Playbook --> SegmentoLIV
+  LIV_Questionario --> Escola
+  LIV_Questionario --> Pessoa
+  LIV_Questionario --> Turma
+  LIV_QuestionarioItem --> LIV_Questionario
+  LIV_StatusPlanoAula --> AnoLetivo
+  LIV_StatusPlanoAula --> SegmentoLIV
+  LIV_StatusPlanoAula --> Usuario
+  LIV_SubTipoMaterial --> LIV_TipoMaterial
+  LIV_UsuarioInativo --> Escola
+  LIV_UsuarioInativo --> Usuario
+  LIV_UsuarioSegmento --> SegmentoLIV
+  LIV_UsuarioSegmento --> Usuario
+  LIV_VideoLinks --> Usuario
+  LIV_Webinar --> Escola
+  LIV_Webinar --> Serie
+  LIV_WebinarPerfilAcesso --> LIV_Webinar
+  LIV_WebinarSegmento --> LIV_Webinar
+  LogAcesso --> Usuario
+  LogAcessoPlataformaAdaptativa --> Assunto
+  LogAcessoPlataformaAdaptativa --> Disciplina
+  LogAcessoPlataformaAdaptativa --> LogAcessoProduto
+  LogAcessoProduto --> Atualidade
+  LogAcessoProduto --> Disciplina
+  LogAcessoProduto --> LogAcesso
+  LogAcessoProduto --> Produto
+  LogAcessoProduto --> PublicacaoCanal
+  LogAcessoProduto --> Serie
+  LogAcessoProduto --> AlunoEscola
+  LogAcessoProduto --> ConteudoOnline
+  LogAcessoResultadoBimestral --> AlunoEscola
+  LogAcessoResultadoBimestral --> Ciclo
+  LogAcessoResultadoBimestral --> Usuario
+  LogAgenteImportacaoColecaoComercial --> Escola
+  LogAlteracaoPrazoCorrecaoRedacao --> Usuario
+  LogAlteracaoPrazoCorrecaoRedacao --> Redacao
+  LogAulaOnlineAssistida --> Usuario
+  LogCadastroAluno --> Usuario
+  LogClassroom --> TipoLogClassroom
+  LogClassroom --> Disciplina
+  LogClassroom --> OperacaoClassroom
+  LogClassroom --> Pessoa
+  LogClassroom --> Turma
+  LogClassroom --> Usuario
+  LogEnturmacao --> AlunoEscola
+  LogEnturmacao --> Turma
+  LogEnturmacao --> Usuario
+  LogEnturmacaoErro --> Usuario
+  LogErroClassroom --> Disciplina
+  LogErroClassroom --> OperacaoClassroom
+  LogErroClassroom --> Pessoa
+  LogErroClassroom --> Turma
+  LogErroClassroom --> Usuario
+  LogErrosPrevia --> Usuario
+  LogFluig --> Usuario
+  LogMaterialEletiva --> MaterialEletivaConteudo
+  LogMaterialEletiva --> SemestreEletiva
+  LogMaterialEletiva --> Usuario
+  LogQuestaoSimilar --> Questao
+  LogQuestaoSimilar --> Usuario
+  LogRecuperacaoSenha --> Usuario
+  LogTermosDeUsoPortal --> TermosDeUso
+  LogTermosDeUsoPortal --> Usuario
+  LogTrocaDeSenha --> Usuario
+  LogUpdateDadosPessoais --> AnoLetivo
+  LogUpdateDadosPessoais --> Pessoa
+  LogUpdateDadosPessoais --> Rede
+  LogUpdateDadosPessoais --> Usuario
+  LogUpdateFotoPessoa --> AnoLetivo
+  LogUpdateFotoPessoa --> Pessoa
+  LogUpdateFotoPessoa --> Rede
+  LogUpdateFotoPessoa --> Usuario
+  MacroTurmaConfiguracao --> AnoLetivo
+  MacroTurmaConfiguracao --> MacroTurma
+  MacroTurmaConfiguracao --> RedePagamento
+  MacroTurmaConfiguracao --> SegmentoPagamento
+  MacroTurmaConfiguracao --> SegmentoSindical
+  MacroTurmaConfiguracao --> TipoEvento
+  MacroTurmaIntelpedTurma --> MacroTurmaIntelped
+  MacroTurmaIntelpedTurma --> Turma
+  MangaHigh --> Usuario
+  Marca --> TipoRede
+  Marca --> Usuario
+  MaterialComplementar --> ConteudoOnline
+  MaterialComplementar --> MaterialEletivaConteudo
+  MaterialComplementar --> SemestreEletiva
+  MaterialComplementar --> Usuario
+  MaterialComplementar --> AnoLetivo
+  MaterialComplementar --> MaterialComplementar
+  MaterialComplementar --> Rede
+  MaterialComplementarEscolaSerie --> EscolaSerie
+  MaterialDidatico --> AnoLetivo
+  MaterialDidatico --> Serie
+  MaterialDidatico --> MaterialDidatico
+  MaterialDidaticoColecaoComercial --> Usuario
+  MaterialDidaticoColecaoComercial --> ColecaoComercial
+  MaterialDidaticoColecaoComercial --> MaterialDidaticoPlanejamento
+  MaterialDidaticoContratoData --> MaterialDidaticoEscola
+  MaterialDidaticoContratoData_backup --> MaterialDidaticoEscola_backup
+  MaterialDidaticoData --> MaterialDidatico
+  MaterialDidaticoDeParaTipoMaterialImportacao --> MaterialDidaticoTipoMaterial
+  MaterialDidaticoDeParaVolume --> MaterialDidatico
+  MaterialDidaticoEscola --> AnoLetivo
+  MaterialDidaticoEscola --> Escola
+  MaterialDidaticoEscola --> MaterialDidaticoCapa
+  MaterialDidaticoEscola --> MaterialDidaticoTipoFrete
+  MaterialDidaticoEscola_backup --> AnoLetivo
+  MaterialDidaticoEscola_backup --> Escola
+  MaterialDidaticoEscola_backup --> Serie
+  MaterialDidaticoEscolaContrato --> MaterialDidatico
+  MaterialDidaticoEscolaContrato --> MaterialDidaticoEscola
+  MaterialDidaticoEscolaContrato_backup --> Escola
+  MaterialDidaticoEscolaContrato_backup --> Fornecedor
+  MaterialDidaticoEscolaContrato_backup --> MaterialDidaticoTipoFrete
+  MaterialDidaticoEscolaContratoComp --> MaterialDidaticoEscolaContrato
+  MaterialDidaticoEscolaContratoComp --> MaterialDidaticoProduto
+  MaterialDidaticoEscolaPedido --> MaterialDidaticoEscolaContrato
+  MaterialDidaticoEscolaPedido --> MaterialDidaticoTipoPedido
+  MaterialDidaticoEscolaPedido --> MaterialDidaticoStatusPedido
+  MaterialDidaticoEscolaPedido --> MaterialDidaticoLote
+  MaterialDidaticoEscolaPedido_backup --> MaterialDidaticoEscola_backup
+  MaterialDidaticoEscolaPedidoExtra --> MaterialDidaticoEscola
+  MaterialDidaticoEscolaPedidoExtra_backup --> MaterialDidaticoEscola_backup
+  MaterialDidaticoEscolaPedidoHistorico --> MaterialDidaticoEscolaPedido_backup
+  MaterialDidaticoEscolaPedidoHistorico --> MaterialDidaticoStatus
+  MaterialDidaticoEscolaPedidoHistorico_backup --> MaterialDidaticoEscolaPedido_backup
+  MaterialDidaticoEscolaPedidoHistorico_backup --> MaterialDidaticoStatus
+  MaterialDidaticoEscolaPlanejamento --> AnoLetivo
+  MaterialDidaticoEscolaPlanejamento --> Escola
+  MaterialDidaticoLote --> MaterialDidaticoTipoFrete
+  MaterialDidaticoLote --> MaterialDidaticoTipoMovimento
+  MaterialDidaticoLote --> MaterialDidaticoCondicaoPagamento
+  MaterialDidaticoMonitoriaPedido --> MaterialDidaticoMonitoriaAvaliacao
+  MaterialDidaticoMonitoriaPedido --> MaterialDidaticoMonitoriaQuestao
+  MaterialDidaticoMonitoriaPedido --> MaterialDidaticoMonitoriaStatus
+  MaterialDidaticoMonitoriaPedido --> Usuario
+  MaterialDidaticoMonitoriaQuestao --> MaterialDidaticoTipoQuestao
+  MaterialDidaticoMonitoriaQuestao --> MaterialDidaticoVolumeModulo
+  MaterialDidaticoMonitoriaQuestao --> Usuario
+  MaterialDidaticoPlanejamento --> MaterialDidaticoTipoMaterial
+  MaterialDidaticoPlanejamento --> MaterialDidaticoVolume
+  MaterialDidaticoPlanejamento --> Rede
+  MaterialDidaticoPlanejamentoConteudo --> MaterialDidaticoPlanejamento
+  MaterialDidaticoProblema --> MaterialDidaticoProblemaAssunto
+  MaterialDidaticoProblema --> MaterialDidaticoProblemaTipo
+  MaterialDidaticoProblema --> MaterialDidaticoVolume
+  MaterialDidaticoProblema --> Usuario
+  MaterialDidaticoProduto --> MaterialDidatico
+  MaterialDidaticoProduto --> MaterialDidaticoCapa
+  MaterialDidaticoVolume --> AnoLetivo
+  MaterialDidaticoVolume --> Disciplina
+  MaterialDidaticoVolume --> MaterialDidatico
+  MaterialDidaticoVolume --> Serie
+  MaterialDidaticoVolumeModulo --> MaterialDidaticoVolume
+  MaterialEletiva --> SemestreEletiva
+  MaterialEletiva --> AnoLetivo
+  MaterialEletiva --> Disciplina
+  MaterialEletiva --> Usuario
+  MaterialEletivaConteudo --> ConteudoOnlineTipo
+  MaterialEletivaConteudo --> MaterialEletiva
+  MaterialEletivaConteudo --> Usuario
+  MediaAvaliacaoEscola --> Prova
+  MediaAvaliacaoEscola --> Escola
+  MediaAvaliacaoEscola --> Usuario
+  MediaAvaliacaoEscola --> Avaliacao
+  Medicamento --> Usuario
+  MedicamentoFormato --> Formato
+  MedicamentoFormato --> Medicamento
+  MedicamentoFormato --> Usuario
+  MedicamentoPrescrito --> Pessoa
+  MedicamentoPrescrito --> PessoaDocumento
+  MedicamentoPrescrito --> Usuario
+  MedicamentoPrescritoHorario --> MedicamentoPrescrito
+  MedicamentoPrescritoHorario --> Usuario
+  MeetTurmaClassroomPessoa --> Pessoa
+  MeetTurmaClassroomPessoa --> Usuario
+  MenuDevolutivas --> Usuario
+  MenuItem --> Funcionalidade
+  MenuItem --> MenuItem
+  MenuItem --> PerfilAcesso
+  MenuItem --> TipoRede
+  MenuItem --> Usuario
+  MenuItemLateral --> Funcionalidade
+  MenuItemLateral --> MenuItemLateral
+  MenuItemLateral --> Usuario
+  MenuLink --> Escola
+  MenuLink --> Usuario
+  MetaAtendimento --> AnoLetivo
+  MetaAtendimentoAluno --> MetaAtendimento
+  MetaAtendimentoAluno --> Pessoa
+  MetaAtendimentoTipoAtendimento --> MetaAtendimento
+  MetaAtendimentoTipoAtendimento --> Segmento
+  MetaAtendimentoTipoAtendimento --> TipoAtendimento
+  MetaEvasao --> Escola
+  MetaEvasao --> Rede
+  ModuloFeedback --> Simulado
+  ModuloFeedback --> Pessoa
+  ModuloFeedback --> Usuario
+  MonitoriaEscala --> Disciplina
+  MonitoriaEscala --> Escola
+  MonitoriaEscala --> MonitoriaMonitor
+  MonitoriaEscalaAlunosPresentes --> AlunoEscola
+  MonitoriaEscalaAlunosPresentes --> MonitoriaEscala
+  MonitoriaMonitor --> Cidade
+  MonitoriaMonitor --> Pessoa
+  MonitoriaMonitor --> Rede
+  MonitoriaMonitorDisciplina --> Disciplina
+  MonitoriaMonitorDisciplina --> MonitoriaMonitor
+  MonitoriaMonitorPresenca --> MonitoriaEscala
+  MonitoriaMonitorPresenca --> MonitoriaMonitor
+  MonitoriaMonitorPresenca --> TipoAbonoFalta
+  MonitoriaMonitorPresenca --> TipoPresenca
+  MonitorTurmaDisciplina --> Disciplina
+  MonitorTurmaDisciplina --> PessoaEscolaAcesso
+  MonitorTurmaDisciplina --> Turma
+  MonitorTurmaDisciplina --> Usuario
+  MotivoAtendimento --> TipoAtendimento
+  MotivoAtendimentoTipoPublicoAtendido --> MotivoAtendimento
+  MotivoAtendimentoTipoPublicoAtendido --> TipoPublicoAtendido
+  MotivoAtendimentoTipoPublicoAtendido --> Usuario
+  MotivoFrequenciaProfessor --> MotivoFrequenciaProfessor
+  MotivoFrequenciaProfessor --> Usuario
+  MotivoFrequenciaProfessorTipoPresenca --> MotivoFrequenciaProfessor
+  MotivoFrequenciaProfessorTipoPresenca --> Rede
+  MotivoFrequenciaProfessorTipoPresenca --> TipoPresenca
+  MotivoFrequenciaProfessorTipoPresenca --> Usuario
+  MotivosSaida --> Rede
+  NaoRecalcularBaseDeSeriesPorAluno --> Pessoa
+  NomeUraniaDisciplina --> Rede
+  NomeUraniaDisciplinaLinha --> NomeUraniaDisciplina
+  NomeUraniaTurma --> AnoLetivo
+  NomeUraniaTurmaLinha --> NomeUraniaTurma
+  NotaAvaliacao --> Usuario
+  NotaFormativa --> TipoNotaFormativa
+  NotaTransferencia --> Disciplina
+  NotaTransferencia --> Pessoa
+  NotaTransferencia --> Usuario
+  Notificacao --> Usuario
+  Ocorrencia --> EscolaSerie
+  Ocorrencia --> RedeSerie
+  Ocorrencia --> TipoOcorrencia
+  Ocorrencia --> Usuario
+  OcorrenciaEscolaEleva --> Pessoa
+  OcorrenciaEscolaEleva --> TipoOcorrenciaEscolaEleva
+  OpcaoResposta --> Pergunta
+  OpcaoResposta --> Usuario
+  OperacaoClassroom --> Usuario
+  Opiniao --> AlunoEscola
+  Opiniao --> MaterialDidaticoMonitoriaQuestao
+  Opiniao --> PerfilAcesso
+  Opiniao --> Produto
+  Opiniao --> PublicacaoCanal
+  Opiniao --> Questao
+  Opiniao --> Usuario
+  OrdenacaoAtendimentoRede --> AnoLetivo
+  OrdenacaoAtendimentoRede --> OrdenacaoAtendimento
+  OrdenacaoAtendimentoRede --> Rede
+  Origem --> Usuario
+  PainelAlunoTrocaAlunoEscola --> AlunoEscola
+  PainelAlunoTrocaAlunoEscola --> Usuario
+  Pais --> Usuario
+  ParametrosFolhaPorRede --> Rede
+  ParametrosFolhaPorRede --> ParametrosFolha
+  PercentualFrequencia --> AnoLetivo
+  PercentualFrequencia --> Pessoa
+  PercentualFrequencia --> Serie
+  PerfilAcessoFuncionalidade --> Escola
+  PerfilAcessoFuncionalidade --> Funcionalidade
+  PerfilAcessoFuncionalidade --> PerfilAcesso
+  PerfilAcessoFuncionalidade --> Rede
+  PerfilAcessoFuncionalidade --> Usuario
+  PerfilAcessoFuncionalidadeSegmentoAgrupamento --> Agrupamento
+  PerfilAcessoFuncionalidadeSegmentoAgrupamento --> Funcionalidade
+  PerfilAcessoFuncionalidadeSegmentoAgrupamento --> Segmento
+  PerfilAcessoFuncionalidadeSegmentoAgrupamento --> TipoRede
+  PerfilAcessoFuncionalidadeSegmentoAgrupamento --> Usuario
+  PerfilAcessoFuncionalidadeSerie --> Escola
+  PerfilAcessoFuncionalidadeSerie --> Funcionalidade
+  PerfilAcessoFuncionalidadeSerie --> PerfilAcesso
+  PerfilAcessoFuncionalidadeSerie --> Rede
+  PerfilAcessoFuncionalidadeSerie --> Serie
+  PerfilAcessoFuncionalidadeSerie --> Usuario
+  PerfilAcessoTipoRede --> PerfilAcesso
+  PerfilAcessoTipoRede --> TipoRede
+  PerfilAcessoTipoRede --> Usuario
+  PerfilDeAcessoDoUsuario --> PerfilAcesso
+  PerfilDeAcessoDoUsuario --> Rede
+  PerfilDeAcessoDoUsuario --> TipoRede
+  PerfilDeAcessoDoUsuario --> Usuario
+  Pergunta --> GrupoPergunta
+  Pergunta --> TipoRespostaAnamnese
+  Pergunta --> Usuario
+  PerguntaCondicionalOpcaoResposta --> OpcaoResposta
+  PerguntaCondicionalOpcaoResposta --> PerguntaVersaoAnamnese
+  PerguntaCondicionalOpcaoResposta --> Usuario
+  PerguntaTipoPergunta --> Pergunta
+  PerguntaTipoPergunta --> TipoPergunta
+  PerguntaTipoPergunta --> Usuario
+  PerguntaVersaoAnamnese --> Pergunta
+  PerguntaVersaoAnamnese --> PerguntaVersaoAnamnese
+  PerguntaVersaoAnamnese --> Usuario
+  PerguntaVersaoAnamnese --> VersaoAnamnese
+  PerguntaVersaoAnamneseTipoPergunta --> PerguntaVersaoAnamnese
+  PerguntaVersaoAnamneseTipoPergunta --> TipoPergunta
+  PerguntaVersaoAnamneseTipoPergunta --> Usuario
+  PerguntaVersaoAnamneseTipoPerguntaOpcaoResposta --> OpcaoResposta
+  PerguntaVersaoAnamneseTipoPerguntaOpcaoResposta --> PerguntaVersaoAnamneseTipoPergunta
+  PerguntaVersaoAnamneseTipoPerguntaOpcaoResposta --> Usuario
+  PeriodoEscolar --> AnoLetivo
+  PeriodoEscolar --> Escola
+  PeriodoEscolar --> TipoPeriodoEscolar
+  PeriodoEscolar --> Usuario
+  PeriodoLancamentoFrequenciaProfessor --> Rede
+  PeriodoLancamentoFrequenciaProfessor --> Usuario
+  PeriodosDeExclusaoCorretores --> AlocacaoCorretorStatus
+  PeriodosDeExclusaoCorretores --> Usuario
+  PermissaoDW --> Rede
+  Pesquisa --> Usuario
+  PesquisaIntencao --> AnoLetivo
+  PesquisaIntencao --> Usuario
+  PesquisaIntencaoPergunta --> PesquisaIntencao
+  PesquisaIntencaoPergunta --> Usuario
+  PesquisaIntencaoPublico --> PesquisaIntencao
+  PesquisaIntencaoPublico --> RedeSerie
+  PesquisaIntencaoPublico --> Usuario
+  PesquisaIntencaoResposta --> PesquisaIntencaoPergunta
+  PesquisaIntencaoResposta --> Usuario
+  PesquisaNotaAvaliacao --> NotaAvaliacao
+  PesquisaNotaAvaliacao --> Pesquisa
+  PesquisaNotaAvaliacao --> Usuario
+  PesquisaOpiniaoPergunta --> PesquisaOpiniaoPergunta
+  PesquisaOpiniaoPergunta --> PesquisaOpiniao
+  PesquisaOpiniaoPergunta --> PesquisaOpiniaoTipoResposta
+  PesquisaOpiniaoResposta --> PesquisaOpiniaoPergunta
+  PesquisaOpiniaoResposta --> Usuario
+  PesquisaOpiniaoUsuario --> PesquisaOpiniao
+  PesquisaOpiniaoUsuario --> Usuario
+  PesquisaPublica --> PerfilAcesso
+  PesquisaPublica --> Pesquisa
+  PesquisaPublica --> RedeSerie
+  PesquisaPublica --> Usuario
+  PesquisaPublico --> Escola
+  PesquisaPublico --> Pesquisa
+  PesquisaPublico --> Serie
+  PesquisaPublicoPerfilAcesso --> PesquisaPublico
+  PesquisaPublicoSegmento --> PesquisaPublico
+  PesquisaRespondida --> Escola
+  PesquisaRespondida --> Serie
+  PesquisaRespondida --> Usuario
+  PesquisaResposta --> NotaAvaliacao
+  PesquisaResposta --> PerfilAcesso
+  PesquisaResposta --> PerfilDeAcessoDoUsuario
+  PesquisaResposta --> Pesquisa
+  PesquisaResposta --> Pessoa
+  PesquisaResposta --> PessoaEscolaAcesso
+  PesquisaResposta --> Usuario
+  PesquisaResultado --> Escola
+  PesquisaResultado --> Serie
+  PesquisaResultadoPerfilAcesso --> PesquisaResultado
+  PesquisaResultadoSegmento --> PesquisaResultado
+  PesquisaSatisfacao --> Usuario
+  PesquisaSatisfacaoPergunta --> PesquisaSatisfacao
+  PesquisaSatisfacaoPergunta --> PesquisaSatisfacaoTipoPergunta
+  PesquisaSatisfacaoPergunta --> Usuario
+  PesquisaSatisfacaoResposta --> PesquisaSatisfacaoPergunta
+  PesquisaSatisfacaoResposta --> PesquisaSatisfacaoUsuario
+  PesquisaSatisfacaoTipoPergunta --> Usuario
+  PesquisaSatisfacaoUsuario --> Escola
+  PesquisaSatisfacaoUsuario --> PerfilAcesso
+  PesquisaSatisfacaoUsuario --> PesquisaSatisfacao
+  PesquisaSatisfacaoUsuario --> Pessoa
+  PesquisaSatisfacaoUsuario --> Serie
+  PesquisaSatisfacaoUsuario --> Turma
+  Pessoa --> Estado
+  Pessoa --> Pessoa
+  PessoaAprovadaConselho --> Pessoa
+  PessoaDadosAlterados --> Pessoa
+  PessoaDePara --> AnoLetivo
+  PessoaDePara --> Pessoa
+  PessoaDocumento --> Pessoa
+  PessoaDocumento --> TipoDocumento
+  PessoaDocumento --> Usuario
+  PessoaEscola --> Usuario
+  PessoaEscola --> Escola
+  PessoaEscola --> Pessoa
+  PessoaEscolaAcesso --> PerfilAcesso
+  PessoaEscolaAcesso --> PessoaEscola
+  PessoaEscolaAcesso --> PessoaEscolaAcesso
+  PessoaEscolaAcessoSegmento --> PessoaEscolaAcesso
+  PessoaEscolaAcessoSegmento --> Segmento
+  PessoaEscolaAcessoSegmento --> Usuario
+  PessoaEscolaSerieDisciplina --> EscolaSerieDisciplina
+  PessoaEscolaSerieDisciplina --> Pessoa
+  PessoaEscolaSerieDisciplina --> Usuario
+  PessoaJuridica --> Usuario
+  PessoaJuridicaAlunoEscola --> AlunoEscola
+  PessoaJuridicaAlunoEscola --> PessoaJuridica
+  PessoaJuridicaAlunoEscola --> Pessoa
+  PessoaJuridicaAlunoEscola --> Usuario
+  PessoaRedeEmail --> Pessoa
+  PessoaRedeEmail --> Rede
+  PessoaRedeEmail --> Usuario
+  PessoaSegmento --> AnoLetivo
+  PessoaSegmento --> Escola
+  PessoaSegmento --> Pessoa
+  PessoaSegmento --> Segmento
+  PessoaSegmento --> Usuario
+  PessoaTelefone --> Pessoa
+  PessoaTurma --> Pessoa
+  PessoaTurma --> Turma
+  PessoaTurma --> Usuario
+  PLADAvaliacao --> AlunoEscola
+  PLADAvaliacao --> Disciplina
+  PLADAvaliacao --> PLADMaterialEstudo
+  PLADAvaliacao --> RedeSerieDisciplinaAssunto
+  PLADAvaliacao --> RedeSerieCicloAssunto
+  PLADAvaliacao --> Usuario
+  PLADAvaliacaoQuestao --> PLADAvaliacao
+  PLADAvaliacaoQuestao --> Questao
+  PLADMaterialEstudo --> Conteudo
+  PLADMaterialEstudo --> RedeSerieDisciplinaAssunto
+  PLADMaterialEstudo --> RedeSerieCicloAssunto
+  PLADNivelAluno --> Disciplina
+  PLADNivelAluno --> RedeSerieDisciplinaAssunto
+  PLADNivelAluno --> RedeSerieCicloAssunto
+  PLADNivelAluno --> Usuario
+  PLADQuestaoGame --> Questao
+  PLADQuestaoGame --> RedeSerieCicloAssunto
+  PLADQuestaoGame --> RedeSerieDisciplinaAssunto
+  POAAgenda --> POATurma
+  POAAgenda --> Usuario
+  POAAluno --> POAPessoa
+  POAAluno --> POATurma
+  POAAlunoOpcao --> POAAluno
+  POAAlunoOpcao --> POAAvaliacao
+  POAAlunoOpcao --> POAOpcao
+  POAAvaliacao --> POAProfessor
+  POAAvaliacao --> POAQuesito
+  POAAvaliacaoResultado --> POAAvaliacao
+  POACartao --> EnvioLeituraCartao
+  POACartao --> POATurma
+  POACartaoOpcao --> POACartao
+  POACartaoOpcao --> POAOpcao
+  POAOpcao --> POAPeriodo
+  POAPeriodo --> AnoLetivo
+  POAPeriodo --> POATipoAplicacao
+  POAPeriodoRede --> POAPeriodo
+  POAPeriodoRede --> Rede
+  POAPessoa --> Pessoa
+  POAProfessor --> Disciplina
+  POAProfessor --> POAPessoa
+  POAProfessor --> POATurma
+  POAQuesito --> POAPeriodo
+  POAQuesito --> Segmento
+  POATurma --> Turma
+  POATurmaStatus --> POAStatus
+  POATurmaStatus --> POATurma
+  Pontuacao --> Agrupamento
+  Pontuacao --> Competencia
+  Pontuacao --> GradeRedacao
+  PontuacaoIA --> Competencia
+  PontuacaoIA --> GradeRedacao
+  Portaria --> Escola
+  PreviaCarga --> Rede
+  PreviaCargaEscola --> Escola
+  PreviaCargaEscola --> PreviaCarga
+  PreviaCargaPublico --> Pessoa
+  PreviaCargaPublico --> PreviaCarga
+  PreviaCargaPublico --> TwilioFilaEnvio
+  Problema --> AlunoEscola
+  Problema --> PerfilAcesso
+  Problema --> MaterialDidaticoMonitoriaQuestao
+  Problema --> Produto
+  Problema --> PublicacaoCanal
+  Problema --> Questao
+  Problema --> Usuario
+  ProcedimentoEnfermagem --> Usuario
+  ProcessamentoBaseAvaliacoes --> RedeSerie
+  ProcessamentoBoletim --> Escola
+  ProcessamentoBoletim --> EscolaSerie
+  ProcessamentoBoletim --> RedeSerie
+  Produto --> ProdutoGrupo
+  ProdutoLancamentoNota --> Usuario
+  ProdutoPermissao --> AnoLetivo
+  ProdutoPermissao --> Escola
+  ProdutoPermissao --> PerfilAcesso
+  ProdutoPermissao --> Produto
+  ProdutoPermissao --> Rede
+  ProdutoPermissao --> Serie
+  ProdutoPermissao --> Turma
+  ProdutoPermissao --> Usuario
+  Professor --> AnoLetivo
+  Professor --> Pessoa
+  Professor --> Rede
+  Professor --> Segmento
+  Professor --> TipoProfessor
+  ProfessorCarga --> Disciplina
+  ProfessorCarga --> MotivosSaida
+  ProfessorCarga --> Pessoa
+  ProfessorCarga --> ProfessorPerfilVigente
+  ProfessorCarga --> Turma
+  ProfessorCargaSubstituto --> MotivosSaida
+  ProfessorCargaSubstituto --> Pessoa
+  ProfessorCargaSubstituto --> ProfessorCarga
+  ProfessorCargaSubstituto --> ProfessorPerfilVigente
+  ProfessorChapa --> Cargo
+  ProfessorChapa --> ProfessorPerfilVigente
+  ProfessorChapaEscolaMes --> EscolaGerencial
+  ProfessorChapaEscolaMes --> TipoDivisaoChapa
+  ProfessorChapaEscolaMes --> AnoLetivo
+  ProfessorChapaEscolaMes --> ProfessorChapa
+  ProfessorClassePagamento --> AnoLetivo
+  ProfessorClassePagamento --> ClassePagamento
+  ProfessorClassePagamento --> ProfessorPerfilVigente
+  ProfessorDisciplina --> Disciplina
+  ProfessorDisciplina --> PessoaEscolaAcesso
+  ProfessorHaPgto --> HoraAulaPgto
+  ProfessorHaPgto --> Pessoa
+  ProfessorHaSegmentoPgto --> HoraAulaSegmentoPgto
+  ProfessorHaSegmentoPgto --> Pessoa
+  ProfessorLicenca --> ProfessorPerfilVigente
+  ProfessorLicenca --> SituacaoProfessor
+  ProfessorLicencaTempos --> ProfessorLicenca
+  ProfessorLicencaTempos --> Segmento
+  ProfessorOcorrencia --> Escola
+  ProfessorOcorrencia --> ProfessorOcorrenciaTipo
+  ProfessorPerfilVigente --> Pessoa
+  ProfessorPerfilVigente --> PessoaEscolaAcesso
+  ProfessorPerfilVigente --> PessoaTelefone
+  ProfessorPerfilVigente --> Rede
+  ProfessorPerfilVigente --> Situacao
+  ProfessorPerfilVigente --> SituacaoProfessor
+  ProfessorTotalTempos --> AnoLetivo
+  ProfessorTotalTempos --> Escola
+  ProfessorTotalTempos --> ProfessorPerfilVigente
+  ProfessorTurmaDisciplina --> Disciplina
+  ProfessorTurmaDisciplina --> MotivosSaida
+  ProfessorTurmaDisciplina --> PessoaEscolaAcesso
+  ProfessorTurmaDisciplina --> Turma
+  ProfessorTurmaDisciplina --> Usuario
+  ProfessorTurmaDisciplina_Lixeira --> Disciplina
+  ProfessorTurmaDisciplina_Lixeira --> PessoaEscolaAcesso
+  ProfessorTurmaDisciplina_Lixeira --> Turma
+  ProfessorTurmaDisciplinaCiclo --> EscolaSerieDisciplinaCiclo
+  ProfessorTurmaDisciplinaCiclo --> Pessoa
+  ProfessorTurmaDisciplinaCiclo --> Turma
+  ProfessorTurmaDisciplinaCiclo --> Usuario
+  ProtocoloLancamento --> Avaliacao
+  ProtocoloLancamento --> Chamada
+  ProtocoloLancamento --> LogAcesso
+  ProtocoloLancamento --> Turma
+  ProtocoloLancamentoAluno --> Pessoa
+  ProtocoloLancamentoAluno --> ProtocoloLancamento
+  ProtocoloLancamentoAluno --> ProtocoloLancamentoStatus
+  ProtocoloLancamentoBusca --> Agrupamento
+  ProtocoloLancamentoBusca --> AnoLetivo
+  ProtocoloLancamentoBusca --> Avaliacao
+  ProtocoloLancamentoBusca --> Chamada
+  ProtocoloLancamentoBusca --> Disciplina
+  ProtocoloLancamentoBusca --> Escola
+  ProtocoloLancamentoBusca --> Rede
+  ProtocoloLancamentoBusca --> Turma
+  Prova --> Agrupamento
+  Prova --> Chamada
+  Prova --> Ciclo
+  Prova --> TipoAvaliacao
+  Prova --> TipoCartaoResposta
+  ProvaAvaliacao --> Avaliacao
+  ProvaAvaliacao --> Prova
+  ProvaAvaliacao --> TipoQuestao
+  ProvaCodigo --> Prova
+  ProvaCodigo --> ProvaModelo
+  ProvaCodigo --> ProvaModeloCodigo
+  ProvaCodigoAvaliacao --> ProvaAvaliacao
+  ProvaCodigoAvaliacao --> ProvaCodigo
+  ProvaCodigoAvaliacaoQuestao --> ProvaCodigoAvaliacao
+  ProvaCodigoAvaliacaoQuestao --> Questao
+  ProvaCodigoAvaliacaoQuestao --> TipoQuestao
+  ProvaCodigoAvaliacaoQuestaoRevisao --> Usuario
+  ProvaCodigoAvaliacaoQuestaoRevisao --> ProvaCodigoAvaliacaoQuestao
+  ProvaCodigoAvaliacaoQuestaoRevisao --> Redacao
+  ProvaCodigoAvaliacaoQuestaoRevisao --> RespostaRevisaoAvaliacao
+  ProvaEditora --> Agrupamento
+  ProvaEditora --> AnoLetivo
+  ProvaEditora --> ParametroProvaEditora
+  ProvaModelo --> Agrupamento
+  ProvaModelo --> AnoLetivo
+  ProvaModelo --> Ciclo
+  ProvaModelo --> ProvaEditora
+  ProvaModelo --> ProvaModelo
+  ProvaModelo --> StatusProvaModelo
+  ProvaModelo --> TipoAvaliacao
+  ProvaModelo --> Turno
+  ProvaModelo --> Usuario
+  ProvaModeloCodigo --> ProvaModelo
+  ProvaModeloCodigo --> Usuario
+  ProvaModeloCodigoQuestao --> ProvaModeloCodigo
+  ProvaModeloCodigoQuestao --> Questao
+  ProvaModeloCodigoQuestao --> Usuario
+  ProvaModeloConveniado --> Usuario
+  ProvaModeloConveniadoQuestao --> ProvaModeloConveniado
+  ProvaModeloConveniadoQuestao --> Questao
+  ProvaModeloRede --> ProvaModelo
+  ProvaModeloRede --> Rede
+  ProvaTurma --> Prova
+  ProvaTurma --> Turma
+  PublicacaoCanal --> Assunto
+  PublicacaoCanal --> Conteudo
+  PublicacaoCanal --> Disciplina
+  PublicacaoCanal --> PublicacaoCanalTipo
+  PublicacaoCanalLIV --> Usuario
+  PublicacaoCanalLIV --> ConteudoLIV
+  PublicacaoCanalMaterialRelacionado --> Conteudo
+  PublicacaoCanalMaterialRelacionado --> PublicacaoCanal
+  PublicacaoCanalSerie --> PublicacaoCanal
+  PublicacaoCanalSerie --> Serie
+  Questao --> Conteudo
+  Questao --> Questao
+  Questao --> Usuario
+  QuestaoAutor --> AprovacaoQuestao
+  QuestaoAutor --> Conteudo
+  QuestaoAutor --> Questao
+  QuestaoClassificacao --> Rede
+  QuestaoClassificacao --> HabilidadeEnem
+  QuestaoClassificacao --> PublicacaoCanal
+  QuestaoClassificacao --> Segmento
+  QuestaoClassificacao --> Assunto
+  QuestaoClassificacao --> Disciplina
+  QuestaoClassificacao --> HabilidadesBNCC
+  QuestaoClassificacao --> HabilidadesENEM
+  QuestaoClassificacao --> Questao
+  QuestaoClassificacao --> QuestaoFonte
+  QuestaoClassificacao --> QuestaoNivelDificuldade
+  QuestaoClassificacao --> QuestaoStatus
+  QuestaoClassificacao --> QuestaoTipo
+  QuestaoClassificacao --> Tag
+  QuestaoClassificacao --> Usuario
+  QuestaoClassificacao --> Video
+  QuestaoFeedback --> Origem
+  QuestaoFeedback --> Questao
+  QuestaoFeedback --> QuestaoTipoErro
+  QuestaoFeedback --> Usuario
+  QuestaoFonte --> Usuario
+  QuestaoLaplace --> Questao
+  QuestaoLaplace --> Usuario
+  QuestaoLaplaceConsumida --> ConsumoQuestoesLaplace
+  QuestaoLaplaceConsumida --> Usuario
+  QuestaoLaplaceConsumidaErrosDeValidacao --> QuestaoLaplaceConsumida
+  QuestaoLaplaceConsumidaErrosDeValidacao --> Usuario
+  QuestaoNivelDificuldade --> Usuario
+  QuestaoOpcaoResposta --> Conteudo
+  QuestaoOpcaoResposta --> Questao
+  QuestaoRedeSerie --> Questao
+  QuestaoRedeSerie --> Rede
+  QuestaoRedeSerie --> Serie
+  QuestaoRedeSerie --> Usuario
+  QuestaoRespostaDiscursiva --> Questao
+  QuestaoRespostaDiscursiva --> Usuario
+  QuestaoRespostaObjetiva --> Questao
+  QuestaoRespostaObjetiva --> Usuario
+  QuestaoRespostaObjetivaMetrica --> QuestaoRespostaObjetiva
+  QuestaoRespostaObjetivaMetrica --> Usuario
+  QuestaoSimilar --> Questao
+  QuestaoSimilar --> Usuario
+  QuestaoStatus --> Usuario
+  QuestaoTag --> Questao
+  QuestaoTag --> Tag
+  QuestaoTag --> Usuario
+  QuestaoTipo --> Usuario
+  QuestaoTipoErro --> Usuario
+  Redacao --> Avaliacao
+  Redacao --> Usuario
+  Redacao --> EnvioLeituraCartao
+  Redacao --> Redacao
+  Redacao --> StatusRedacao
+  Redacao --> AlunoCartao
+  Redacao --> GradeRedacao
+  RedacaoAvaliacaoCorrecaoIA --> AvaliacaoIA
+  RedacaoAvaliacaoCorrecaoIA --> Redacao
+  RedacaoAvaliacaoCorrecaoIA --> Usuario
+  RedacaoCompetencia --> Competencia
+  RedacaoCompetencia --> Redacao
+  RedacaoCompetencia --> Usuario
+  RedacaoCorrecaoIAAcompanhamento --> Redacao
+  RedacaoCorrecaoIAAcompanhamento --> StatusCorrecaoIA
+  RedacaoCorrecaoIAAcompanhamento --> TipoErroCorrecaoIA
+  RedacaoCorrecaoIAAcompanhamento --> Usuario
+  RedacaoDigital --> Pessoa
+  RedacaoDigital --> ProvaAvaliacao
+  RedacaoDigital --> Usuario
+  RedacaoDigitalRegras --> Usuario
+  RedacaoHistorico --> Redacao
+  RedacaoHistorico --> StatusRedacao
+  RedacaoHistoricoRevisaoIA --> Redacao
+  RedacaoHistoricoRevisaoIA --> Usuario
+  RedacaoNotaCache --> Competencia
+  RedacaoNotaCache --> Redacao
+  RedacaoRegraGeral --> Redacao
+  RedacaoRegraGeral --> RegraGeralRedacao
+  RedacaoRegraGeral --> Usuario
+  RedacaoRevisao --> Redacao
+  RedacaoRevisao --> StatusRedacaoRevisao
+  RedacaoRevisao --> Usuario
+  RedacaoStatusHistorico --> Redacao
+  Rede --> Rede
+  Rede --> Periodo
+  Rede --> Marca
+  Rede --> TipoRede
+  RedeAcesso --> Rede
+  RedeAcesso --> Usuario
+  RedeIdioma --> Idioma
+  RedeIdioma --> Rede
+  RedeIntegracoes --> Rede
+  RedeLivroDigital --> Rede
+  RedeMaterialDidatico --> Rede
+  RedeMaterialDidatico --> Usuario
+  RedeOpcao --> Opcao
+  RedeOpcao --> Rede
+  RedePagamentoRede --> Rede
+  RedePagamentoRede --> RedePagamento
+  RedeQuesito --> Quesito
+  RedeQuesito --> Rede
+  RedeSegmento --> Rede
+  RedeSerie --> Agrupamento
+  RedeSerie --> AnoLetivo
+  RedeSerie --> Rede
+  RedeSerie --> RedeSerie
+  RedeSerie --> Serie
+  RedeSerie --> ExtracaoBaseDeNotas
+  RedeSerie --> TipoArredondamento
+  RedeSerie --> TipoCalculo
+  RedeSerieAgrupamento --> Agrupamento
+  RedeSerieAgrupamento --> AnoLetivo
+  RedeSerieAgrupamento --> Rede
+  RedeSerieAgrupamento --> Serie
+  RedeSerieCiclo --> Ciclo
+  RedeSerieCiclo --> RedeSerie
+  RedeSerieCiclo --> Usuario
+  RedeSerieCicloAssunto --> Assunto
+  RedeSerieCicloAssunto --> RedeSerieCiclo
+  RedeSerieCicloAssunto --> Usuario
+  RedeSerieDisciplina --> AnoLetivo
+  RedeSerieDisciplina --> Rede
+  RedeSerieDisciplina --> AreaConhecimento
+  RedeSerieDisciplina --> Disciplina
+  RedeSerieDisciplina --> RedeSerie
+  RedeSerieDisciplina --> RedeSerieDisciplina
+  RedeSerieDisciplinaAssunto --> Assunto
+  RedeSerieDisciplinaAssunto --> RedeSerieCiclo
+  RedeSerieDisciplinaAssunto --> RedeSerieDisciplina
+  RedeSerieDisciplinaCiclo --> RedeSerieCiclo
+  RedeSerieDisciplinaCiclo --> RedeSerieDisciplina
+  RedeSerieDisciplinaCiclo --> Usuario
+  RedeSerieDisciplinaFrente --> Disciplina
+  RedeSerieDisciplinaFrente --> RedeSerieDisciplina
+  RedeSerieDisciplinaFrente --> Usuario
+  RedeSerieDisciplinaLinha --> RedeSerieDisciplina
+  RedeSerieVersaoAnamnese --> RedeSerie
+  RedeSerieVersaoAnamnese --> Usuario
+  RedeSerieVersaoAnamnese --> VersaoAnamnese
+  RegraGeralRedacao --> Usuario
+  RelatorioFolhaPeriodo --> AnoLetivo
+  RelatorioFolhaPeriodo --> TipoRelatorioFolha
+  RelatorioFolhaPublico --> AnoLetivo
+  RelatorioFolhaPublico --> Rede
+  RelatorioFolhaPublico --> TipoRelatorioFolha
+  RelatorioSimulado --> Usuario
+  ReleaseNotes --> Funcionalidade
+  ReleaseNotesVisualizacao --> ReleaseNotes
+  ReleaseNotesVisualizacao --> Usuario
+  RematriculaConveniados --> AlunoEscola
+  RematriculaConveniados --> Turma
+  RematriculaConveniados --> Usuario
+  ResponsavelAlunoClassroom --> AlunoEscola
+  ResponsavelAlunoClassroom --> Pessoa
+  ResponsavelAlunoClassroom --> Usuario
+  ResponsavelAtendimento --> AlunoEscola
+  ResponsavelAtendimento --> MotivoAtendimento
+  ResponsavelAtendimento --> SolicitanteAtendimento
+  RestricaoRankingSimuladoRede --> Rede
+  RestricaoRankingSimuladoRede --> Simulado
+  RestricaoRankingSimuladoRede --> Usuario
+  Resumo --> Assunto
+  Resumo --> Disciplina
+  Resumo --> Segmento
+  Resumo --> Usuario
+  Segmento --> Segmento
+  Segmento --> Usuario
+  SegmentoPagamento --> RedePagamento
+  SegmentoSindical --> RedePagamento
+  SemestreEletiva --> Serie
+  SemestreEletiva --> Usuario
+  Serie --> Agrupamento
+  Serie --> CategoriaSerie
+  Serie --> Curso
+  Serie --> Escola
+  Serie --> Serie
+  Serie --> Segmento
+  Serie --> SegmentoLIV
+  Serie --> Usuario
+  SerieBolsao --> Serie
+  SerieBolsao --> Usuario
+  SerieDePara --> Serie
+  SerieDePara --> Usuario
+  SerieDeParaImportacao --> Serie
+  SerieDisciplinaPadrao --> AreaConhecimento
+  SerieDisciplinaPadrao --> Serie
+  SerieDisciplinaPadrao --> Usuario
+  SerieHisSerie --> HisSerie
+  SerieHisSerie --> Serie
+  SerieLaplaceAssociada --> Serie
+  SerieLaplaceAssociada --> Usuario
+  Series --> EscolaSerie
+  Series --> PessoaEscolaAcesso
+  ServicoCampoDinamico --> CampoDinamicoListaEspecifica
+  ServicoCampoDinamico --> ChamadoOtrsTipo
+  ServicoCampoDinamico --> CampoDinamico
+  ServicoPerfilAcesso --> ChamadoOtrsTipo
+  ServicoPerfilAcesso --> PerfilAcesso
+  ServicoPerfilAcesso --> Usuario
+  Simulado --> Usuario
+  SimuladoAgrupamento --> Simulado
+  SimuladoAgrupamento --> SimuladoTRI
+  SimuladoAgrupamento --> Usuario
+  SimuladoDetalhe --> Usuario
+  SimuladoQuestaoDetalhe --> CadernoProva
+  SimuladoQuestaoDetalhe --> Usuario
+  SimuladoQuestaoDetalhe --> Simulado
+  SimuladoTRI --> AnoLetivo
+  SimuladoTRI --> Usuario
+  SimuladoTRIAreaConhecimento --> AreaConhecimento
+  SimuladoTRIAreaConhecimento --> SimuladoTRI
+  SimuladoTRIAreaConhecimento --> Usuario
+  SimuladoTRICalculo --> SimuladoTRI
+  SimuladoTRICalculo --> Usuario
+  SimuladoTRIGabaritoOficial --> SimuladoTRI
+  SimuladoTRIGabaritoOficial --> Usuario
+  SimuladoTRIProvaCodigo --> ProvaCodigo
+  SimuladoTRIProvaCodigo --> SimuladoTRI
+  SimuladoTRIProvaCodigo --> Usuario
+  SimuladoTRIStatusCalculo --> SimuladoTRI
+  SimuladoTRIStatusCalculo --> Usuario
+  SiteInstitucionalWhiteList --> Rede
+  SiteInstitucionalWhiteList --> Usuario
+  Situacao --> AnoLetivo
+  Situacao --> Rede
+  SituacaoQuestoesLaplace --> Usuario
+  SolicitanteAtendimentoPorTipoRede --> SolicitanteAtendimento
+  SolicitanteAtendimentoPorTipoRede --> TipoRede
+  SolicitanteAtendimentoPorTipoRede --> Usuario
+  State --> Job
+  StatusAtividadeAlunoClassroom --> Usuario
+  StatusAtividadeClassroom --> Usuario
+  StatusCorrecaoIA --> Usuario
+  StatusCovid --> Pessoa
+  StatusCovid --> Usuario
+  StatusRedacao --> Usuario
+  StatusRedacaoRevisao --> Usuario
+  Tag --> Disciplina
+  Tag --> Segmento
+  Tag --> Tag
+  Tag --> Usuario
+  Tags --> Conteudo
+  Tags --> Tag
+  TemplateEmail --> Rede
+  TempoAula --> EscolaSerie
+  TempoAula --> Usuario
+  TemporalMediasTCTRede --> Simulado
+  TemporalMediasTCTUnidade --> Simulado
+  TemporalNotasTRIEscola --> Escola
+  TemporalNotasTRIEscola --> Simulado
+  TemporalNotasTRIRede --> Rede
+  TemporalNotasTRIRede --> Simulado
+  TemporalQuestaoPercentual --> CadernoProva
+  TemporalQuestaoPercentual --> Usuario
+  TemporalQuestaoPercentual --> Simulado
+  TemporalRank --> Escola
+  TemporalRank --> Pessoa
+  TemporalRank --> Rede
+  TemporalRank --> Turma
+  TemporalRank --> Usuario
+  TemporalRank --> Simulado
+  TermosDeUso --> Usuario
+  TermosDeUsoRedePerfil --> PerfilAcesso
+  TermosDeUsoRedePerfil --> TermosDeUso
+  TermosDeUsoRedePerfil --> Usuario
+  TermosDeUsoRedePerfil --> Rede
+  Ticket --> Produto
+  Ticket --> Usuario
+  TicketProblemaMD --> MaterialDidaticoProblema
+  TicketProblemaMD --> Usuario
+  TipoAtendimentoPorTipoRede --> TipoAtendimento
+  TipoAtendimentoPorTipoRede --> TipoRede
+  TipoAtendimentoPorTipoRede --> Usuario
+  TipoAulaOnline --> Usuario
+  TipoAulaOnlineRede --> Rede
+  TipoAulaOnlineRede --> TipoAulaOnline
+  TipoAulaOnlineRede --> Usuario
+  TipoAulaOnlineRedeSerie --> RedeSerie
+  TipoAulaOnlineRedeSerie --> TipoAulaOnline
+  TipoAulaOnlineRedeSerie --> Usuario
+  TipoAvaliacao --> AnoLetivo
+  TipoAvaliacao --> TipoAvaliacao
+  TipoAvaliacao --> Rede
+  TipoAvaliacao --> TipoCartaoResposta
+  TipoCalculo --> Usuario
+  TipoCartaoResposta --> Usuario
+  TipoCartaoRespostaSomatorioAlternativa --> TipoCartaoResposta
+  TipoCartaoRespostaSomatorioAlternativa --> Usuario
+  TipoCartaoRespostaSomatorioValor --> TipoCartaoResposta
+  TipoCartaoRespostaSomatorioValor --> Usuario
+  TipoComportamentoAluno --> Escola
+  TipoComportamentoAluno --> Rede
+  TipoComportamentoAluno --> Usuario
+  TipoComportamentoAlunoSerie --> Serie
+  TipoComportamentoAlunoSerie --> TipoComportamentoAluno
+  TipoComportamentoAlunoSerie --> Usuario
+  TipoComportamentoConfiguracao --> AnoLetivo
+  TipoComportamentoConfiguracao --> Rede
+  TipoComportamentoConfiguracao --> Segmento
+  TipoComportamentoConfiguracao --> TipoComportamento
+  TipoDeIntervalo --> Usuario
+  TipoDocumento --> GrupoDocumento
+  TipoDocumento --> Usuario
+  TipoEvento --> RedePagamento
+  TipoEvento --> TipoEvento
+  TipoEvento --> TipoPagamento
+  TipoFarol --> Usuario
+  TipoJustificativaNota --> Usuario
+  TipoLogClassroom --> Usuario
+  TipoNotaFormativa --> GrupoNotaFormativa
+  TipoNotaFormativa --> Rede
+  TipoOcorrencia --> TipoOcorrencia
+  TipoPergunta --> Usuario
+  TipoPeriodoEscolar --> Usuario
+  TipoProfissionalSaude --> Usuario
+  TipoPublicoAtendido --> Usuario
+  TipoPublicoAtendidoPorTipoRede --> TipoPublicoAtendido
+  TipoPublicoAtendidoPorTipoRede --> TipoRede
+  TipoPublicoAtendidoPorTipoRede --> Usuario
+  TipoRedeFuncionalidadePadrao --> PerfilAcesso
+  TipoRedeFuncionalidadePadrao --> Funcionalidade
+  TipoRedeFuncionalidadePadrao --> TipoRede
+  TipoRedeResultado --> TipoRede
+  TipoRedeResultado --> TipoResultado
+  TipoRedeResultado --> Usuario
+  TipoRedeSerie --> Serie
+  TipoRedeSerie --> TipoRede
+  TipoRespostaAnamnese --> Usuario
+  TipoSerie --> Usuario
+  TipoSituacaoBinaria --> Usuario
+  TipoSubstituicao --> Usuario
+  ToDoTarefa --> Usuario
+  TRI --> SimuladoTRI
+  TRI --> Usuario
+  TRILinha --> TRI
+  TRILinha --> Usuario
+  Turma --> Turma
+  Turma --> Rede
+  Turma --> RedeSegmento
+  Turma --> EscolaSerie
+  Turma --> Serie
+  Turma --> TurmaClassroom
+  Turma --> Turno
+  TurmaAgrupada --> AnoLetivo
+  TurmaAgrupada --> Disciplina
+  TurmaAgrupada --> Rede
+  TurmaAgrupada --> Serie
+  TurmaAgrupada --> Usuario
+  TurmaAgrupadaTurma --> Turma
+  TurmaAgrupadaTurma --> TurmaAgrupada
+  TurmaAgrupadaTurma --> Usuario
+  TurmaClassroom --> TurmaAgrupada
+  TurmaClassroom --> Disciplina
+  TurmaClassroom --> Turma
+  TurmaClassroom --> Usuario
+  TurmaClassroomAtividade --> StatusAtividadeClassroom
+  TurmaClassroomAtividade --> TurmaClassroom
+  TurmaClassroomAtividade --> Usuario
+  TurmaClassroomAtividadeAluno --> StatusAtividadeAlunoClassroom
+  TurmaClassroomAtividadeAluno --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeAluno --> Usuario
+  TurmaClassroomAtividadeDrive --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeDrive --> Usuario
+  TurmaClassroomAtividadeForm --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeForm --> Usuario
+  TurmaClassroomAtividadeLink --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeLink --> Usuario
+  TurmaClassroomAtividadeYoutube --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeYoutube --> Usuario
+  TurmaClassroomPessoaEscolaAcesso --> Pessoa
+  TurmaClassroomPessoaEscolaAcesso --> PessoaEscolaAcesso
+  TurmaClassroomPessoaEscolaAcesso --> TurmaClassroom
+  TurmaClassroomPessoaEscolaAcesso --> Usuario
+  TurmaDisciplina --> Disciplina
+  TurmaDisciplina --> Turma
+  TurmaDisciplinaFolha --> DisciplinaFolha
+  TurmaDisciplinaFolha --> Turma
+  TurmaEletivaEscolaSerie --> EscolaSerie
+  TurmaEletivaEscolaSerie --> Turma
+  TurmaEletivaEscolaSerie --> Usuario
+  TurmaEscolaSerieDisciplina --> EscolaSerieDisciplina
+  TurmaEscolaSerieDisciplina --> Turma
+  TurmaEscolaSerieDisciplina --> Usuario
+  TurmaHorarioPadrao --> Turma
+  TurmaMacroTurma --> MacroTurma
+  TurmaMacroTurma --> Turma
+  TurmaTempo --> Turma
+  Turno --> Usuario
+  TwilioFilaEnvio --> TwilioRemetente
+  TwilioFilaEnvio --> TwilioTemplate
+  TwilioFilaEnvioParametro --> TwilioFilaEnvio
+  TwilioFilaEnvioParametro --> TwilioTemplateParametro
+  TwilioRemetenteRede --> Rede
+  TwilioRemetenteRede --> TwilioRemetente
+  TwilioTemplate --> Funcionalidade
+  TwilioTemplateParametro --> TwilioTemplate
+  Usuario --> Usuario
+  Usuario --> Idioma
+  Usuario --> Pessoa
+  UsuarioAcessoGuia --> Usuario
+  UsuarioAcessoGuiaFinanceiro --> Rede
+  UsuarioAcessoGuiaFinanceiro --> Usuario
+  UsuarioAuthToken --> Usuario
+  UsuarioEscolaEleva --> Usuario
+  UsuarioLinha --> Usuario
+  UsuarioLIVConteudoLIV --> ConteudoLIV
+  UsuarioLogarComo --> Usuario
+  UsuarioProdutoDestaque --> Usuario
+  UsuarioProdutoDestaque --> Produto
+  UsuarioUltimoFiltro --> UsuarioUltimoFiltro
+  UsuarioVisualizouCampanha --> Campanha
+  UsuarioVisualizouCampanha --> Usuario
+  UsuarioVisualizouRegraPLAD --> Usuario
+  ValorPgtoProfessor --> MacroTurmaIntelpedTurma
+  ValorPgtoProfessor --> ProfessorHaPgto
+  ValorPgtoProfessorSegmento --> MacroTurmaIntelpedTurma
+  ValorPgtoProfessorSegmento --> ProfessorHaSegmentoPgto
+  VersaoAnamnese --> Usuario
+  VersaoAnamnesePadrao --> Segmento
+  VersaoAnamnesePadrao --> TipoRede
+  VersaoAnamnesePadrao --> Usuario
+  VersaoAnamnesePadrao --> VersaoAnamnese
+  Video --> Assunto
+  Video --> Disciplina
+  Video --> VideoTipo
+  'META FINAL$'
+  'Tabelameta2019$'
+  AggregatedCounter
+  AgrupadorDeMeses
+  AlocacaoProfessoresStatus
+  AlunoAvaliacaoPresenca_bkp
+  AlunoAvaliacaoPresenca_bkp2
+  AlunoCartaoResposta
+  AlunoEletivaModulo
+  AlunoEscolaEleva2018
+  AlunoEscolaEleva2018_05022018
+  AlunoEscolaEnturmacaoTemp
+  AlunoExecucaoProva2
+  AlunoNotaEscolaEleva
+  AlunoNota_bkp
+  AlunoProvaMarcacao
+  AlunoProvaQuestaoSomatorio
+  AnoQuestao
+  AtendimentoMeta2019
+  AtendimentoTipoRelatorio
+  BNCC
+  BaseCanalEleva
+  BaseDeAcessos
+  BaseDeAtualidades
+  BaseDeComprometimento
+  BaseDeDesempenho
+  BaseDeDesempenhoDisciplina
+  BaseDeDisciplinas
+  BaseDeDisciplinasParaLuppa
+  BaseDeEletivasExcelencia
+  BaseDeEsforcoResultado
+  BaseDeLancamentoNotas
+  BaseDeNotas
+  BaseDeProfessoresParaLuppa
+  BaseDeResponsaveis
+  BaseDeSeriesPorAluno
+  BaseDeSituacao
+  BaseDeTRI
+  BaseDeTurmas
+  BaseDeUsuariosParaMarketing
+  BaseDeUtilizacaoAlunos
+  BaseDesempenhoPlataforma
+  BaseEstrelasPlataforma
+  BaseLivroDigital
+  BaseMonitoriaOnline
+  CabecalhoBoletim
+  CalendarioEventoEntreguePorAluno
+  CanalElevaControleAzureIndexer
+  CaracteresInvalidosParaEmail
+  CargaHorariaProfResumida
+  CargaHorariaSubstituicoes
+  CartaoValidacao
+  ChamadoOtrsGrupo
+  CombinacoesSimuladoSomatorio
+  CombinacoesSimuladoSomatorioResultado
+  Comentario
+  ConsultaBoletimAlunoCriptografado
+  ConteudoVisualizacao
+  ContratacaoPS
+  ControleDeImportacaoDeAlunos
+  ControleErroFotos
+  ControleFotos
+  ControleLinhasFotoTotvs
+  Counter
+  DATAS
+  DashboardEditora
+  DeHabilitacaoParaSerie
+  DisciplinaCargaHoraria
+  Disciplina_Origem
+  EnturmacaoEE
+  Escola_Origem
+  EtapaDeResultadosSemelhante
+  EventosProfessor
+  FalhaLogin
+  Feriado
+  FiltroBaseDeDesempenho
+  Fluig
+  FonteQuestao
+  FormaSolicitacaoPasse
+  FormatoQuestao
+  Handbook
+  Hash
+  HistoricoCargaProfessorEntrando
+  HistoricoCargaProfessorSaindo
+  HistoricoLiberacaoPedido
+  HoraInicioFimPorTurma
+  ImportTemp
+  ImportTempEE
+  ImportacaoAlunosEE
+  ImportacaoAlunosGE
+  ImportacaoAlunosTOTVS
+  ImportacaoAlunosTOTVS_TurmasInvalidas
+  ImportacaoClientesEscolaEleva
+  ImportacaoClientesLog
+  ImportacaoDependencias
+  ImportacaoFrequencia
+  ImportacaoLIVCoordenador
+  ImportacaoLIVEscola
+  ImportacaoLIVProfessor
+  Importacao_Eletivas_Semestral
+  IntegracaoEditora
+  IntegralAlun
+  JobQueue
+  Kiduca
+  LIV_Aprovacao
+  LIV_Feedback
+  LIV_GoogleAuthData
+  LIV_MigrationHistory
+  LIV_MigrationHistorySeed
+  LIV_TermosDeUso
+  LinhaOrcamento
+  List
+  LogAcessoTipo
+  LogAgenteImportacao
+  LogAlteracaoEscolaAtivaAte
+  LogClassificacaoQuestao
+  LogDevolutivasHome
+  LogEscolaAdimplente
+  LogExecucao
+  LogFolha
+  LogGoogleMeet
+  LogImportacaoAlunos
+  LogImportacaoPedidoEditora
+  LogInconsistenciaImportacaoPedidoEditora
+  LogMangaHigh
+  LogProcessamentoBoletim
+  LogRematricula
+  LogTransferenciaAlunoComEletiva
+  Marca_Origem
+  MaterialDidaticoClassificacaoMovimento
+  MaterialDidaticoDeParaNaturezaFiscal
+  MaterialDidaticoEscolaConfirmacaoEmail
+  MaterialDidaticoEscolaPedidoAuxImportacao
+  MaterialDidaticoImportacao
+  MaterialDidaticoLocalSaida
+  MaterialDidaticoProdutoTipo
+  MaterialPlanejamentoPedagogico
+  Mensageria
+  Meta permanência 2017'
+  MonitorEscola
+  NivelQuestao
+  NotaElite
+  NotaPensi
+  NotificacaoErroOtrs
+  NovasFuncionalidadesId
+  OTRSServiceIDs
+  OperacaoGoogleMeet
+  OrdenarTempos
+  POAAlunoObservacoes
+  POAAlunoObservacoes_Modulo
+  POAAlunoOpcao_Modulo
+  POAAluno_Modulo
+  POAAvaliacaoResultado_Modulo
+  POAAvaliacao_Modulo
+  POANaoPossuiAula
+  POANaoPossuiAula_Modulo
+  POANaoSabeAvaliarProfessor_Modulo
+  POAOpcao_Modulo
+  POAPeriodoRede_Modulo
+  POAPeriodo_Modulo
+  POAPessoa_Modulo
+  POAProfessor_Modulo
+  POAQuesito_Modulo
+  POATipoAplicacao_Modulo
+  POATurma_Modulo
+  PainelAluno
+  ParamentrosSLA
+  Parametro
+  PercentualFrequenciaLog
+  PeriodoCargaGoogleMeetRede
+  PermissaoCartaoCredito
+  PessoaEndereco
+  PlanilhaLote
+  PreviaCargaProfessores
+  ProblemaStatus
+  ProcessamentoDeTickets
+  ProdutoTotvs
+  ProfessorEscola
+  ProvaCodigoArquivo
+  ProvaOnline
+  PublicoSerie
+  QRCodeWhitelist
+  QuestaoLaPlaceImportar
+  RA_Maracaju_20180405
+  RedacaoCompetencia_BKP
+  Rede_Origem
+  RegistrosImportacaoPedidoEditoraCSV
+  RelacaoDisciplinaPlanejamentoPedagogico
+  RelacaoSeriePlanejamentoPedagogico
+  RelatorioAcessoFinanceiro
+  RelatorioAlunoDesempenho
+  RelatorioAlunoDesempenhoSimulados
+  RelatorioAlunoNotaEE
+  RelatorioAlunoUtilizacao
+  RelatorioAlunoUtilizacaoCanalEleva
+  RelatorioAlunoUtilizacaoMonitoriaOnline
+  RelatorioComunicados
+  RelatorioComunicadosLOG
+  RelatorioFolha
+  RelatorioLancamentoNotasEscolaEleva
+  RelatorioLancamentoPresencas
+  RelatorioPlataformaAdaptativa
+  RelatorioPresencaEE
+  RelatorioPresencaEmSimulados
+  RelatorioPreviaCarga
+  RelatorioUploadCartoes
+  RelatorioUploadCartoesAnalitico
+  RotinasImportacao
+  Sala
+  Schema
+  Segmento_Origem
+  Serie_Origem
+  Server
+  ServicosCamposDinamicosOTRS
+  ServicosContratadosTipoRelatorio
+  Set
+  StatusBoletim
+  StatusControleEmail
+  StatusLancamentoFrequencia
+  StatusQuestao
+  TEMP_DBA_JHY
+  TempAlunoEscolaRestore
+  TempAlunosSaes
+  TempArquivoFileServerDelete
+  TempImportacaoAlunos
+  TempLogUpdateUsuario
+  TempPessoaEscolaAcessoRestore
+  TempPessoaEscolaRestore
+  TempServerIPLog
+  TipoDisciplina
+  TipoEspacamento
+  TipoModal
+  TipoSanguineo
+  Turma_Origem
+  TurmasBarraPOA2019
+  TurmasBotafogoPOA2019
+  TurmasIgnoradas
+  UnidadesEscolasGeCalc
+  UsuarioAcesso
+  UsuarioFuncionalidade
+  UsuarioLIV
+  UsuarioRede
+  UsuarioSismat
+  Usuario_Origem
+  Usuario_id_origem
+  UsuariosNotificacaoEnvioCartao
+  ValidacaoDeBoletim
+  VersionInfo
+  _DELETEME_TempEnem1
+  _DELETEME_TempRankEnem1
+  _MigrationHistory
+  bkp_email_usuario
+  dummy
+  logAlunoNota
+  logclassroom
+  segmentoProfessor
+  sysdiagrams
+  tempEmailEnviados
+  temp_BasicAcessouUltimosMeses
+  temp_EnvioLeitura
+  tmpCargaAluno

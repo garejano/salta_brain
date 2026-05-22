@@ -1,0 +1,90 @@
+graph TD
+  AlunoCartaoNota --> Avaliacao
+  AlunoCartaoNota --> AlunoCartaoNota
+  AlunoNota --> TipoJustificativaNota
+  AlunoNota --> Avaliacao
+  AlunoNota --> TipoNotaFormativa
+  AlunoNota --> ProdutoLancamentoNota
+  AlunoNotaDetalhamento --> Avaliacao
+  AlunoNotaLinha --> AlunoNota
+  AlunoNotaRecomendacao --> Avaliacao
+  AlunoNotaTRI --> Avaliacao
+  AnotacaoLegendaRedacao --> Anotacao
+  AnotacaoRegraGeralRedacao --> Anotacao
+  AtendimentoAvaliacaoItem --> AtendimentoAvaliacao
+  AtendimentoAvaliacaoItem --> Avaliacao
+  Avaliacao --> EstruturaAvaliacaoImportacaoEstrutura
+  Avaliacao --> Avaliacao
+  Avaliacao --> TipoAvaliacao
+  AvaliacaoDisciplina --> Avaliacao
+  AvaliacaoEscola --> Avaliacao
+  AvaliacaoEscolaEleva --> Avaliacao
+  AvaliacaoEscolaTurma --> AvaliacaoEscolaTurmaStatus
+  AvaliacaoEscolaTurma --> AvaliacaoFormativa
+  AvaliacaoFormativaDisciplina --> AvaliacaoFormativa
+  AvaliacaoFormativaEscola --> AvaliacaoFormativa
+  AvaliacaoFormativaMarcaPublico --> AvaliacaoFormativa
+  AvaliacaoFormativaProva --> AvaliacaoFormativa
+  AvaliacaoFormativaPublico --> AvaliacaoFormativa
+  AvaliacaoFormativaQuestoes --> AvaliacaoFormativa
+  AvaliacaoMediaAvaliacao --> Avaliacao
+  AvaliacaoModelo --> StatusAvaliacaoModelo
+  AvaliacaoModeloChat --> AvaliacaoModelo
+  AvaliacaoModeloHistorico --> AvaliacaoModelo
+  AvaliacaoModeloHistorico --> StatusAvaliacaoModelo
+  AvaliacaoModeloQuestao --> AvaliacaoModelo
+  AvaliacaoSerie --> Avaliacao
+  BaseDeAvaliacoesAluno --> BaseDeAvaliacoes
+  EstruturaAvaliacao --> EstruturaAvaliacao
+  EstruturaAvaliacao --> TipoAvaliacao
+  EstruturaAvaliacaoAprovacao --> EstruturaAvaliacao
+  EstruturaAvaliacaoConfiguracao --> GrupoNotaFormativa
+  EstruturaAvaliacaoConfiguracao --> EstruturaAvaliacaoConfiguracao
+  EstruturaAvaliacaoConfiguracaoEscopo --> EstruturaAvaliacaoConfiguracao
+  EstruturaAvaliacaoImportacao --> EstruturaAvaliacaoEscopo
+  EstruturaAvaliacaoImportacaoAprovacao --> EstruturaAvaliacaoImportacao
+  EstruturaAvaliacaoImportacaoAprovacao --> EstruturaAvaliacao
+  EstruturaAvaliacaoImportacaoEstrutura --> EstruturaAvaliacaoImportacao
+  EstruturaAvaliacaoImportacaoEstrutura --> EstruturaAvaliacao
+  EstruturaAvaliacaoImportacaoEstrutura --> TipoAvaliacao
+  EstruturaAvaliacaoImportacaoSerie --> EstruturaAvaliacaoImportacao
+  EstruturaAvaliacaoSubstituicao --> EstruturaAvaliacao
+  LancamentoNotasBusca --> TipoAvaliacao
+  LancamentoNotasStatusPorTurma --> Avaliacao
+  MediaAvaliacaoEscola --> Avaliacao
+  NotaFormativa --> TipoNotaFormativa
+  PesquisaNotaAvaliacao --> NotaAvaliacao
+  PLADAvaliacaoQuestao --> PLADAvaliacao
+  POAAvaliacaoResultado --> POAAvaliacao
+  ProvaAvaliacao --> Avaliacao
+  ProvaCodigoAvaliacao --> ProvaAvaliacao
+  ProvaCodigoAvaliacaoQuestao --> ProvaCodigoAvaliacao
+  ProvaCodigoAvaliacaoQuestaoRevisao --> ProvaCodigoAvaliacaoQuestao
+  ProvaCodigoAvaliacaoQuestaoRevisao --> RespostaRevisaoAvaliacao
+  RedacaoAvaliacaoCorrecaoIA --> AvaliacaoIA
+  TipoAvaliacao --> TipoAvaliacao
+  TipoNotaFormativa --> GrupoNotaFormativa
+  AlunoNotaEscolaEleva
+  AlunoNota_bkp
+  AvaliacaoEditora
+  BaseDeLancamentoNotas
+  BaseDeNotas
+  EstruturaAvaliacaoLiberacaoBoletim
+  EstruturaAvaliacaoLiberacaoSituacao
+  EstruturaAvaliacaoOrdemDisciplina
+  ExtracaoBaseDeNotas
+  HisHistoricoNotas
+  MaterialDidaticoMonitoriaAvaliacao
+  NotaElite
+  NotaPensi
+  NotaTransferencia
+  POAAvaliacaoResultado_Modulo
+  POAAvaliacao_Modulo
+  POANaoSabeAvaliarProfessor_Modulo
+  ProcessamentoBaseAvaliacoes
+  RedacaoNotaCache
+  RelatorioAlunoNotaEE
+  RelatorioLancamentoNotasEscolaEleva
+  TemporalNotasTRIEscola
+  TemporalNotasTRIRede
+  logAlunoNota

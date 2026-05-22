@@ -7,6 +7,7 @@ Importe assim em qualquer script em _scripts/:
 Não precisa de pip install — usa apenas stdlib do Python.
 """
 
+import json as _json
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -34,6 +35,50 @@ ARCHIVE_DIR:       Path = SALTA_BRAIN / "_archive"
 
 REPOSITORY_MAP:      Path = SALTA_BRAIN / "repository_map.md"
 FRONTEND_CHANGELOG:  Path = FRONTEND_MAPS_DIR / "changelog.md"
+
+# ---------------------------------------------------------------------------
+# db_map — mapa do banco para consumo da IA
+# ---------------------------------------------------------------------------
+
+DB_MAP_DIR:          Path = SALTA_BRAIN / "_pde" / "db_map"
+DB_MAP_SCHEMA_DIR:   Path = DB_MAP_DIR / "schema"
+DB_MAP_DOMAINS_DIR:  Path = DB_MAP_DIR / "domains"
+DB_MAP_DIAGRAMS_DIR: Path = DB_MAP_DIR / "diagrams"
+DB_MAP_CHANGELOG:    Path = DB_MAP_DIR / "changelog.md"
+
+# Configuração SQL Server — lida do claude_desktop_config.json (mesmo que o MCP usa).
+# Override via variáveis de ambiente SALTA_DB_*.
+def _load_mcp_sqlserver_env() -> dict[str, str]:
+    """Lê as env vars do MCP sqlserver do claude_desktop_config.json."""
+    cfg_path = Path.home() / "AppData" / "Roaming" / "Claude" / "claude_desktop_config.json"
+    try:
+        cfg = _json.loads(cfg_path.read_text(encoding="utf-8"))
+        return cfg.get("mcpServers", {}).get("sqlserver", {}).get("env", {})
+    except Exception:
+        return {}
+
+_mcp_env = _load_mcp_sqlserver_env()
+
+import os as _os
+SQLSERVER_HOST:     str = _os.getenv("SALTA_DB_SERVER",   _mcp_env.get("SQLSERVER_HOST",     "localhost"))
+SQLSERVER_DATABASE: str = _os.getenv("SALTA_DB_NAME",     _mcp_env.get("SQLSERVER_DATABASE", "ElevaPortalHomolog"))
+SQLSERVER_USER:     str = _os.getenv("SALTA_DB_USER",     _mcp_env.get("SQLSERVER_USER",     ""))
+SQLSERVER_PASSWORD: str = _os.getenv("SALTA_DB_PASSWORD", _mcp_env.get("SQLSERVER_PASSWORD", ""))
+SQLSERVER_DRIVER:   str = _os.getenv("SALTA_DB_DRIVER",   "ODBC Driver 17 for SQL Server")
+SQLSERVER_ENCRYPT:  str = _mcp_env.get("SQLSERVER_ENCRYPT",    "false")
+SQLSERVER_TRUST_CERT: str = _mcp_env.get("SQLSERVER_TRUST_CERT", "false")
+
+# Dias antes de o db_map ser considerado stale
+STALE_DB_MAP_DAYS: int = 30
+
+# Mapeamento nome_tabela (substring) → domínio
+DOMAIN_KEYWORDS: dict[str, list[str]] = {
+    # frequencia tem prioridade sobre academico para tabelas como AlunoFalta
+    "frequencia": ["FREQUEN", "AULA", "CHAMADA", "PRESENCA", "FALTA", "LANCAMENTO"],
+    "avaliacao":  ["AVALIA", "NOTA", "BIMESTRE", "RUBRICA", "CONCEITO"],
+    "academico":  ["ALUNO", "MATRICULA", "TURMA", "ESCOLA", "SERIE", "ANOLETIVO", "ANO_LETIVO"],
+    "acesso":     ["PESSOA", "ACESSO", "USUARIO", "LOGIN", "PERFIL", "PERMISSAO"],
+}
 
 # ---------------------------------------------------------------------------
 # Frontends Angular conhecidos

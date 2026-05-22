@@ -88,3 +88,32 @@ Não é possível `ALTER COLUMN bit → datetime` diretamente; o script adiciona
 - [x] **Sub-bug 1 (botão fechar invisível em mobile):** Adicionar media query em `modal.component.css` para ajustar `min-width`, `padding` e `top` do `.btn-modal-close` em telas ≤ 600px
 - [x] **Sub-bug 2 (msg erro sobre label "Tipo"):** Encapsular `<single-select>` e a `<div class="msg-warn">` em um `<div>` wrapper dentro de `.row-form` em `formulario.component.html`
 - [x] **Sub-bug 3 (feriado regional aparece selecionado):** Corrigir `toggleDropdown()` e `openDropdown()` em `select-field.component.ts` — inicializar `hoveredIndex` com o índice do item selecionado (ou `-1`) em vez de sempre `0`
+
+---
+
+## EFC-6401 — Campo de tempo de aula oculto quando há apenas um tempo
+
+> Turma com único tempo de aula: campo deve aparecer como texto estático, não como dropdown.  
+> Exemplo de reprodução: Rede Ábaco, Escola Sumaré, Turma Infantil 2 A - T.
+
+- [ ] Localizar a condição que controla exibição do campo de tempo de aula no template de lançamento
+- [ ] Corrigir para exibir texto estático quando `tempos.length === 1` (provavelmente a condição atual só renderiza quando `> 1`)
+
+---
+
+## EFC-6402 — Layout mobile inconsistente na listagem de alunos
+
+> Resolução de teste: 412×915 (S25 FE). Comportamento intermitente — às vezes correto, às vezes não.
+
+- [ ] Reproduzir em DevTools (resolução 412×915) e identificar se a inconsistência é de timing (detecção de breakpoint antes do render) ou de estado inicial
+- [ ] Garantir que a view padrão (cards em mobile) seja definida antes do primeiro render — revisar `ngOnInit` e `BreakpointObserver` no componente de lançamento (relacionado ao EFC-6396)
+
+---
+
+## EFC-6403 — Dias sem aula ausentes na exportação de período letivo
+
+> Exportação de configurações do período letivo não inclui os dias sem aula cadastrados.
+
+- [ ] Localizar o endpoint/service de exportação de período letivo no backend de estrutura-pedagogica
+- [ ] Verificar se a query inclui `DiaSemAula` na projeção dos dados exportados
+- [ ] Incluir os dias sem aula no payload/arquivo gerado e validar em homologação

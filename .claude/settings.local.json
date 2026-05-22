@@ -111,7 +111,11 @@
       "PowerShell(Get-ChildItem -Path \"c:\\\\projects\\\\estrutura-pedagogica\" -Recurse -File | Where-Object { $_.Name -match \"\\(buildspec|appspec|Jenkinsfile|docker-compose|Dockerfile\\)\" -or $_.Extension -match \"\\(\\\\.tf|\\\\.yml|\\\\.yaml\\)$\" } | Select-Object FullName)",
       "PowerShell(Get-ChildItem -Path \"c:\\\\projects\\\\estrutura-pedagogica\" -Recurse -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -eq \".github\" -or $_.Name -eq \"workflows\" -or $_.Name -eq \".aws\" -or $_.Name -eq \"deploy\" -or $_.Name -eq \"infra\" -or $_.Name -eq \".circleci\" } | Select-Object FullName)",
       "Bash(grep -r \"\\\\$[A-Z_]*\" \"c:\\\\projects\\\\estrutura-pedagogica\\\\frontend\\\\buildspec.yml\" \"c:\\\\projects\\\\estrutura-pedagogica\\\\backend\\\\BuildCfg\" --include=\"*.sh\" --include=\"*.yml\")",
-      "Bash(grep -oE '\\\\$[A-Z_]+')"
+      "Bash(grep -oE '\\\\$[A-Z_]+')",
+      "PowerShell(claude.cmd mcp list 2>&1)",
+      "Bash(claude.cmd mcp *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\gustavo.arejano\\\\AppData\\\\Roaming\\\\Claude\\\\claude_desktop_config.json\")",
+      "mcp__sqlserver__get_foreign_keys"
     ],
     "additionalDirectories": [
       "c:\\projects\\notas",

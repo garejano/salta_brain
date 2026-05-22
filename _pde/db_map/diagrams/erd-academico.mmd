@@ -1,0 +1,305 @@
+graph TD
+  AdminEscola --> Escola
+  AlunoAP --> AnoLetivo
+  AlunoAtendimento --> AlunoEscola
+  AlunoCartao --> AnoLetivo
+  AlunoCartaoLinha --> AlunoCartao
+  AlunoEletiva --> AnoLetivo
+  AlunoEletivaLinha --> AlunoEletiva
+  AlunoEscola --> PessoaEscolaAcesso
+  AlunoEscola --> TipoSaidaAluno
+  AlunoEscola --> Turma
+  AlunoEscolaDependencia --> AlunoEscola
+  AlunoEscolaDisciplina --> AlunoEscola
+  AlunoEscolaDisciplinaComportamento --> AlunoEscola
+  AlunoEscolaDisciplinaComportamento --> TipoComportamentoAluno
+  AlunoEscolaEletiva --> AlunoEscola
+  AlunoEscolaItinerarioFormativo --> AlunoEscola
+  AlunoEscolaLinguaEstrangeira --> AlunoEscola
+  AlunoEscolaResponsavel --> AlunoEscola
+  AlunoExecucaoProva --> AlunoProva
+  AlunoNecessidadesEspeciaisRelatorio --> AnoLetivo
+  AlunoOcorrencia --> AlunoEscola
+  AlunoParentesco --> AlunoEscola
+  AlunoProvaResposta --> AlunoProva
+  AlunoTendencia --> Turma
+  AnoLetivoProduto --> AnoLetivo
+  AnoLetivoSemanas --> AnoLetivo
+  AoVivoSerie --> Serie
+  AtendimentoEscolaEleva --> TipoAtendimentoEscolaEleva
+  AtualidadeRedeEscola --> Escola
+  AtualidadeSerie --> Serie
+  AtualidadeTurma --> Turma
+  ClasseExemploEscola --> Escola
+  ClasseTurmaSegmentoPgto --> Turma
+  ColecaoComercialEscola --> Escola
+  ComunicadoEscolaSerieTurma --> Escola
+  ComunicadoEscolaSerieTurma --> Serie
+  ComunicadoEscolaSerieTurma --> Turma
+  ComunicadoMobileEscolaSerieTurma --> AlunoEscola
+  ComunicadoMobileEscolaSerieTurma --> Escola
+  ComunicadoMobileEscolaSerieTurma --> Serie
+  ComunicadoMobileEscolaSerieTurma --> Turma
+  ConteudoOnlineEscola --> Escola
+  ConteudoOnlineTurma --> Turma
+  CoordenadorEscola --> Escola
+  DiretorEscola --> Escola
+  DissidioAnoLetivo --> AnoLetivo
+  Escola --> Escola
+  Escola --> TipoEscola
+  EscolaAnoLetivo --> AnoLetivo
+  EscolaAnoLetivo --> Escola
+  EscolaConfiguracao --> Escola
+  EscolaFeriado --> Escola
+  EscolaFeriado --> Turma
+  EscolaGerencialEscola --> AnoLetivo
+  EscolaGerencialEscola --> Escola
+  EscolaGerencialEscola --> EscolaGerencial
+  EscolaGSuiteCredential --> Escola
+  EscolaMeta --> AnoLetivo
+  EscolaMeta --> Escola
+  EscolaPagamentoEscola --> AnoLetivo
+  EscolaPagamentoEscola --> Escola
+  EscolaPagamentoEscola --> EscolaPagamento
+  EscolaSerie --> AnoLetivo
+  EscolaSerie --> Escola
+  EscolaSerie --> Serie
+  EscolaSerie --> TipoSerie
+  EscolaSerieCargaHoraria --> EscolaSerie
+  EscolaSerieDisciplina --> EscolaSerie
+  EscolaSerieDisciplinaCiclo --> EscolaSerieDisciplina
+  EscolaSerieDisciplinaCiclo --> RedeSerieCiclo
+  EscolaSerieDisciplinaEletiva --> EscolaSerie
+  EscolaSerieDisciplinaEletiva --> EscolaSerieDisciplina
+  EscolaSerieDisciplinaGrupoDisciplina --> EscolaSerieDisciplina
+  EscolaSerieEtapa --> EscolaSerie
+  EstatisticaTurmaClassroom --> TurmaClassroom
+  HisAnoLetivo --> AnoLetivo
+  HisEscola --> Escola
+  HisEscolaComp --> HisAnoLetivo
+  HisEscolaComp --> HisEscola
+  HisEscolaComp --> HisSerie
+  HisEscolaCompDisc --> HisEscolaComp
+  HisHistoricoAnoLetivo --> HisEscolaComp
+  IndicadorEscola --> AnoLetivo
+  IndicadorEscola --> Escola
+  IndicadorEscolaObjeto --> IndicadorEscola
+  IndicadorEscolaObjetoValor --> IndicadorEscolaObjeto
+  IndicadorEscolaValor --> IndicadorEscola
+  IndicadorEscolaValorOrcado --> IndicadorEscola
+  InformacaoSaidaAluno --> AlunoEscola
+  ItinerarioFormativoRedeSerie --> RedeSerie
+  ItinerarioFormativoRedeSerieDisciplina --> ItinerarioFormativoRedeSerie
+  LIV_EscolaSegmentoLivMais --> Escola
+  LIV_INEPEscola --> Escola
+  LIV_LOG_MaterialSerieVideoLinks --> LIV_MaterialSerieVideoLinks
+  LIV_MaterialSerie --> TipoSerie
+  LIV_MaterialSerieVideoLinks --> LIV_MaterialSerieVideo
+  LIV_ParametroEscolaMaterial --> LIV_ParametroEscola
+  LIV_PessoaSerie --> Escola
+  LIV_PessoaSerie --> Serie
+  LogEnturmacao --> AlunoEscola
+  LogEnturmacao --> Turma
+  MacroTurmaConfiguracao --> AnoLetivo
+  MacroTurmaConfiguracao --> MacroTurma
+  MacroTurmaIntelpedTurma --> MacroTurmaIntelped
+  MacroTurmaIntelpedTurma --> Turma
+  MaterialComplementarEscolaSerie --> EscolaSerie
+  MaterialDidaticoEscola --> AnoLetivo
+  MaterialDidaticoEscola --> Escola
+  MaterialDidaticoEscola_backup --> AnoLetivo
+  MaterialDidaticoEscola_backup --> Escola
+  MaterialDidaticoEscola_backup --> Serie
+  MaterialDidaticoEscolaContrato --> MaterialDidaticoEscola
+  MaterialDidaticoEscolaContrato_backup --> Escola
+  MaterialDidaticoEscolaContratoComp --> MaterialDidaticoEscolaContrato
+  MaterialDidaticoEscolaPedido --> MaterialDidaticoEscolaContrato
+  MaterialDidaticoEscolaPedido_backup --> MaterialDidaticoEscola_backup
+  MaterialDidaticoEscolaPedidoExtra --> MaterialDidaticoEscola
+  MaterialDidaticoEscolaPedidoExtra_backup --> MaterialDidaticoEscola_backup
+  MaterialDidaticoEscolaPedidoHistorico --> MaterialDidaticoEscolaPedido_backup
+  MaterialDidaticoEscolaPedidoHistorico_backup --> MaterialDidaticoEscolaPedido_backup
+  MaterialDidaticoEscolaPlanejamento --> AnoLetivo
+  MaterialDidaticoEscolaPlanejamento --> Escola
+  MonitoriaEscalaAlunosPresentes --> AlunoEscola
+  MonitorTurmaDisciplina --> PessoaEscolaAcesso
+  MonitorTurmaDisciplina --> Turma
+  NomeUraniaTurma --> AnoLetivo
+  NomeUraniaTurmaLinha --> NomeUraniaTurma
+  OcorrenciaEscolaEleva --> TipoOcorrenciaEscolaEleva
+  PainelAlunoTrocaAlunoEscola --> AlunoEscola
+  PerfilAcessoFuncionalidadeSerie --> Escola
+  PerfilAcessoFuncionalidadeSerie --> Serie
+  PeriodoEscolar --> AnoLetivo
+  PeriodoEscolar --> Escola
+  PeriodoEscolar --> TipoPeriodoEscolar
+  PessoaEscola --> Escola
+  PessoaEscolaAcesso --> PessoaEscola
+  PessoaEscolaAcesso --> PessoaEscolaAcesso
+  PessoaEscolaAcessoSegmento --> PessoaEscolaAcesso
+  PessoaEscolaSerieDisciplina --> EscolaSerieDisciplina
+  PessoaJuridicaAlunoEscola --> AlunoEscola
+  PessoaTurma --> Turma
+  PLADNivelAluno --> RedeSerieDisciplinaAssunto
+  PLADNivelAluno --> RedeSerieCicloAssunto
+  POAAluno --> POATurma
+  POAAlunoOpcao --> POAAluno
+  POATurma --> Turma
+  POATurmaStatus --> POATurma
+  PreviaCargaEscola --> Escola
+  ProfessorChapaEscolaMes --> EscolaGerencial
+  ProfessorChapaEscolaMes --> AnoLetivo
+  ProfessorTurmaDisciplina --> PessoaEscolaAcesso
+  ProfessorTurmaDisciplina --> Turma
+  ProfessorTurmaDisciplina_Lixeira --> PessoaEscolaAcesso
+  ProfessorTurmaDisciplina_Lixeira --> Turma
+  ProfessorTurmaDisciplinaCiclo --> EscolaSerieDisciplinaCiclo
+  ProfessorTurmaDisciplinaCiclo --> Turma
+  ProvaTurma --> Turma
+  PublicacaoCanalSerie --> Serie
+  QuestaoRedeSerie --> Serie
+  RedeSerie --> AnoLetivo
+  RedeSerie --> RedeSerie
+  RedeSerie --> Serie
+  RedeSerieAgrupamento --> AnoLetivo
+  RedeSerieAgrupamento --> Serie
+  RedeSerieCiclo --> RedeSerie
+  RedeSerieCicloAssunto --> RedeSerieCiclo
+  RedeSerieDisciplina --> AnoLetivo
+  RedeSerieDisciplina --> RedeSerie
+  RedeSerieDisciplina --> RedeSerieDisciplina
+  RedeSerieDisciplinaAssunto --> RedeSerieCiclo
+  RedeSerieDisciplinaAssunto --> RedeSerieDisciplina
+  RedeSerieDisciplinaCiclo --> RedeSerieCiclo
+  RedeSerieDisciplinaCiclo --> RedeSerieDisciplina
+  RedeSerieDisciplinaFrente --> RedeSerieDisciplina
+  RedeSerieDisciplinaLinha --> RedeSerieDisciplina
+  RedeSerieVersaoAnamnese --> RedeSerie
+  RematriculaConveniados --> AlunoEscola
+  RematriculaConveniados --> Turma
+  ResponsavelAlunoClassroom --> AlunoEscola
+  Serie --> CategoriaSerie
+  Serie --> Escola
+  Serie --> Serie
+  SerieBolsao --> Serie
+  SerieDePara --> Serie
+  SerieDeParaImportacao --> Serie
+  SerieDisciplinaPadrao --> Serie
+  SerieHisSerie --> HisSerie
+  SerieHisSerie --> Serie
+  SerieLaplaceAssociada --> Serie
+  Series --> EscolaSerie
+  Series --> PessoaEscolaAcesso
+  TipoComportamentoAluno --> Escola
+  TipoComportamentoAlunoSerie --> Serie
+  TipoComportamentoAlunoSerie --> TipoComportamentoAluno
+  TipoRedeSerie --> Serie
+  Turma --> Turma
+  Turma --> EscolaSerie
+  Turma --> Serie
+  Turma --> TurmaClassroom
+  TurmaAgrupada --> AnoLetivo
+  TurmaAgrupada --> Serie
+  TurmaAgrupadaTurma --> Turma
+  TurmaAgrupadaTurma --> TurmaAgrupada
+  TurmaClassroom --> TurmaAgrupada
+  TurmaClassroom --> Turma
+  TurmaClassroomAtividade --> TurmaClassroom
+  TurmaClassroomAtividadeAluno --> StatusAtividadeAlunoClassroom
+  TurmaClassroomAtividadeAluno --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeDrive --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeForm --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeLink --> TurmaClassroomAtividade
+  TurmaClassroomAtividadeYoutube --> TurmaClassroomAtividade
+  TurmaClassroomPessoaEscolaAcesso --> PessoaEscolaAcesso
+  TurmaClassroomPessoaEscolaAcesso --> TurmaClassroom
+  TurmaDisciplina --> Turma
+  TurmaDisciplinaFolha --> Turma
+  TurmaEletivaEscolaSerie --> EscolaSerie
+  TurmaEletivaEscolaSerie --> Turma
+  TurmaEscolaSerieDisciplina --> EscolaSerieDisciplina
+  TurmaEscolaSerieDisciplina --> Turma
+  TurmaHorarioPadrao --> Turma
+  TurmaMacroTurma --> MacroTurma
+  TurmaMacroTurma --> Turma
+  TurmaTempo --> Turma
+  AlunoCartaoResposta
+  AlunoConselhoClasse
+  AlunoEletivaModulo
+  AlunoEscolaEleva2018
+  AlunoEscolaEleva2018_05022018
+  AlunoEscolaEnturmacaoTemp
+  AlunoExecucaoProva2
+  AlunoFalta
+  AlunoFaltas
+  AlunoJustificativaFalta
+  AlunoLaudoMedico
+  AlunoNecessidadesEspeciais
+  AlunoParaSincronizacao
+  AlunoProvaMarcacao
+  AlunoProvaQuestaoSomatorio
+  AlunoSemNecessidadesEspeciais
+  BaseDeAlunos
+  BaseDeSeriesPorAluno
+  BaseDeTurmas
+  BaseDeUtilizacaoAlunos
+  BoletimEscolaEleva
+  CalendarioEventoAluno
+  CalendarioEventoEntreguePorAluno
+  CicloDeMatriculas
+  ClassroomAluno
+  ConsultaBoletimAlunoCriptografado
+  ControleDeImportacaoDeAlunos
+  ControleMatricula
+  DeHabilitacaoParaSerie
+  EnturmacaoEE
+  Escola_Origem
+  HoraInicioFimPorTurma
+  ImportacaoAlunosEE
+  ImportacaoAlunosGE
+  ImportacaoAlunosTOTVS
+  ImportacaoAlunosTOTVS_TurmasInvalidas
+  ImportacaoClientesEscolaEleva
+  ImportacaoLIVEscola
+  LogAlteracaoEscolaAtivaAte
+  LogCadastroAluno
+  LogEnturmacaoErro
+  LogEscolaAdimplente
+  LogImportacaoAlunos
+  LogRematricula
+  LogTransferenciaAlunoComEletiva
+  MaterialDidaticoEscolaConfirmacaoEmail
+  MaterialDidaticoEscolaPedidoAuxImportacao
+  MeetTurmaClassroomPessoa
+  MetaAtendimentoAluno
+  MonitorEscola
+  NaoRecalcularBaseDeSeriesPorAluno
+  POAAlunoObservacoes
+  POAAlunoObservacoes_Modulo
+  POAAlunoOpcao_Modulo
+  POAAluno_Modulo
+  POATurma_Modulo
+  PainelAluno
+  ProfessorEscola
+  ProtocoloLancamentoAluno
+  PublicoSerie
+  RelacaoSeriePlanejamentoPedagogico
+  RelatorioAlunoDesempenho
+  RelatorioAlunoDesempenhoSimulados
+  RelatorioAlunoUtilizacao
+  RelatorioAlunoUtilizacaoCanalEleva
+  RelatorioAlunoUtilizacaoMonitoriaOnline
+  Serie_Origem
+  TempAlunoEscolaRestore
+  TempAlunosSaes
+  TempImportacaoAlunos
+  TempPessoaEscolaAcessoRestore
+  TempPessoaEscolaRestore
+  TipoDivisaoEscola
+  Turma_Origem
+  TurmasBarraPOA2019
+  TurmasBotafogoPOA2019
+  TurmasIgnoradas
+  UnidadesEscolasGeCalc
+  UsuarioEscolaEleva
+  tmpCargaAluno

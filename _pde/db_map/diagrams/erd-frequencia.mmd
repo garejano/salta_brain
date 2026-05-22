@@ -1,0 +1,56 @@
+graph TD
+  AlunoAvaliacaoPresenca --> Chamada
+  AlunoAvaliacaoPresenca --> TipoPresenca
+  AlunoFrequencia --> TipoFrequencia
+  AulaEvento --> TipoAulaEvento
+  AulaEventoAnotacoes --> AulaEvento
+  AulaEventoDeverDeCasa --> AulaEvento
+  AulaEventoPauta --> AulaEvento
+  AulaOnline --> TipoAulaOnline
+  AulaOnline --> AulaOnline
+  AulaOnlineAcesso --> AulaOnline
+  AulaOnlineAcessoPing --> AulaOnlineAcesso
+  DiaSemAulaMotivo --> DiaSemAulaTipo
+  DiaSemAulaTurma --> DiaSemAulaMotivo
+  FrequenciaProfessor --> FrequenciaProfessor
+  FrequenciaProfessor --> MotivoFrequenciaProfessorTipoPresenca
+  FrequenciaProfessorSubstituto --> FrequenciaProfessor
+  FuncionalidadeTipoPresenca --> TipoPresenca
+  HistoricoHoraAulaPgto --> HoraAulaPgto
+  HistoricoHoraAulaSegmentoPgto --> HoraAulaSegmentoPgto
+  HoraAulaPgto --> TipoHoraAula
+  HoraAulaSegmentoPgto --> TipoHoraAula
+  LIV_FeedbackAula --> LIV_FeedbackCadastroAulas
+  LIV_FeedbackAulaRespostas --> LIV_FeedbackAula
+  MonitoriaMonitorPresenca --> TipoPresenca
+  MotivoFrequenciaProfessor --> MotivoFrequenciaProfessor
+  MotivoFrequenciaProfessorTipoPresenca --> MotivoFrequenciaProfessor
+  MotivoFrequenciaProfessorTipoPresenca --> TipoPresenca
+  TipoAulaOnlineRede --> TipoAulaOnline
+  TipoAulaOnlineRedeSerie --> TipoAulaOnline
+  AlunoAvaliacaoPresenca_bkp
+  AlunoAvaliacaoPresenca_bkp2
+  AulaEventoConfiguracao
+  AulaEventoPautaMensal
+  AulaEventoPautaSemanal
+  AulaEventoUltimaAlteracao
+  Aula_ComentarioComportamento
+  Aula_LancamentoComportamento
+  DiaSemAula
+  DuracaoTempoAula
+  HoraAulaPadrao
+  ImportacaoFrequencia
+  LIV_MaterialPlanoAula
+  LIV_StatusPlanoAula
+  LogAulaOnlineAssistida
+  POANaoPossuiAula
+  POANaoPossuiAula_Modulo
+  PercentualFrequencia
+  PercentualFrequenciaLog
+  PeriodoLancamentoFrequenciaProfessor
+  RelatorioLancamentoPresencas
+  RelatorioPresencaEE
+  RelatorioPresencaEmSimulados
+  StatusLancamentoFrequencia
+  TempoAula
+  TipoChamada

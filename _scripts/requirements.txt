@@ -4,5 +4,9 @@
 # bench_scan_frontend.py   → sem dependências externas (invoca `claude` CLI via subprocess)
 # scan-angular.mjs         → requer Node.js: npm install ts-morph
 #
+# db_map/:
+#   pip install pyodbc pyyaml
+#   (requer ODBC Driver 17 for SQL Server instalado no sistema)
+#
 # Dependências opcionais:
 #   pip install tree-sitter tree-sitter-typescript   # parsing TypeScript por AST real
