@@ -55,18 +55,18 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 
 **Alunos disponíveis (qualquer um serve):**
 
-| HashAluno | Nome (anonimizado) |
+| Matrícula | HashAluno |
 |---|---|
-| `72F60410-0C4F-42A3-96E5-1BED54C52774` | MANLOREM IPSUM... |
-| `9F2986F3-B34D-4207-8E70-861D8CE1429E` | CAMLOREM IPSUM... |
-| `3CDC526B-D99A-4E73-B150-878BBA8C9C18` | HELLOREM IPSUM... |
-| `306FA049-ACED-4460-892C-D68CD8886921` | ISALOREM IPSUM... |
+| `25406662` | `DF504A1E-183E-4785-B839-E8B69CA4C688` |
+| `25414861` | `786DB3F9-4937-453A-B3B1-AD0E58BBE0F2` |
+| `25414867` | `707E6594-4AFA-4FEA-95F2-903B46919F75` |
+| `25403494` | `9F2986F3-B34D-4207-8E70-861D8CE1429E` |
 
 **Request pronto:**
 ```json
 {
   "hashRede": "A43C39F2-91B7-4425-8921-1849090C1804",
-  "hashUsuario": "72F60410-0C4F-42A3-96E5-1BED54C52774",
+  "hashUsuario": "DF504A1E-183E-4785-B839-E8B69CA4C688",
   "hashTurma": "BD93C9B1-CEA9-41B9-9673-088A3D2D897D",
   "ativo": true
 }
@@ -90,11 +90,11 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 
 **Alunos disponíveis:**
 
-| HashAluno | Nome (anonimizado) |
+| Matrícula | HashAluno |
 |---|---|
-| `538FFC36-9DAC-48E3-8658-CFD0B6930D42` | BEALOREM IPSUM... |
-| `7A1DC4AC-C828-4B5F-B81A-C0FA6EB65127` | GABLOREM IPSUM... |
-| `76D08A60-D0CB-443B-B599-1AAA7DA2381F` | MANLOREM IPSUM... |
+| `22214043` | `538FFC36-9DAC-48E3-8658-CFD0B6930D42` |
+| `22214058` | `7A1DC4AC-C828-4B5F-B81A-C0FA6EB65127` |
+| `22191526` | `76D08A60-D0CB-443B-B599-1AAA7DA2381F` |
 
 **Request pronto:**
 ```json
@@ -121,6 +121,7 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 | Turma | 2.2 AM |
 | HashRede | `4F79ADEC-4D7F-43E8-B4EF-B0172DC000DB` |
 | HashTurma | `96664705-833F-48CF-AF31-D75BF971779C` |
+| Matrícula | `22212724` |
 | HashAluno | `CB5ACECC-15E6-4520-A1B0-686420F3AFD2` |
 
 **Request pronto:**
@@ -142,6 +143,7 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 | Turma | Serviços 7º ano - M |
 | HashRede | `98CD62E1-0350-4DB8-9181-420BA0EEE1FC` |
 | HashTurma | `1ED75C16-F913-489A-B512-5ED0205393BF` |
+| Matrícula | `19286024` |
 | HashAluno | `04C01F72-64B5-43AC-80E5-2BB0064F7B61` |
 
 ---
@@ -157,6 +159,7 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 | Turma | 3ª série A - M |
 | HashRede | `98CD62E1-0350-4DB8-9181-420BA0EEE1FC` |
 | HashTurma | `49B57797-F302-4DA5-8ECA-84A003A1C245` |
+| Matrícula | `80012508` |
 | HashAluno | `9D01F492-A6DB-4189-BF24-D11D50B3F965` |
 
 **Conteúdo esperado no campo Observações:**
@@ -191,11 +194,11 @@ O comportamento esperado é **idêntico** ao da tela antiga (`documentacao-pedag
 
 **Alunos disponíveis:**
 
-| HashAluno | Nome (anonimizado) |
+| Matrícula | HashAluno |
 |---|---|
-| `BEC475F4-01F9-4162-A7EA-E7642E8AFFA2` | ANALOREM IPSUM... |
-| `5B96D18D-332E-45D3-83A1-164749327208` | ANALOREM IPSUM... |
-| `0C67A537-F89E-4EA8-803F-5E9070432F8D` | ANALOREM IPSUM... |
+| `25403918` | `0C67A537-F89E-4EA8-803F-5E9070432F8D` |
+| `25405677` | `BEC475F4-01F9-4162-A7EA-E7642E8AFFA2` |
+| `25409542` | `5B96D18D-332E-45D3-83A1-164749327208` |
 
 **Request pronto:**
 ```json
