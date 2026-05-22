@@ -404,6 +404,200 @@ toggleDropdown(): void {
 
 ---
 
+---
+
+## EFC-6401 — Campo de tempo de aula oculto quando há apenas um tempo
+
+### Diagnóstico
+
+**Arquivo:** `frontend/src/app/features/lancamento-frequencia/lancamento/lancamento.component.ts`
+
+A lógica de exibição já está estruturada corretamente:
+
+```html
+<!-- lancamento.component.html — linhas 28-43 -->
+<ng-container *ngIf="ehPorAula">
+  <div class="stoolbar-tempo">
+    <ng-container *ngIf="mostrarSeletorTempo; else tempoEstatico">
+      <single-select ...></single-select>
+    </ng-container>
+    <ng-template #tempoEstatico>
+      <span class="ccard-value">{{ tempoAtualFormatado }}</span>
+    </ng-template>
+  </div>
+</ng-container>
+```
+
+```typescript
+// .ts linha 488
+get mostrarSeletorTempo(): boolean {
+  return this.temposDisponiveis.length > 1;
+}
+
+// .ts linha 526
+get tempoAtualFormatado(): string {
+  if (!this.tempoAtual?.tempo) { return ""; }  // ← retorna "" se tempoAtual é null
+  const inicio = this.formatarHora(this.tempoAtual.horarioInicio);
+  const fim = this.formatarHora(this.tempoAtual.horarioTermino);
+  return `${this.tempoAtual.tempo}º tempo · ${inicio}–${fim}`;
+}
+```
+
+**Causa raiz:** Com 1 tempo, `mostrarSeletorTempo` retorna `false` → o template `#tempoEstatico` é exibido. Mas `tempoAtualFormatado` depende de `this.tempoAtual`, que é inicializado assim:
+
+```typescript
+// .ts linhas 109-111
+if (this.evento?.tempos?.length > 0) {
+  this.tempoAtual = this.evento.tempos.find(t => t.hash === this.hashAulaEvento) ?? null;
+}
+```
+
+Se `hashAulaEvento` não coincidir com nenhum hash em `evento.tempos` (cenário possível quando a chamada é iniciada sem um tempo específico já selecionado), `tempoAtual` fica `null` → `tempoAtualFormatado` retorna `""` → o campo aparece em branco/invisível.
+
+### Solução
+
+**Arquivo a modificar:** `lancamento.component.ts`
+
+Adicionar um fallback logo após o bloco de inicialização de `tempoAtual`:
+
+```typescript
+// Após a inicialização existente (~linha 112):
+if (!this.tempoAtual && this.temposDisponiveis.length === 1) {
+  this.tempoAtual = this.temposDisponiveis[0];
+}
+```
+
+Quando há exatamente 1 tempo disponível e `tempoAtual` ainda é `null`, usa esse único tempo automaticamente. O `controlTempo` já é inicializado com `this.hashAulaEvento` logo depois — pode ser necessário também alinhar o valor do control:
+
+```typescript
+if (!this.tempoAtual && this.temposDisponiveis.length === 1) {
+  this.tempoAtual = this.temposDisponiveis[0];
+  this.controlTempo.setValue(this.tempoAtual.hash);
+}
+```
+
+### Checklist de Teste
+
+- [ ] Filtrar: Rede Ábaco, Escola Sumaré, Turma Infantil 2 A - T → "Lançar" → campo de tempo deve aparecer como texto estático (ex.: `1º tempo · 07:00–07:50`)
+- [ ] Turma com múltiplos tempos → dropdown ainda aparece normalmente
+- [ ] Navegar entre turmas (1 tempo ↔ múltiplos tempos) → campo alterna corretamente
+
+---
+
+## EFC-6403 — Dias sem aula ausentes na exportação de período letivo
+
+### Diagnóstico
+
+**Fluxo:** `editar.component.ts:exportar()` → `ConfiguradorPeriodoLetivoService.export()` → `POST /api/configuradorperiodoletivo/export` → `ExportarConfiguracaoService.Get()` → `GetResponseParaExport()` + geração de Excel.
+
+A investigação identificou **3 camadas sem os dados de dias sem aula**:
+
+| Camada | Arquivo | Problema |
+|--------|---------|---------|
+| DTO | `ConfiguradorPeriodoLetivoExport.cs` | Não tem propriedade para dias sem aula |
+| Repository | `ConfiguracaoPeriodoLetivoRepository.cs:GetResponseParaExport()` | Query não inclui `DiaSemAulaMotivos` |
+| Service | `ExportarConfiguracaoService.cs` | Coluna ausente + linha de dados sem o campo |
+
+**Relação de entidades:**
+
+```
+ConfiguracaoPeriodoLetivo
+  └─ EscolaSerie.AnoLetivo              (navigation: AnoLetivo entity)
+       └─ AnoLetivo.DiaSemAulaMotivos   (List<DiaSemAulaMotivo> — confirmado na entidade)
+
+DiaSemAulaMotivo
+  ├─ AnoLetivoId (int)
+  ├─ EscolaId (int?) — null quando TodasAsEscolas = true
+  ├─ TodasAsEscolas (bool)
+  ├─ DataInicio / DataFim (DateTime)
+  └─ Descricao (string)
+```
+
+Um dia sem aula vale para a escola da EscolaSerie se:
+`d.TodasAsEscolas == true` **OU** `d.EscolaId == <id da escola da EscolaSerie>`
+
+**Formato de saída:** Uma coluna "Dias sem aula" por linha de EscolaSerie, com os dias concatenados (ex.: `Feriado municipal (10/06 - 10/06) | Recesso (14/07 - 18/07)`).
+
+### Solução — 3 arquivos
+
+#### 1. DTO — `ConfiguradorPeriodoLetivoExport.cs`
+
+```csharp
+public class ConfiguradorPeriodoLetivoExport
+{
+   // ... campos existentes ...
+   public string TipoChamadaNome { get; set; }
+   public List<string> DiasSemAula { get; set; } = [];  // ← adicionar
+}
+```
+
+#### 2. Repository — `ConfiguracaoPeriodoLetivoRepository.cs`
+
+Em `GetResponseParaExport()`, adicionar ao `.Select(x => new ConfiguradorPeriodoLetivoExport { ... })`:
+
+```csharp
+DiasSemAula = x.EscolaSerie.AnoLetivo.DiaSemAulaMotivos
+   .Where(d => d.Ativo
+            && (d.TodasAsEscolas || d.EscolaId == x.EscolaSerie.Escola.Id))
+   .OrderBy(d => d.DataInicio)
+   .Select(d => $"{d.Descricao} ({d.DataInicio:dd/MM} - {d.DataFim:dd/MM})")
+   .ToList()
+```
+
+> `x.EscolaSerie.Escola.Id` obtém o ID via navigation. Se `EscolaSerie` expõe um FK int diretamente (verificar entity), pode usar esse campo ao invés da navigation para evitar JOIN extra.
+
+#### 3. Service — `ExportarConfiguracaoService.cs`
+
+**a) Adicionar coluna** (linha 55):
+
+```csharp
+var colunas = new List<string> {
+   "Rede", "Escola", "Série",
+   "Data Inicio Ano", "Data Fim Ano",
+   "Data Inicio Recesso", "Data Fim Recesso",
+   "Usuário última operação", "Tipo de Chamada",
+   "Dias sem aula"  // ← novo
+};
+```
+
+**b) Propagar `DiasSemAula` no mapeamento intermediário** (em `FormatarParaDataTable`, ~linha 84):
+
+```csharp
+return new ConfiguradorPeriodoLetivoExport
+{
+   // ... campos existentes ...
+   TipoChamadaNome = config?.TipoChamadaNome,
+   DiasSemAula = config?.DiasSemAula ?? [],  // ← adicionar
+};
+```
+
+**c) Adicionar na chamada `dataTable.Rows.Add()`** (linha 102):
+
+```csharp
+dataTable.Rows.Add(
+   item.Rede,
+   item.Escola,
+   item.Serie,
+   FormatarData(item.DataInicioAno),
+   FormatarData(item.DataFimAno),
+   FormatarData(item.DataInicioRecesso),
+   FormatarData(item.DataFimRecesso),
+   item.UsuarioUltimaAlteracao,
+   item.TipoChamadaNome ?? "",
+   string.Join(" | ", item.DiasSemAula)  // ← novo
+);
+```
+
+### Checklist de Teste
+
+- [ ] Cadastrar ao menos 1 dia sem aula para uma escola específica e 1 "para todas as escolas"
+- [ ] Exportar período letivo → coluna "Dias sem aula" aparece no Excel
+- [ ] Linha da escola com dia específico → aparece o dia
+- [ ] Linha de outra escola → aparece apenas o dia "para todas as escolas"
+- [ ] Escola sem dias sem aula → coluna aparece vazia (não erro)
+
+---
+
 ## Ordem de Implementação Sugerida
 
 | Prioridade | Card | Justificativa |
